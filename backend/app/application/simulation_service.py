@@ -27,6 +27,7 @@ from app.domain.units import TimeUnit
 from app.domain.units import UnitConverter
 from app.infrastructure.db.models import ReliabilityModelRow
 from app.infrastructure.db.models import SimulationRunRow
+from app.infrastructure.db.scenario_repo import ScenarioRepository
 from app.infrastructure.db.simulation_repo import SimulationRepository
 from app.infrastructure.db.uow import SqlAlchemyUnitOfWork
 
@@ -51,6 +52,7 @@ class SimulationService:
         idempotency_key: str | None = None,
         reliability_model_id: UUID | None = None,
         seed: int | None = None,
+        scenario_version_id: UUID | None = None,
     ) -> dict[str, Any]:
         """Enqueue a simulation job (idempotent when key is set)."""
         self._validate_limits(configuration)
@@ -74,7 +76,11 @@ class SimulationService:
                 reliability_model_id,
             )
             model = CompiledModel.model_validate(model_row.snapshot_json)
-            scenario = ScenarioOverlay()
+            scenario = self._resolve_scenario(
+                uow,
+                version_id=version_id,
+                scenario_version_id=scenario_version_id,
+            )
             model_hash = model.model_hash()
             scen_hash = scenario.scenario_hash()
             cfg_hash = configuration_hash(cfg)
@@ -96,6 +102,7 @@ class SimulationService:
                 version_id=version_id,
                 reliability_model_id=model_row.id,
                 configuration_id=cfg_row.id,
+                scenario_version_id=scenario_version_id,
                 status=SimulationRunStatus.QUEUED.value,
                 progress=0.0,
                 completed_runs=0,
@@ -227,6 +234,27 @@ class SimulationService:
                 code="SIMULATION_LIMIT",
                 entity="SimulationConfiguration",
             )
+
+    def _resolve_scenario(
+        self,
+        uow: SqlAlchemyUnitOfWork,
+        *,
+        version_id: UUID,
+        scenario_version_id: UUID | None,
+    ) -> ScenarioOverlay:
+        if scenario_version_id is None:
+            return ScenarioOverlay()
+        scenario_repo = ScenarioRepository(uow.session)
+        version = scenario_repo.get_version(scenario_version_id)
+        scenario = scenario_repo.get(version.scenario_id)
+        if scenario.version_id != version_id:
+            raise ValidationError(
+                "scenario belongs to another system version",
+                code="SCENARIO_VERSION_MISMATCH",
+                entity="ScenarioVersion",
+                entity_id=str(scenario_version_id),
+            )
+        return scenario_repo.overlay_for_version(scenario_version_id)
 
     def _resolve_model(
         self,

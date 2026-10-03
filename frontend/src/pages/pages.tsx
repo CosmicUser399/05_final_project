@@ -10,7 +10,8 @@ export function HomePage() {
       <Typography color="text.secondary">
         Платформа моделирования надёжности, доступности и
         ремонтопригодности (RAM). Доступны CRUD систем/оборудования,
-        AI/Fabricate генерация со staging-ревью и граф оборудования.
+        AI/Fabricate генерация со staging-ревью, граф оборудования и
+        сценарии сравнения стратегий ТО.
       </Typography>
       <Stack direction="row" spacing={1}>
         <Button component={RouterLink} to="/systems" variant="contained">
@@ -18,6 +19,9 @@ export function HomePage() {
         </Button>
         <Button component={RouterLink} to="/ai/generate" variant="outlined">
           AI-генерация
+        </Button>
+        <Button component={RouterLink} to="/scenarios" variant="outlined">
+          Сценарии
         </Button>
       </Stack>
     </Stack>
@@ -29,15 +33,6 @@ export function SimulationsPage() {
     <PlaceholderPage
       title="Симуляции"
       description="Запуски Monte Carlo и результаты появятся в фазе P9."
-    />
-  )
-}
-
-export function ScenariosPage() {
-  return (
-    <PlaceholderPage
-      title="Сценарии"
-      description="Сценарии и сравнение появятся в фазе P8."
     />
   )
 }

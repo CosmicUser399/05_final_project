@@ -28,6 +28,9 @@ from app.infrastructure.db.models.reliability import (
     ReliabilityStructureMemberRow,
 )
 from app.infrastructure.db.models.reliability import ReliabilityStructureRow
+from app.infrastructure.db.models.scenario import ScenarioChangeRow
+from app.infrastructure.db.models.scenario import ScenarioRow
+from app.infrastructure.db.models.scenario import ScenarioVersionRow
 from app.infrastructure.db.models.simulation import DiagnosticEventRow
 from app.infrastructure.db.models.simulation import EquipmentMetricsRow
 from app.infrastructure.db.models.simulation import FailureEventRow
@@ -74,6 +77,9 @@ __all__ = [
     "ResourceConsumptionRow",
     "ResourceRequirementRow",
     "ResourceRow",
+    "ScenarioChangeRow",
+    "ScenarioRow",
+    "ScenarioVersionRow",
     "SimulationConfigurationRow",
     "SimulationRunRow",
     "SparePartConsumptionRow",

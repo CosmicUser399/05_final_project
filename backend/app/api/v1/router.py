@@ -14,6 +14,7 @@ from app.api.v1 import petri
 from app.api.v1 import production
 from app.api.v1 import reliability
 from app.api.v1 import resources
+from app.api.v1 import scenarios
 from app.api.v1 import simulations
 from app.api.v1 import systems
 from app.api.v1 import versions
@@ -32,4 +33,5 @@ router.include_router(production.router)
 router.include_router(reliability.router)
 router.include_router(petri.router)
 router.include_router(simulations.router)
+router.include_router(scenarios.router)
 router.include_router(ai.router)

@@ -679,6 +679,7 @@ class SimulationCreateRequest(BaseModel):
 
     version_id: UUID
     reliability_model_id: UUID | None = None
+    scenario_version_id: UUID | None = None
     horizon: float = Field(gt=0)
     horizon_unit: TimeUnit = TimeUnit.HOURS
     number_of_runs: int = Field(default=100, ge=1)
@@ -715,6 +716,7 @@ class SimulationCreateRequest(BaseModel):
 class SimulationStatusResponse(BaseModel):
     id: UUID
     version_id: UUID
+    scenario_version_id: UUID | None = None
     status: str
     progress: float
     completed_runs: int

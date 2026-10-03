@@ -5,6 +5,10 @@ import type {
   EquipmentConnection,
   GenerationJob,
   Proposal,
+  Scenario,
+  ScenarioChangeType,
+  ScenarioComparison,
+  SimulationStatus,
   System,
   SystemVersion,
 } from './types'
@@ -62,4 +66,77 @@ export const aiApi = {
     proposalId: string,
     body: { system_name?: string; create_system?: boolean },
   ) => apiPost<CommitResult>(`/ai/proposals/${proposalId}/commit`, body),
+}
+
+export const scenariosApi = {
+  list: (versionId: string) =>
+    apiGet<Scenario[]>(`/versions/${versionId}/scenarios`),
+  get: (scenarioId: string) =>
+    apiGet<Scenario>(`/scenarios/${scenarioId}`),
+  create: (
+    versionId: string,
+    body: {
+      name: string
+      description?: string
+      changes: Array<{
+        change_type: ScenarioChangeType
+        target_lineage_id: string
+        parameters: Record<string, unknown>
+      }>
+    },
+  ) => apiPost<Scenario>(`/versions/${versionId}/scenarios`, body),
+  addVersion: (
+    scenarioId: string,
+    body: {
+      changes: Array<{
+        change_type: ScenarioChangeType
+        target_lineage_id: string
+        parameters: Record<string, unknown>
+      }>
+    },
+  ) =>
+    apiPost<Scenario>(`/scenarios/${scenarioId}/versions`, body),
+  simulate: (
+    scenarioId: string,
+    body: {
+      horizon: number
+      horizon_unit?: string
+      number_of_runs?: number
+      random_seed?: number
+      parallel_runs?: number
+    },
+  ) =>
+    apiPost<SimulationStatus>(
+      `/scenarios/${scenarioId}/simulate`,
+      body,
+    ),
+  compare: (
+    scenarioId: string,
+    params?: { baseline_run_id?: string; scenario_run_id?: string },
+  ) => {
+    const query = new URLSearchParams()
+    if (params?.baseline_run_id) {
+      query.set('baseline_run_id', params.baseline_run_id)
+    }
+    if (params?.scenario_run_id) {
+      query.set('scenario_run_id', params.scenario_run_id)
+    }
+    const suffix = query.size > 0 ? `?${query.toString()}` : ''
+    return apiGet<ScenarioComparison>(
+      `/scenarios/${scenarioId}/compare${suffix}`,
+    )
+  },
+}
+
+export const simulationsApi = {
+  create: (body: {
+    version_id: string
+    horizon: number
+    horizon_unit?: string
+    number_of_runs?: number
+    random_seed?: number
+    parallel_runs?: number
+  }) => apiPost<SimulationStatus>('/simulations', body),
+  get: (runId: string) =>
+    apiGet<SimulationStatus>(`/simulations/${runId}`),
 }

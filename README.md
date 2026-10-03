@@ -21,7 +21,8 @@ Reliability Model -> Petri Model / RAM-симуляция (Monte Carlo).
 | P5 Monte Carlo + Metrics | выполнен | N прогонов, CI, jobs, API/SSE |
 | P6 Petri-Pilot | выполнен | генератор, MCP-адаптер, validate/analyze API |
 | P7 AI + Frontend CRUD | выполнен | OpenAI/Fabricate, proposals, CRUD, граф |
-| P8-P12 | не начаты | см. план в `.cursor/plans/` |
+| P8 Scenarios | выполнен | Scenario overlay, simulate/compare, UI |
+| P9-P12 | не начаты | Results UI, AI Analyst, OREDA, Excel/Demo |
 
 ### P0. Bootstrap
 
@@ -163,8 +164,14 @@ OpenAI, MCP (проверяется архитектурным тестом).
   фронтенд Systems/Equipment (MUI X DataGrid), Equipment Graph
   (`@xyflow/react` + dagre), типизированный API-клиент. См.
   `docs/architecture/ai-fabricate.md`.
+- **P8 Scenarios:** `Scenario` / `ScenarioVersion` / `ScenarioChange`
+  (9 типов overlay), миграция M007, валидация по `lineage_id`,
+  `POST /scenarios/{id}/simulate`, `GET /scenarios/{id}/compare`
+  (Δ Availability / Production Loss / Maintenance Cost), worker
+  применяет overlay; UI список/редактор/таблица сравнения + ECharts.
+  Baseline не мутирует. См. `docs/architecture/scenarios.md`.
 
-Следующий шаг - P8 (сценарии) / P9 (Results UI) / P10 (AI Analyst).
+Следующий шаг - P9 (Results UI) / P10 (AI Analyst).
 
 ## Требования
 

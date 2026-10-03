@@ -51,7 +51,7 @@ describe('app shell', () => {
     renderAt('/scenarios')
 
     expect(
-      screen.getByRole('heading', { name: 'Сценарии', level: 5 }),
+      screen.getByRole('heading', { name: 'Сценарии', level: 4 }),
     ).toBeInTheDocument()
   })
 

@@ -77,7 +77,9 @@ class SimulationRunRow(Base, TimestampMixin):
     )
     scenario_version_id: Mapped[UUID | None] = mapped_column(
         Uuid(as_uuid=True),
+        ForeignKey("scenario_versions.id", ondelete="SET NULL"),
         nullable=True,
+        index=True,
     )
     status: Mapped[str] = mapped_column(
         String(32),
@@ -146,6 +148,7 @@ class SimulationRunRow(Base, TimestampMixin):
         return {
             "id": self.id,
             "version_id": self.version_id,
+            "scenario_version_id": self.scenario_version_id,
             "status": self.status,
             "progress": self.progress,
             "completed_runs": self.completed_runs,

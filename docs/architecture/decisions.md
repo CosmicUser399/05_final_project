@@ -81,6 +81,16 @@
   MCP Cursor (SQLite, Fabricate, Petri-Pilot) - инструменты
   разработчика (`.cursor/rules/011-dev-mcp.mdc`).
 
+## ADR-011. Scenario architecture
+
+- Status: Accepted.
+- Сценарий - overlay поверх замороженной `SystemVersion`; baseline
+  не меняется. Изменения ссылаются на `lineage_id`, применяются к
+  `CompiledModel` при симуляции, дают `scenario_hash`. Версии
+  сценария неизменяемы (новая правка = новый `ScenarioVersion`).
+  Сравнение метрик - только по завершённым прогонам (ТЗ §71).
+  Подробности: `docs/architecture/scenarios.md`.
+
 ## Контракт P0 (bootstrap)
 
 - API: `GET /health`, `GET /ready` (в том числе под `/api/v1`), заголовок

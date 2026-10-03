@@ -41,6 +41,7 @@ def create_simulation(
         idempotency_key=idempotency_key,
         reliability_model_id=body.reliability_model_id,
         seed=body.random_seed,
+        scenario_version_id=body.scenario_version_id,
     )
     return SimulationStatusResponse.from_row(row)
 

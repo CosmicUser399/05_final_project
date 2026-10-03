@@ -25,6 +25,7 @@ from app.application.ports import PetriPilotPort
 from app.application.production_service import ProductionService
 from app.application.reliability_service import ReliabilityService
 from app.application.resources_service import ResourcesService
+from app.application.scenario_service import ScenarioService
 from app.application.simulation_service import SimulationService
 from app.application.systems import SystemService
 from app.application.versions import VersionService
@@ -168,6 +169,17 @@ def get_simulation_service(
     return SimulationService(uow_factory, settings)
 
 
+def get_scenario_service(
+    uow_factory: UowFactoryDep,
+    simulation_service: Annotated[
+        SimulationService,
+        Depends(get_simulation_service),
+    ],
+) -> ScenarioService:
+    """Provide the scenario application service."""
+    return ScenarioService(uow_factory, simulation_service)
+
+
 def get_ai_provider(settings: SettingsDep) -> AIProvider:
     """Provide AIProvider (mock by default)."""
     if settings.openai_use_mock:
@@ -244,6 +256,10 @@ PetriServiceDep = Annotated[PetriService, Depends(get_petri_service)]
 SimulationServiceDep = Annotated[
     SimulationService,
     Depends(get_simulation_service),
+]
+ScenarioServiceDep = Annotated[
+    ScenarioService,
+    Depends(get_scenario_service),
 ]
 AiGenerationServiceDep = Annotated[
     AiGenerationService,

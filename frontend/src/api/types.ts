@@ -96,3 +96,79 @@ export interface CommitResult {
   created_connections: number
   status: string
 }
+
+export type ScenarioChangeType =
+  | 'CHANGE_DIAGNOSTIC_INTERVAL'
+  | 'CHANGE_DETECTION_PROBABILITY'
+  | 'CHANGE_PM_INTERVAL'
+  | 'CHANGE_MAINTENANCE_DISTRIBUTION'
+  | 'CHANGE_RESOURCE'
+  | 'CHANGE_SPARE_STOCK'
+  | 'CHANGE_FAILURE_PARAMETER'
+  | 'ENABLE_TASK'
+  | 'DISABLE_TASK'
+
+export interface ScenarioChange {
+  id: string
+  scenario_version_id: string
+  change_type: ScenarioChangeType
+  target_lineage_id: string
+  parameters: Record<string, unknown>
+  sort_order: number
+}
+
+export interface ScenarioVersion {
+  id: string
+  scenario_id: string
+  version_number: number
+  scenario_hash: string
+  created_at: string
+  changes: ScenarioChange[]
+}
+
+export interface Scenario {
+  id: string
+  version_id: string
+  name: string
+  description: string | null
+  current_version_id: string | null
+  created_at: string
+  updated_at: string
+  current_version: ScenarioVersion | null
+}
+
+export interface SimulationStatus {
+  id: string
+  version_id: string
+  scenario_version_id: string | null
+  status: string
+  progress: number
+  completed_runs: number
+  total_runs: number
+  random_seed: number
+  model_hash: string
+  scenario_hash: string
+  configuration_hash: string
+  software_version: string
+  simulation_fingerprint: string
+  error_message: string | null
+}
+
+export interface MetricComparisonRow {
+  metric: string
+  baseline: number | null
+  scenario: number | null
+  delta: number | null
+}
+
+export interface ScenarioComparison {
+  scenario_id: string
+  scenario_version_id: string
+  version_id: string
+  baseline_run_id: string
+  scenario_run_id: string
+  baseline_scenario_hash: string
+  scenario_scenario_hash: string
+  rows: MetricComparisonRow[]
+  deltas: Record<string, number | null>
+}

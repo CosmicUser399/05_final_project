@@ -25,6 +25,7 @@ from app.domain.simulation.status import ACTIVE_STATUSES
 from app.domain.simulation.status import SimulationRunStatus
 from app.infrastructure.db.models import ReliabilityModelRow
 from app.infrastructure.db.models import SimulationRunRow
+from app.infrastructure.db.scenario_repo import ScenarioRepository
 from app.infrastructure.db.simulation_repo import SimulationRepository
 from app.infrastructure.db.uow import SqlAlchemyUnitOfWork
 from app.simulation.monte_carlo.runner import MonteCarloRunner
@@ -352,8 +353,13 @@ class LocalProcessJobRunner:
                     entity_id=str(run.version_id),
                 )
             model = CompiledModel.model_validate(model_row.snapshot_json)
-            # Scenarios arrive in P8; baseline overlay for now.
-            scenario: ScenarioOverlay | None = ScenarioOverlay()
+            scenario: ScenarioOverlay | None
+            if run.scenario_version_id is None:
+                scenario = ScenarioOverlay()
+            else:
+                scenario = ScenarioRepository(uow.session).overlay_for_version(
+                    run.scenario_version_id
+                )
             return model, scenario, configuration
 
     def _set_status(
