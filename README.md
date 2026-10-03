@@ -106,7 +106,7 @@ OpenAI, MCP (проверяется архитектурным тестом).
   entity `id` и переназначенными FK.
 - **Application services** (`app/application/`): systems, versions,
   equipment, failure modes, maintenance, diagnostics, connections,
-  resources, production - поверх UoW.
+  resources, production, reliability - поверх UoW.
 - **REST `/api/v1`** (тонкие роутеры, OpenAPI на `/api/docs`):
 
   | Ресурс | Пути |
@@ -120,16 +120,16 @@ OpenAI, MCP (проверяется архитектурным тестом).
   | Connections | `GET/POST /versions/{id}/connections`, `DELETE /connections/{id}` |
   | Resources / spares | `/versions/{id}/resources\|spares`, CRUD по id |
   | Production | `/versions/{id}/production`, `/production-impacts` |
+  | Reliability | `POST /versions/{id}/validate`, `POST .../reliability/generate`, `GET .../reliability`, `GET /reliability-models/{id}` |
 
   Ошибки: domain → `404` (`ENTITY_NOT_FOUND`), `409` (`VERSION_FROZEN`,
   `INVALID_STATUS_TRANSITION`), `422` (валидация), без стектрейсов.
-- **Тесты:** `tests/api/` (API→DB: система/оборудование/FM/ТО + полная
-  модель, clone, freeze), `tests/infrastructure/` (PRAGMA, FK, WAL,
-  миграции up/down). Всего **264** pytest, `ruff` и строгий `mypy`
-  без замечаний.
+- **P3 Reliability Model:** валидация уровней 4-5, `ReliabilityCompiler`
+  → `CompiledModel` + `model_hash` (SHA-256), таблица
+  `reliability_models`, `ScenarioOverlay` + `scenario_hash`.
 
-Следующий шаг - P3: валидация модели уровня 4-5, `ReliabilityCompiler`,
-`model_hash`, эндпоинты generate/validate.
+Следующий шаг - P4: RAM Engine (часы событий, failure/PF/diagnostic/
+maintenance engines).
 
 ## Требования
 

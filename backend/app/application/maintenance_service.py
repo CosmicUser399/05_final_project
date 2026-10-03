@@ -9,6 +9,7 @@ from typing import Any
 from uuid import UUID
 
 from app.application.audit import write_audit
+from app.domain.maintenance.entities import MaintenanceDistribution
 from app.domain.maintenance.entities import MaintenanceTask
 from app.infrastructure.db.uow import SqlAlchemyUnitOfWork
 
@@ -39,6 +40,7 @@ class MaintenanceService:
         equipment_id: UUID,
         data: dict[str, Any],
         *,
+        duration: dict[str, Any] | None = None,
         actor_id: UUID | None = None,
         source: str | None = None,
         reason: str | None = None,
@@ -62,6 +64,24 @@ class MaintenanceService:
                 source=source,
                 reason=reason,
             )
+            if duration is not None:
+                dist = MaintenanceDistribution(
+                    version_id=equipment.version_id,
+                    maintenance_task_id=task.id,
+                    **duration,
+                )
+                uow.content.save_maintenance_distribution(dist)
+                write_audit(
+                    uow,
+                    version_id=dist.version_id,
+                    entity_type="MaintenanceDistribution",
+                    entity_id=dist.id,
+                    action="CREATE",
+                    actor_id=actor_id,
+                    new_value=dist,
+                    source=source,
+                    reason=reason,
+                )
             return task
 
     def update(

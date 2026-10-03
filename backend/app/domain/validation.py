@@ -6,7 +6,9 @@
 3. ``ENGINEERING`` - engineering plausibility (criticality, PF vs life,
    diagnostic interval vs PF, resource capacity).
 
-Levels 4-6 (model, Petri, simulation readiness) are added later.
+Levels 4-5 (model, simulation readiness) live in
+``app.domain.reliability.model_validation``. Level 6 (Petri) is
+added with the Petri-Pilot flow.
 """
 
 from collections import Counter

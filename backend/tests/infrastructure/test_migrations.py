@@ -23,6 +23,7 @@ def test_migrations_upgrade_and_downgrade(tmp_path: Path) -> None:
     assert "equipment" in tables
     assert "failure_modes" in tables
     assert "maintenance_tasks" in tables
+    assert "reliability_models" in tables
     assert "alembic_version" in tables
     engine.dispose()
 

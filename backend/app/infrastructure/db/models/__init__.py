@@ -1,5 +1,6 @@
 """SQLAlchemy ORM row models."""
 
+from app.infrastructure.db.models.compiled import ReliabilityModelRow
 from app.infrastructure.db.models.equipment import EquipmentComponentRow
 from app.infrastructure.db.models.equipment import EquipmentConnectionRow
 from app.infrastructure.db.models.equipment import EquipmentRow
@@ -40,6 +41,7 @@ __all__ = [
     "ProductionFunctionRow",
     "ProductionImpactRow",
     "ReferenceSourceRow",
+    "ReliabilityModelRow",
     "ReliabilityStructureMemberRow",
     "ReliabilityStructureRow",
     "ResourceRequirementRow",

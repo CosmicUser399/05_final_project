@@ -39,6 +39,7 @@ def create_maintenance_task(
     task = service.create(
         equipment_id,
         body.to_data(),
+        duration=body.duration_data(),
         actor_id=body.actor_id,
         source=body.source,
         reason=body.reason,

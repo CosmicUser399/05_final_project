@@ -10,6 +10,7 @@ from app.api.v1 import equipment
 from app.api.v1 import failure_modes
 from app.api.v1 import maintenance
 from app.api.v1 import production
+from app.api.v1 import reliability
 from app.api.v1 import resources
 from app.api.v1 import systems
 from app.api.v1 import versions
@@ -25,3 +26,4 @@ router.include_router(diagnostics.router)
 router.include_router(connections.router)
 router.include_router(resources.router)
 router.include_router(production.router)
+router.include_router(reliability.router)

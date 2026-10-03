@@ -136,6 +136,58 @@ class VersionTransition(BaseModel):
     status: VersionStatus
 
 
+class ReliabilityGenerateRequest(BaseModel):
+    notes: str | None = None
+
+
+class ValidationIssueResponse(BaseModel):
+    code: str
+    message: str
+    level: str
+    severity: str
+    entity: str | None = None
+    entity_id: str | None = None
+
+
+class ValidationReportResponse(BaseModel):
+    is_valid: bool
+    issues: list[ValidationIssueResponse]
+
+    @classmethod
+    def from_report(
+        cls,
+        report: Any,
+    ) -> ValidationReportResponse:
+        return cls(
+            is_valid=report.is_valid,
+            issues=[
+                ValidationIssueResponse(
+                    code=i.code,
+                    message=i.message,
+                    level=str(i.level),
+                    severity=str(i.severity),
+                    entity=i.entity,
+                    entity_id=i.entity_id,
+                )
+                for i in report.issues
+            ],
+        )
+
+
+class ReliabilityModelResponse(BaseModel):
+    id: UUID
+    version_id: UUID
+    model_hash: str
+    validation_status: str
+    generated_at: datetime
+    notes: str | None = None
+    snapshot: dict[str, Any] | None = None
+
+    @classmethod
+    def from_row(cls, row: dict[str, Any]) -> ReliabilityModelResponse:
+        return cls.model_validate(row)
+
+
 class VersionResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
@@ -320,6 +372,17 @@ class FailureModeUpdate(AuditFields):
         return raw
 
 
+class MaintenanceDurationCreate(BaseModel):
+    distribution: dict[str, Any]
+    provenance: ProvenanceDto
+
+    def to_data(self) -> dict[str, Any]:
+        return {
+            "distribution": parse_distribution(self.distribution),
+            "provenance": self.provenance.to_domain(),
+        }
+
+
 class MaintenanceTaskCreate(AuditFields):
     name: str
     task_type: MaintenanceTaskType
@@ -327,15 +390,27 @@ class MaintenanceTaskCreate(AuditFields):
     failure_mode_id: UUID | None = None
     interval: TimeValueDto | None = None
     cost: float | None = None
+    duration: MaintenanceDurationCreate | None = None
 
     def to_data(self) -> dict[str, Any]:
         data = self.model_dump(
-            exclude={"actor_id", "source", "reason", "interval"},
+            exclude={
+                "actor_id",
+                "source",
+                "reason",
+                "interval",
+                "duration",
+            },
             exclude_none=True,
         )
         if self.interval is not None:
             data["interval"] = self.interval.to_domain()
         return data
+
+    def duration_data(self) -> dict[str, Any] | None:
+        if self.duration is None:
+            return None
+        return self.duration.to_data()
 
 
 class MaintenanceTaskUpdate(AuditFields):

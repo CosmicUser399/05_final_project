@@ -1,1 +1,1 @@
-"""Package app.domain.reliability."""
+"""Reliability domain: distributions, compiler, overlays."""

@@ -17,6 +17,7 @@ from app.application.equipment_service import EquipmentService
 from app.application.failure_modes import FailureModeService
 from app.application.maintenance_service import MaintenanceService
 from app.application.production_service import ProductionService
+from app.application.reliability_service import ReliabilityService
 from app.application.resources_service import ResourcesService
 from app.application.systems import SystemService
 from app.application.versions import VersionService
@@ -116,6 +117,13 @@ def get_production_service(
     return ProductionService(uow_factory)
 
 
+def get_reliability_service(
+    uow_factory: UowFactoryDep,
+) -> ReliabilityService:
+    """Provide the reliability model application service."""
+    return ReliabilityService(uow_factory)
+
+
 SystemServiceDep = Annotated[SystemService, Depends(get_system_service)]
 VersionServiceDep = Annotated[VersionService, Depends(get_version_service)]
 EquipmentServiceDep = Annotated[
@@ -145,4 +153,8 @@ ResourcesServiceDep = Annotated[
 ProductionServiceDep = Annotated[
     ProductionService,
     Depends(get_production_service),
+]
+ReliabilityServiceDep = Annotated[
+    ReliabilityService,
+    Depends(get_reliability_service),
 ]
