@@ -16,7 +16,9 @@ Reliability Model -> Petri Model / RAM-симуляция (Monte Carlo).
 | P0 Bootstrap | выполнен | каркас репозитория, backend, frontend, Docker, проверки |
 | P1 Domain Foundation | выполнен | доменная модель, единицы, распределения, валидация |
 | P2 Database + API | выполнен | SQLAlchemy, Alembic, UoW, COW-версии, REST `/api/v1` |
-| P3-P12 | не начаты | см. план в `.cursor/plans/` |
+| P3 Reliability Model | выполнен | compiler, model_hash, overlay, validate API |
+| P4 RAM Engine | выполнен | event-driven engine + golden-тесты |
+| P5-P12 | не начаты | см. план в `.cursor/plans/` |
 
 ### P0. Bootstrap
 
@@ -127,9 +129,16 @@ OpenAI, MCP (проверяется архитектурным тестом).
 - **P3 Reliability Model:** валидация уровней 4-5, `ReliabilityCompiler`
   → `CompiledModel` + `model_hash` (SHA-256), таблица
   `reliability_models`, `ScenarioOverlay` + `scenario_hash`.
+- **P4 RAM Engine** (`app/simulation/`): событийный движок одного
+  прогона — `EventQueue`/`SimulationClock`, `RandomProvider`
+  (`SeedSequence`), отказы и competing risks, PF + ленивая диагностика,
+  CM/PM и эффекты ТО, ресурсы/запчасти, production capacity, метрики
+  (MTBF/MTTR/MTBM/MDT, Ai/Ao, потери). Вход: `CompiledModel` +
+  scenario + `SimulationConfiguration` + seed. Golden-тесты:
+  `tests/simulation/` (P-101 Ai, PF detection, determinism). См.
+  `docs/simulation/ram-engine.md`.
 
-Следующий шаг - P4: RAM Engine (часы событий, failure/PF/diagnostic/
-maintenance engines).
+Следующий шаг - P5: Monte Carlo (N прогонов, агрегация, API/worker).
 
 ## Требования
 
