@@ -22,6 +22,16 @@ from app.infrastructure.db.models.reliability import (
     ReliabilityStructureMemberRow,
 )
 from app.infrastructure.db.models.reliability import ReliabilityStructureRow
+from app.infrastructure.db.models.simulation import DiagnosticEventRow
+from app.infrastructure.db.models.simulation import EquipmentMetricsRow
+from app.infrastructure.db.models.simulation import FailureEventRow
+from app.infrastructure.db.models.simulation import MaintenanceEventRow
+from app.infrastructure.db.models.simulation import ProductionLossEventRow
+from app.infrastructure.db.models.simulation import ResourceConsumptionRow
+from app.infrastructure.db.models.simulation import SimulationConfigurationRow
+from app.infrastructure.db.models.simulation import SimulationRunRow
+from app.infrastructure.db.models.simulation import SparePartConsumptionRow
+from app.infrastructure.db.models.simulation import SystemMetricsRow
 from app.infrastructure.db.models.system import AuditEventRow
 from app.infrastructure.db.models.system import ReferenceSourceRow
 from app.infrastructure.db.models.system import SystemRow
@@ -29,25 +39,35 @@ from app.infrastructure.db.models.system import SystemVersionRow
 
 __all__ = [
     "AuditEventRow",
+    "DiagnosticEventRow",
     "DiagnosticTaskRow",
     "EquipmentComponentRow",
     "EquipmentConnectionRow",
+    "EquipmentMetricsRow",
     "EquipmentRow",
     "FailureDistributionRow",
+    "FailureEventRow",
     "FailureModeRow",
     "MaintenanceDistributionRow",
     "MaintenanceEffectRow",
+    "MaintenanceEventRow",
     "MaintenanceTaskRow",
     "ProductionFunctionRow",
     "ProductionImpactRow",
+    "ProductionLossEventRow",
     "ReferenceSourceRow",
     "ReliabilityModelRow",
     "ReliabilityStructureMemberRow",
     "ReliabilityStructureRow",
+    "ResourceConsumptionRow",
     "ResourceRequirementRow",
     "ResourceRow",
+    "SimulationConfigurationRow",
+    "SimulationRunRow",
+    "SparePartConsumptionRow",
     "SparePartRequirementRow",
     "SparePartRow",
+    "SystemMetricsRow",
     "SystemRow",
     "SystemVersionRow",
     "TaxonomyNodeRow",

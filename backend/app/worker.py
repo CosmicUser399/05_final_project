@@ -1,4 +1,4 @@
-"""Worker process stub (job queue arrives in phase P5)."""
+"""Worker process: claim and execute queued simulation jobs."""
 
 from __future__ import annotations
 
@@ -8,15 +8,16 @@ import threading
 from types import FrameType
 
 from app.config import get_settings
+from app.infrastructure.db.session import create_engine_from_settings
+from app.infrastructure.db.session import create_session_factory
+from app.infrastructure.jobs.runner import LocalProcessJobRunner
 from app.logging_config import configure_logging
 
 logger = logging.getLogger(__name__)
 
-HEARTBEAT_SECONDS = 30.0
-
 
 def run_worker(stop_event: threading.Event | None = None) -> None:
-    """Idle until stopped; later claims QUEUED simulation runs."""
+    """Poll the simulation queue until stopped."""
     settings = get_settings()
     configure_logging(settings.log_level, settings.log_json)
     stop = stop_event if stop_event is not None else threading.Event()
@@ -28,9 +29,26 @@ def run_worker(stop_event: threading.Event | None = None) -> None:
     signal.signal(signal.SIGINT, _handle_signal)
     signal.signal(signal.SIGTERM, _handle_signal)
 
-    logger.info("worker started (stub, no jobs yet)")
-    while not stop.wait(HEARTBEAT_SECONDS):
-        logger.info("worker heartbeat")
+    engine = create_engine_from_settings(settings)
+    session_factory = create_session_factory(engine)
+    runner = LocalProcessJobRunner(session_factory, settings)
+    poll = settings.simulation_worker_poll_seconds
+
+    logger.info(
+        "worker started id=%s poll=%ss",
+        runner.worker_id,
+        poll,
+    )
+    while not stop.is_set():
+        try:
+            worked = runner.process_once()
+        except Exception:
+            logger.exception("worker iteration failed")
+            worked = False
+        if worked:
+            continue
+        stop.wait(poll)
+    engine.dispose()
     logger.info("worker stopped")
 
 

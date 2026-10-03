@@ -18,7 +18,8 @@ Reliability Model -> Petri Model / RAM-симуляция (Monte Carlo).
 | P2 Database + API | выполнен | SQLAlchemy, Alembic, UoW, COW-версии, REST `/api/v1` |
 | P3 Reliability Model | выполнен | compiler, model_hash, overlay, validate API |
 | P4 RAM Engine | выполнен | event-driven engine + golden-тесты |
-| P5-P12 | не начаты | см. план в `.cursor/plans/` |
+| P5 Monte Carlo + Metrics | выполнен | N прогонов, CI, jobs, API/SSE |
+| P6-P12 | не начаты | см. план в `.cursor/plans/` |
 
 ### P0. Bootstrap
 
@@ -122,10 +123,12 @@ OpenAI, MCP (проверяется архитектурным тестом).
   | Connections | `GET/POST /versions/{id}/connections`, `DELETE /connections/{id}` |
   | Resources / spares | `/versions/{id}/resources\|spares`, CRUD по id |
   | Production | `/versions/{id}/production`, `/production-impacts` |
-  | Reliability | `POST /versions/{id}/validate`, `POST .../reliability/generate`, `GET .../reliability`, `GET /reliability-models/{id}` |
+| Reliability | `POST /versions/{id}/validate`, `POST .../reliability/generate`, `GET .../reliability`, `GET /reliability-models/{id}` |
+  | Simulations | `POST /simulations` (+ `Idempotency-Key`), `GET /simulations/{id}`, `/status`, `/results`, `/events`, `/stream` (SSE), `POST .../cancel` |
 
   Ошибки: domain → `404` (`ENTITY_NOT_FOUND`), `409` (`VERSION_FROZEN`,
-  `INVALID_STATUS_TRANSITION`), `422` (валидация), без стектрейсов.
+  `INVALID_STATUS_TRANSITION`, `RESULTS_NOT_READY`), `422` (валидация),
+  без стектрейсов.
 - **P3 Reliability Model:** валидация уровней 4-5, `ReliabilityCompiler`
   → `CompiledModel` + `model_hash` (SHA-256), таблица
   `reliability_models`, `ScenarioOverlay` + `scenario_hash`.
@@ -137,8 +140,13 @@ OpenAI, MCP (проверяется архитектурным тестом).
   scenario + `SimulationConfiguration` + seed. Golden-тесты:
   `tests/simulation/` (P-101 Ai, PF detection, determinism). См.
   `docs/simulation/ram-engine.md`.
+- **P5 Monte Carlo + Metrics:** `MonteCarloRunner` (батчи,
+  `ProcessPoolExecutor`, отмена, прогресс), агрегаты и CI
+  (Wilson / Clopper-Pearson / t), `simulation_fingerprint`, таблицы
+  M008/M009, `LocalProcessJobRunner` (атомарный claim, heartbeat,
+  reclaim), worker, REST + SSE. См. `docs/simulation/monte-carlo.md`.
 
-Следующий шаг - P5: Monte Carlo (N прогонов, агрегация, API/worker).
+Следующий шаг - P6 (Petri-Pilot) / P7 (AI + frontend) / P8 (сценарии).
 
 ## Требования
 

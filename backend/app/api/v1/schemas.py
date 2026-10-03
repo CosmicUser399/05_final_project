@@ -24,6 +24,7 @@ from app.domain.provenance import Provenance
 from app.domain.provenance import SourceType
 from app.domain.reliability.distributions import parse_distribution
 from app.domain.reliability.pf import PFInterval
+from app.domain.simulation.config import SimulationConfiguration
 from app.domain.system.content import SystemVersionContent
 from app.domain.system.entities import System
 from app.domain.system.entities import SystemVersion
@@ -626,3 +627,84 @@ class ProductionImpactUpdate(AuditFields):
 def json_equipment_list(items: list[Equipment]) -> list[dict[str, Any]]:
     """Serialize equipment entities for JSON responses."""
     return [entity_json(e) for e in items]
+
+
+class SimulationCreateRequest(BaseModel):
+    """Body for ``POST /simulations``."""
+
+    version_id: UUID
+    reliability_model_id: UUID | None = None
+    horizon: float = Field(gt=0)
+    horizon_unit: TimeUnit = TimeUnit.HOURS
+    number_of_runs: int = Field(default=100, ge=1)
+    random_seed: int | None = None
+    warmup_period: float = Field(default=0.0, ge=0)
+    warmup_unit: TimeUnit = TimeUnit.HOURS
+    confidence_level: float = Field(default=0.95, gt=0, lt=1)
+    collect_event_log: bool = True
+    collect_equipment_metrics: bool = True
+    collect_resource_consumption: bool = True
+    collect_production_loss: bool = True
+    parallel_runs: int = Field(default=1, ge=1)
+    event_log_limit: int | None = Field(default=None, ge=1)
+
+    def to_configuration(self) -> SimulationConfiguration:
+        seed = 0 if self.random_seed is None else self.random_seed
+        return SimulationConfiguration(
+            horizon=self.horizon,
+            horizon_unit=self.horizon_unit,
+            number_of_runs=self.number_of_runs,
+            random_seed=seed,
+            warmup_period=self.warmup_period,
+            warmup_unit=self.warmup_unit,
+            confidence_level=self.confidence_level,
+            collect_event_log=self.collect_event_log,
+            collect_equipment_metrics=self.collect_equipment_metrics,
+            collect_resource_consumption=(self.collect_resource_consumption),
+            collect_production_loss=self.collect_production_loss,
+            parallel_runs=self.parallel_runs,
+            event_log_limit=self.event_log_limit,
+        )
+
+
+class SimulationStatusResponse(BaseModel):
+    id: UUID
+    version_id: UUID
+    status: str
+    progress: float
+    completed_runs: int
+    total_runs: int
+    random_seed: int
+    model_hash: str
+    scenario_hash: str
+    configuration_hash: str
+    software_version: str
+    simulation_fingerprint: str
+    error_message: str | None = None
+    started_at: datetime | None = None
+    completed_at: datetime | None = None
+    created_at: datetime | None = None
+    updated_at: datetime | None = None
+
+    @classmethod
+    def from_row(cls, row: dict[str, Any]) -> SimulationStatusResponse:
+        return cls.model_validate(row)
+
+
+class SimulationResultsResponse(BaseModel):
+    id: UUID
+    status: str
+    simulation_fingerprint: str
+    model_hash: str
+    scenario_hash: str
+    configuration_hash: str
+    software_version: str
+    random_seed: int
+    metrics: dict[str, Any]
+
+
+class SimulationEventsResponse(BaseModel):
+    items: list[dict[str, Any]]
+    offset: int
+    limit: int
+    count: int

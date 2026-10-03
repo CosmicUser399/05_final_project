@@ -35,6 +35,29 @@ class Settings(BaseSettings):
     simulation_default_seed: int = 12345
     simulation_max_runs: int = Field(default=100_000, ge=1)
     simulation_max_workers: int = Field(default=4, ge=1, le=64)
+    simulation_max_horizon_years: float = Field(
+        default=50.0,
+        gt=0,
+        le=200,
+    )
+    simulation_result_batch_size: int = Field(
+        default=500,
+        ge=1,
+        le=10_000,
+    )
+    simulation_heartbeat_timeout_seconds: int = Field(
+        default=120,
+        ge=10,
+    )
+    simulation_worker_poll_seconds: float = Field(
+        default=1.0,
+        gt=0,
+    )
+    simulation_sse_poll_seconds: float = Field(
+        default=0.5,
+        gt=0,
+    )
+    simulation_event_log_runs: int = Field(default=5, ge=0)
 
     openai_api_key: SecretStr | None = None
     openai_model: str | None = None

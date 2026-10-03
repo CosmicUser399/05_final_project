@@ -287,9 +287,7 @@ class SimulationEngine:
         return handler(ctx, event)
 
     @staticmethod
-    def _log_only(
-        _ctx: _SimContext, _event: SimulationEvent
-    ) -> bool:
+    def _log_only(_ctx: _SimContext, _event: SimulationEvent) -> bool:
         """Keep a queued informational event in the log."""
         return True
 

@@ -46,6 +46,7 @@ class MetricsCollector:
     event_limit: int | None = None
     production_loss: float = 0.0
     false_positive_count: int = 0
+    first_failure_minutes: float | None = None
     _capacity: float = 1.0
     _nominal: float = 0.0
     _last_time: float = 0.0
@@ -99,6 +100,8 @@ class MetricsCollector:
         if new_state is EquipmentState.FAILED and acc.cm_open_at is None:
             acc.failure_count += 1
             acc.cm_open_at = now
+            if self.first_failure_minutes is None and now > self.warmup:
+                self.first_failure_minutes = now
         if acc.cm_open_at is not None and new_state is EquipmentState.UP:
             if now > self.warmup:
                 start = max(acc.cm_open_at, self.warmup)
@@ -213,6 +216,7 @@ class MetricsCollector:
             ao=ao,
             production_loss=self.production_loss,
             production_availability=prod_avail,
+            first_failure_minutes=self.first_failure_minutes,
         )
 
     def equipment_metrics(self) -> tuple[EquipmentRunMetrics, ...]:

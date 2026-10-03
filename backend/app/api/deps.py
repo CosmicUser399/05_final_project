@@ -19,6 +19,7 @@ from app.application.maintenance_service import MaintenanceService
 from app.application.production_service import ProductionService
 from app.application.reliability_service import ReliabilityService
 from app.application.resources_service import ResourcesService
+from app.application.simulation_service import SimulationService
 from app.application.systems import SystemService
 from app.application.versions import VersionService
 from app.config import Settings
@@ -29,6 +30,9 @@ from app.infrastructure.db.uow import SqlAlchemyUnitOfWork
 def get_app_settings() -> Settings:
     """Return application settings."""
     return get_settings()
+
+
+SettingsDep = Annotated[Settings, Depends(get_app_settings)]
 
 
 def get_session_factory(request: Request) -> sessionmaker[Session]:
@@ -124,6 +128,14 @@ def get_reliability_service(
     return ReliabilityService(uow_factory)
 
 
+def get_simulation_service(
+    uow_factory: UowFactoryDep,
+    settings: SettingsDep,
+) -> SimulationService:
+    """Provide the simulation job application service."""
+    return SimulationService(uow_factory, settings)
+
+
 SystemServiceDep = Annotated[SystemService, Depends(get_system_service)]
 VersionServiceDep = Annotated[VersionService, Depends(get_version_service)]
 EquipmentServiceDep = Annotated[
@@ -157,4 +169,8 @@ ProductionServiceDep = Annotated[
 ReliabilityServiceDep = Annotated[
     ReliabilityService,
     Depends(get_reliability_service),
+]
+SimulationServiceDep = Annotated[
+    SimulationService,
+    Depends(get_simulation_service),
 ]

@@ -89,7 +89,7 @@ def _seed_valid_model(client: TestClient, version_id: str) -> str:
         },
     )
     assert impact.status_code == 201, impact.text
-    return equipment_id
+    return str(equipment_id)
 
 
 def test_validate_and_generate_reliability_model(

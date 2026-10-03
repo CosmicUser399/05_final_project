@@ -61,6 +61,7 @@ class SystemRunMetrics(BaseModel):
     ao: float | None
     production_loss: float
     production_availability: float | None
+    first_failure_minutes: float | None = None
 
 
 class SimulationRunResult(BaseModel):

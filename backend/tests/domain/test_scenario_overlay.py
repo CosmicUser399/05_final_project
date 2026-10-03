@@ -5,17 +5,19 @@ from __future__ import annotations
 import pytest
 
 from app.domain.errors import ValidationError
+from app.domain.reliability.compiled import CompiledModel
 from app.domain.reliability.compiled import ScenarioChange
 from app.domain.reliability.compiled import ScenarioChangeType
 from app.domain.reliability.compiled import ScenarioOverlay
 from app.domain.reliability.compiler import ReliabilityCompiler
+from app.domain.reliability.distributions import Weibull
 from app.domain.reliability.scenario_overlay import apply_scenario_overlay
 from app.domain.units import TimeUnit
 from tests.domain.factories import VERSION_ID
 from tests.domain.factories import make_valid_content
 
 
-def _compiled():
+def _compiled() -> CompiledModel:
     return ReliabilityCompiler().compile(VERSION_ID, make_valid_content())
 
 
@@ -97,7 +99,9 @@ def test_change_failure_parameter() -> None:
         )
     )
     updated = apply_scenario_overlay(model, overlay)
-    assert updated.failure_modes[0].distribution.shape == 3.5
+    dist = updated.failure_modes[0].distribution
+    assert isinstance(dist, Weibull)
+    assert dist.shape == 3.5
 
 
 def test_unknown_target_raises() -> None:

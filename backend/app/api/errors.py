@@ -15,6 +15,7 @@ from app.domain.errors import DomainError
 from app.domain.errors import ImmutableVersionError
 from app.domain.errors import InvalidTransitionError
 from app.domain.errors import NotFoundError
+from app.domain.errors import SimulationError
 from app.domain.errors import UnitError
 from app.domain.errors import ValidationError as DomainValidationError
 
@@ -72,6 +73,12 @@ async def _domain_error_handler(
         domain_exc,
         (ImmutableVersionError, InvalidTransitionError),
     ):
+        status_code = 409
+    elif isinstance(domain_exc, SimulationError) and domain_exc.code in {
+        "RESULTS_NOT_READY",
+        "INVALID_STATUS_TRANSITION",
+        "SIMULATION_CANCELLED",
+    }:
         status_code = 409
     return JSONResponse(
         status_code=status_code,
