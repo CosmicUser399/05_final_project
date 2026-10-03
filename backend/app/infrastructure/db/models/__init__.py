@@ -1,5 +1,10 @@
 """SQLAlchemy ORM row models."""
 
+from app.infrastructure.db.models.ai import AiGeneratedValueRow
+from app.infrastructure.db.models.ai import AiRunRow
+from app.infrastructure.db.models.ai import GenerationJobRow
+from app.infrastructure.db.models.ai import ProposalItemRow
+from app.infrastructure.db.models.ai import ProposalRow
 from app.infrastructure.db.models.compiled import ReliabilityModelRow
 from app.infrastructure.db.models.equipment import EquipmentComponentRow
 from app.infrastructure.db.models.equipment import EquipmentConnectionRow
@@ -39,6 +44,8 @@ from app.infrastructure.db.models.system import SystemRow
 from app.infrastructure.db.models.system import SystemVersionRow
 
 __all__ = [
+    "AiGeneratedValueRow",
+    "AiRunRow",
     "AuditEventRow",
     "DiagnosticEventRow",
     "DiagnosticTaskRow",
@@ -49,6 +56,7 @@ __all__ = [
     "FailureDistributionRow",
     "FailureEventRow",
     "FailureModeRow",
+    "GenerationJobRow",
     "MaintenanceDistributionRow",
     "MaintenanceEffectRow",
     "MaintenanceEventRow",
@@ -57,6 +65,8 @@ __all__ = [
     "ProductionFunctionRow",
     "ProductionImpactRow",
     "ProductionLossEventRow",
+    "ProposalItemRow",
+    "ProposalRow",
     "ReferenceSourceRow",
     "ReliabilityModelRow",
     "ReliabilityStructureMemberRow",

@@ -1,20 +1,26 @@
+import { Button, Stack, Typography } from '@mui/material'
+import { Link as RouterLink } from 'react-router-dom'
+
 import { PlaceholderPage } from '../components/PlaceholderPage'
 
 export function HomePage() {
   return (
-    <PlaceholderPage
-      title="AI Reliability Modelling"
-      description="Платформа моделирования надёжности, доступности и ремонтопригодности (RAM). Каркас приложения готов."
-    />
-  )
-}
-
-export function SystemsPage() {
-  return (
-    <PlaceholderPage
-      title="Системы"
-      description="Список систем и версий моделей появится в фазе P7."
-    />
+    <Stack spacing={2}>
+      <Typography variant="h4">AI Reliability Modelling</Typography>
+      <Typography color="text.secondary">
+        Платформа моделирования надёжности, доступности и
+        ремонтопригодности (RAM). Доступны CRUD систем/оборудования,
+        AI/Fabricate генерация со staging-ревью и граф оборудования.
+      </Typography>
+      <Stack direction="row" spacing={1}>
+        <Button component={RouterLink} to="/systems" variant="contained">
+          Системы
+        </Button>
+        <Button component={RouterLink} to="/ai/generate" variant="outlined">
+          AI-генерация
+        </Button>
+      </Stack>
+    </Stack>
   )
 }
 
@@ -22,7 +28,7 @@ export function SimulationsPage() {
   return (
     <PlaceholderPage
       title="Симуляции"
-      description="Запуски Monte Carlo и результаты появятся в фазах P5 и P9."
+      description="Запуски Monte Carlo и результаты появятся в фазе P9."
     />
   )
 }

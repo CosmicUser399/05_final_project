@@ -60,10 +60,36 @@ class Settings(BaseSettings):
     simulation_event_log_runs: int = Field(default=5, ge=0)
 
     openai_api_key: SecretStr | None = None
-    openai_model: str | None = None
+    openai_model: str = "gpt-4o-mini"
+    openai_timeout_seconds: float = Field(default=60.0, gt=0, le=300)
+    openai_max_retries: int = Field(default=2, ge=0, le=5)
+    openai_use_mock: bool = True
 
     fabricate_api_url: str | None = None
     fabricate_api_key: SecretStr | None = None
+    fabricate_timeout_seconds: float = Field(
+        default=60.0,
+        gt=0,
+        le=600,
+    )
+    fabricate_max_attempts: int = Field(default=3, ge=1, le=10)
+    fabricate_max_artifact_bytes: int = Field(
+        default=50_000_000,
+        ge=1024,
+        le=200_000_000,
+    )
+    fabricate_max_equipment_rows: int = Field(
+        default=500,
+        ge=1,
+        le=5000,
+    )
+    fabricate_use_mock: bool = True
+    fabricate_staging_schema_version: str = "1"
+    generation_heartbeat_timeout_seconds: int = Field(
+        default=300,
+        ge=10,
+    )
+    generation_sse_poll_seconds: float = Field(default=0.5, gt=0)
 
     petri_pilot_mcp_url: str | None = None
     petri_pilot_api_key: SecretStr | None = None

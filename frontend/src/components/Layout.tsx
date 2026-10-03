@@ -40,7 +40,7 @@ export function Layout() {
           <BackendStatus />
         </Toolbar>
       </AppBar>
-      <Container maxWidth="lg" sx={{ py: 3 }}>
+      <Container maxWidth="xl" sx={{ py: 3 }}>
         <Outlet />
       </Container>
     </Box>

@@ -11,12 +11,16 @@ from fastapi import Request
 from sqlalchemy.orm import Session
 from sqlalchemy.orm import sessionmaker
 
+from app.application.ai_service import AiGenerationService
+from app.application.ai_service import build_default_providers
 from app.application.connections_service import ConnectionsService
 from app.application.diagnostics_service import DiagnosticsService
 from app.application.equipment_service import EquipmentService
 from app.application.failure_modes import FailureModeService
 from app.application.maintenance_service import MaintenanceService
 from app.application.petri_service import PetriService
+from app.application.ports import AIProvider
+from app.application.ports import FabricateProvider
 from app.application.ports import PetriPilotPort
 from app.application.production_service import ProductionService
 from app.application.reliability_service import ReliabilityService
@@ -26,7 +30,11 @@ from app.application.systems import SystemService
 from app.application.versions import VersionService
 from app.config import Settings
 from app.config import get_settings
+from app.infrastructure.ai.mock_ai import MockAIProvider
+from app.infrastructure.ai.openai_provider import OpenAIProvider
 from app.infrastructure.db.uow import SqlAlchemyUnitOfWork
+from app.infrastructure.mcp.fabricate import FabricateMCPAdapter
+from app.infrastructure.mcp.mock_fabricate import MockFabricateProvider
 from app.infrastructure.mcp.mock_petri_pilot import MockPetriPilotProvider
 from app.infrastructure.mcp.petri_pilot import PetriPilotMCPAdapter
 
@@ -160,6 +168,44 @@ def get_simulation_service(
     return SimulationService(uow_factory, settings)
 
 
+def get_ai_provider(settings: SettingsDep) -> AIProvider:
+    """Provide AIProvider (mock by default)."""
+    if settings.openai_use_mock:
+        return MockAIProvider(model=settings.openai_model)
+    return OpenAIProvider(settings)
+
+
+def get_fabricate_provider(settings: SettingsDep) -> FabricateProvider:
+    """Provide FabricateProvider (mock by default)."""
+    if settings.fabricate_use_mock or not settings.fabricate_api_url:
+        return MockFabricateProvider()
+    return FabricateMCPAdapter(settings)
+
+
+def get_ai_generation_service(
+    request: Request,
+    settings: SettingsDep,
+    uow_factory: UowFactoryDep,
+    ai: Annotated[AIProvider, Depends(get_ai_provider)],
+    fabricate: Annotated[FabricateProvider, Depends(get_fabricate_provider)],
+) -> AiGenerationService:
+    """Provide AI generation / proposal application service."""
+    session_factory = get_session_factory(request)
+    openai_eq, fabricate_eq = build_default_providers(
+        settings,
+        ai=ai,
+        fabricate=fabricate,
+    )
+    return AiGenerationService(
+        session_factory,
+        settings,
+        openai_provider=openai_eq,
+        fabricate_provider=fabricate_eq,
+        fabricate_port=fabricate,
+        uow_factory=uow_factory,
+    )
+
+
 SystemServiceDep = Annotated[SystemService, Depends(get_system_service)]
 VersionServiceDep = Annotated[VersionService, Depends(get_version_service)]
 EquipmentServiceDep = Annotated[
@@ -198,4 +244,8 @@ PetriServiceDep = Annotated[PetriService, Depends(get_petri_service)]
 SimulationServiceDep = Annotated[
     SimulationService,
     Depends(get_simulation_service),
+]
+AiGenerationServiceDep = Annotated[
+    AiGenerationService,
+    Depends(get_ai_generation_service),
 ]

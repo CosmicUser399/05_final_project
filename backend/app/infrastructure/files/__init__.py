@@ -1,1 +1,1 @@
-"""Package app.infrastructure.files."""
+"""File helpers: Fabricate staging SQLite import."""

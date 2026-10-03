@@ -35,11 +35,13 @@ describe('app shell', () => {
   it('renders navigation and the home page', async () => {
     renderAt('/')
 
-    expect(screen.getByRole('link', { name: 'Системы' })).toBeInTheDocument()
+    expect(
+      screen.getAllByRole('link', { name: 'Системы' }).length,
+    ).toBeGreaterThan(0)
     expect(
       screen.getByRole('heading', {
         name: 'AI Reliability Modelling',
-        level: 5,
+        level: 4,
       }),
     ).toBeInTheDocument()
     expect(await screen.findByText(/Бэкенд OK/)).toBeInTheDocument()
@@ -50,6 +52,17 @@ describe('app shell', () => {
 
     expect(
       screen.getByRole('heading', { name: 'Сценарии', level: 5 }),
+    ).toBeInTheDocument()
+  })
+
+  it('renders AI generation page', () => {
+    renderAt('/ai/generate')
+
+    expect(
+      screen.getByRole('heading', {
+        name: 'Генерация базы оборудования',
+        level: 4,
+      }),
     ).toBeInTheDocument()
   })
 

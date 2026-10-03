@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from fastapi import APIRouter
 
+from app.api.v1 import ai
 from app.api.v1 import connections
 from app.api.v1 import diagnostics
 from app.api.v1 import equipment
@@ -31,3 +32,4 @@ router.include_router(production.router)
 router.include_router(reliability.router)
 router.include_router(petri.router)
 router.include_router(simulations.router)
+router.include_router(ai.router)

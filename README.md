@@ -19,7 +19,9 @@ Reliability Model -> Petri Model / RAM-симуляция (Monte Carlo).
 | P3 Reliability Model | выполнен | compiler, model_hash, overlay, validate API |
 | P4 RAM Engine | выполнен | event-driven engine + golden-тесты |
 | P5 Monte Carlo + Metrics | выполнен | N прогонов, CI, jobs, API/SSE |
-| P6-P12 | не начаты | см. план в `.cursor/plans/` |
+| P6 Petri-Pilot | выполнен | генератор, MCP-адаптер, validate/analyze API |
+| P7 AI + Frontend CRUD | выполнен | OpenAI/Fabricate, proposals, CRUD, граф |
+| P8-P12 | не начаты | см. план в `.cursor/plans/` |
 
 ### P0. Bootstrap
 
@@ -152,8 +154,17 @@ OpenAI, MCP (проверяется архитектурным тестом).
   непрозрачными ID; `PetriPilotPort` / `PetriPilotMCPAdapter` (белый
   список) / `MockPetriPilotProvider`; валидация/анализ/verify;
   conformance-кросс-проверка с RAM event log; таблица `petri_models`.
+- **P7 AI Generation + Frontend CRUD + Graph:** порты `AIProvider`,
+  `FabricateProvider`, `EquipmentProposalProvider`; mock/реальных
+  адаптеры; `StagingImporter` и схема
+  `docs/api/fabricate-staging-schema.md`; таблицы `ai_runs`,
+  `generation_jobs`, `proposals`, `proposal_items`; API
+  `/api/v1/ai/*` + SSE; Review UI и commit через доменные сервисы;
+  фронтенд Systems/Equipment (MUI X DataGrid), Equipment Graph
+  (`@xyflow/react` + dagre), типизированный API-клиент. См.
+  `docs/architecture/ai-fabricate.md`.
 
-Следующий шаг - P7 (AI + frontend) / P8 (сценарии) / P9 (Results UI).
+Следующий шаг - P8 (сценарии) / P9 (Results UI) / P10 (AI Analyst).
 
 ## Требования
 
@@ -211,11 +222,13 @@ backend/
     application/    # use cases (systems, versions, equipment, …)
     domain/         # чистый домен (без SQLAlchemy/FastAPI)
     infrastructure/db/  # ORM, session/PRAGMA, mappers, repos, UoW
-    infrastructure/mcp/ # Petri-Pilot adapter + mock
+    infrastructure/ai/  # OpenAI + equipment proposal providers
+    infrastructure/mcp/ # Petri-Pilot / Fabricate adapters + mocks
+    infrastructure/files/ # Fabricate staging importer
     simulation/     # RAM engine (Monte Carlo)
   alembic/          # миграции схемы
   tests/            # domain, api, infrastructure
-frontend/           # React + TypeScript + Vite + MUI
+frontend/           # React + TS + MUI X DataGrid + React Flow
 docs/               # architecture, api, domain, simulation, decisions
 scripts/            # check.ps1, dev.ps1
 docker/             # Dockerfile-ы и nginx.conf
