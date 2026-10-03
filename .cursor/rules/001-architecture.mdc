@@ -1,0 +1,44 @@
+---
+description: Архитектура проекта AI Reliability Modelling (слои, порты, источник истины, версии)
+alwaysApply: true
+---
+
+# Архитектура
+
+Источники: `Technical_Specification_01.md`, `Cursor_Development_Package_01.md`,
+план в `.cursor/plans/`. При конфликте документов действуют решения плана.
+
+## Модульный монолит
+
+- Слои: `domain` -> `application` -> `infrastructure` / `simulation` -> `api`.
+- Не вводить микросервисы и не усложнять MVP.
+- Приоритет: корректность > воспроизводимость > трассируемость >
+  производительность > удобство UI.
+
+## Границы
+
+- `domain` не импортирует FastAPI, SQLAlchemy, OpenAI, MCP, Petri-Pilot,
+  Fabricate. Pydantic допустим как библиотека валидации.
+- Роутеры FastAPI тонкие: DTO -> use case -> ответ. Бизнес-логики нет в
+  роутерах, React-компонентах, MCP-адаптерах и AI-промптах.
+- Внешние сервисы только через порты: `AIProvider`, `FabricateProvider`,
+  `PetriPilotPort`, `SimulationJobRunner`. Реализации живут в
+  `infrastructure`; для каждого порта есть Mock, тесты не ходят вовне.
+
+## Источник истины
+
+- Единственный источник истины: Domain DB. Excel, LLM, Fabricate,
+  Petri-модель, JSON-вывод - производные представления.
+- Четыре уровня не смешивать: Digital Twin, Reliability Model, Petri
+  Model, RAM Simulation.
+- Версии модели неизменяемы: `VALIDATED`/`RELEASED` не меняется, правка =
+  клон в новый `DRAFT` (сохраняется `lineage_id`).
+- Симуляция ссылается на `model_hash`, `scenario_hash`,
+  `configuration_hash`, `seed`, `software_version`
+  (`simulation_fingerprint`).
+
+## Асинхронность
+
+- Долгие задачи (Monte Carlo, генерация Fabricate) выполняются в worker,
+  не в HTTP-запросе; прогресс через SSE.
+- Расчёты метрик только на backend, во фронтенде их нет.

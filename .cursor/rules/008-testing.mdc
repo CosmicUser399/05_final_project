@@ -1,0 +1,34 @@
+---
+description: Тестирование, golden-тесты и критерии готовности задачи
+globs: backend/tests/**/*.py, frontend/src/**/*.test.ts, frontend/src/**/*.test.tsx
+alwaysApply: false
+---
+
+# Тесты
+
+## Обязательные
+
+- Все инженерные формулы покрыты тестами: `R(t) = exp(-lambda*t)`,
+  `Ai = MTBF/(MTBF+MTTR)`, `Ao = MTBM/(MTBM+MDT)`, `T_pf = T_f - PF`,
+  `Loss = sum(rate * duration)`.
+- Unit: единицы, распределения, PF, генерация отказов, диагностика, ТО,
+  ресурсы, запчасти, потери, метрики (`hypothesis` для инвариантов).
+- Интеграция: API -> DB, AI -> DTO -> валидация, Domain -> Petri, адаптер
+  -> Mock/реальный сервис, Simulation -> DB, Scenario -> Simulation.
+
+## Симуляция
+
+- Детерминизм: два запуска с одним seed дают идентичный результат.
+- Golden P-101: экспонента MTBF 1000 ч, MTTR 10 ч, `Ai ~ 1000/1010`;
+  сходимость к теории проверяется по доверительному интервалу.
+- Golden PF: `T_f = 1000 ч`, `PF = 100 ч`, диагностика на 950 ч с
+  `p = 1` -> обнаружено, корректирующего отказа нет.
+- Performance-тест: 10k прогонов небольшой модели.
+
+## Прочее
+
+- Тесты не обращаются к OpenAI, Fabricate и Petri-Pilot (используются
+  `MockAIProvider`, `MockFabricateProvider`, `MockPetriPilotProvider`).
+- Задача готова, если есть реализация и тесты, они проходят, `ruff`,
+  `mypy`, `tsc` чистые, обновлены API-контракт и документация, архитектурные
+  правила не нарушены.

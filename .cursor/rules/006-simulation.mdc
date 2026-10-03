@@ -1,0 +1,50 @@
+---
+description: RAM Engine, Monte Carlo, детерминизм, метрики надёжности
+globs: backend/app/simulation/**/*.py, backend/tests/simulation/**/*.py
+alwaysApply: false
+---
+
+# Симуляция (RAM Engine)
+
+## Архитектура
+
+- Движок событийный (priority queue, детерминированный tie-break по
+  `(time, seq)`), без фиксированного шага.
+- Вход: `CompiledModel` + сценарий + конфигурация + seed; выход:
+  `SimulationRunResult`. Движок не импортирует БД, FastAPI и UI.
+- Явный seed обязателен для каждой симуляции.
+
+## Детерминизм
+
+- RNG: `numpy.random.SeedSequence(entropy=seed, spawn_key=(run_id, ...))`
+  и `numpy.random.default_rng`; независимый поток на прогон; не
+  использовать `hash()` и глобальное random-состояние.
+- Стабильный порядок сущностей при компиляции (одинаковая модель - одинаковый
+  `model_hash`).
+
+## Логика
+
+- Отказы: выбор распределения, `T_f`, `T_pf = T_f - PF`; при `T_pf < 0`
+  потенциальный отказ не моделируется. Competing risks: `min(T_i)`.
+- Диагностика ленивая: проверки считаются по окну `[T_f - PF, T_f)`, а не
+  периодическими событиями в очереди; ложные срабатывания логируются
+  отдельно.
+- Состояния: `UP`, `POTENTIAL_FAILURE`, `FAILED`, `DIAGNOSIS`,
+  `WAITING_FOR_RESOURCE`, `WAITING_FOR_SPARE`, `MAINTENANCE`, `RESTORING`,
+  `STANDBY`; переходы явные.
+- Время в минутах; конверсия только через `UnitConverter`.
+
+## Метрики (определения показываются в UI)
+
+- `R(t) = P(T_failure > t)`; `MTBF = рабочее время / число отказов`;
+  `MTTR = время корректирующего ремонта / число ремонтов`.
+- `Ai = MTBF / (MTBF + MTTR)`; `Ao = MTBM / (MTBM + MDT)`; MDT включает
+  диагностику, ожидание ресурсов и запчастей, ремонт, логистику.
+- Production Loss = `sum(loss_rate * nominal_rate * duration)`.
+- Данные до `warmup_period` в метрики не входят; для пропорций - интервалы
+  Уилсона/Клоппера-Пирсона.
+
+## Результаты и ограничения
+
+- Полный event log для ограниченного числа прогонов; агрегаты по всем.
+- Ограничивать число прогонов и горизонт; Monte Carlo выполняется в worker.

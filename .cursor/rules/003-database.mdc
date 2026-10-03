@@ -1,0 +1,52 @@
+---
+description: База данных, SQLAlchemy, Alembic, миграции и репозитории
+globs: backend/app/infrastructure/db/**/*.py, backend/migrations/**/*.py
+alwaysApply: false
+---
+
+# База данных
+
+- SQLAlchemy 2 + Alembic. SQLite в разработке, PostgreSQL в продакшене;
+  SQLite-специфичного SQL и логики нет.
+- Все изменения схемы только через Alembic; миграции обратимы и проходят
+  на SQLite и PostgreSQL. Файл БД разработки: `data/app.db` (в
+  `.gitignore`).
+## SQLite (разработка, локальный режим)
+
+- На каждом соединении (событие `connect` движка) включать:
+  `PRAGMA journal_mode=WAL`, `PRAGMA busy_timeout=<мс>`,
+  `PRAGMA foreign_keys=ON`, `PRAGMA synchronous=NORMAL`. Значения берутся из
+  `config.py`; для PostgreSQL эти настройки не применяются.
+- Писатель в SQLite один: транзакции короткие, долгие вычисления вне
+  транзакции, результаты симуляции пишутся батчами с коммитом после
+  каждого батча.
+- Alembic для SQLite работает в режиме `batch`
+  (`render_as_batch=True`, `op.batch_alter_table`); ограничения именуются
+  явно через naming convention в `MetaData`.
+- Для тестов параллельной записи использовать файловую SQLite, а не
+  in-memory.
+
+## Очередь задач
+
+- Таблица `simulation_runs` служит очередью; захват задачи только внутри
+  `SimulationJobRunner`, без прямых запросов из других мест.
+- SQLite: один атомарный `UPDATE ... WHERE status='QUEUED'` с проверкой
+  числа изменённых строк. PostgreSQL: `SELECT ... FOR UPDATE SKIP LOCKED`.
+- Хартбит и возврат «зависших» задач в `QUEUED`; обязателен тест с
+  несколькими worker (одна задача - один worker).
+
+## Общее
+
+- ORM-модели только в `infrastructure/db`; в домен попадают через
+  мапперы. Домен не знает про сессии и модели.
+- Репозитории + Unit of Work; запись в замороженную версию запрещена на
+  уровне сервиса и репозитория.
+- UUID-ключи, `created_at`/`updated_at`; каждое изменение инженерных
+  данных пишет аудит (кто, когда, что, старое/новое значение, источник,
+  причина).
+- События симуляции хранятся в нормализованных таблицах (не одним JSON),
+  вставка батчами, индексы по `simulation_run_id`, `equipment_id`,
+  `timestamp`.
+- Не использовать произвольный SQL от AI; доступ только через типизированные
+  инструменты и сервисы.
+- Секреты и ключи в БД не хранятся.

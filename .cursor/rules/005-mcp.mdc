@@ -1,0 +1,38 @@
+---
+description: Изоляция Petri-Pilot и Fabricate за адаптерами (рантайм приложения)
+globs: backend/app/infrastructure/mcp/**/*.py, backend/app/infrastructure/ai/**/*.py, backend/app/domain/**/petri*/**/*.py
+alwaysApply: false
+---
+
+# MCP и внешние адаптеры (рантайм)
+
+- Прямые вызовы MCP из `domain`, `application` и `simulation` запрещены;
+  только `PetriPilotPort`/`FabricateProvider` и их адаптеры.
+- Детали транспорта (HTTP/stdio, заголовки, сессии) остаются внутри
+  адаптера. Смена API внешнего сервиса меняет только адаптер.
+- Результат адаптера типизирован: `success`, `failure`, `timeout`,
+  `validation_error`, `external_error`. Сбой внешнего сервиса не роняет
+  приложение.
+
+## Petri-Pilot
+
+- Белый список инструментов: `petri_validate`, `petri_analyze`,
+  `petri_verify`, `petri_invariants`, `petri_simulate`,
+  `petri_conformance`, `petri_diff`, `petri_canonical`.
+- Не использовать `petri_build`, `petri_codegen`, `petri_frontend`,
+  `petri_preview`, `petri_code_to_flow`, `petri_app_*`, `petri_extend`,
+  DeFi-инструменты (`petri_amm_*`, `petri_sde`, `petri_risk`).
+- Наружу передавать только непрозрачные ID элементов; карта
+  `opaque_id -> source_entity` хранится локально.
+- Модель передаётся строкой JSON. Учитывать лимит состояний: проверять по
+  подсетям и свёрнутой системной сети.
+- Petri-Pilot не заменяет RAM Engine и не блокирует его разработку.
+- Каждый Petri-элемент хранит `source_entity_type` и `source_entity_id`;
+  генерация детерминирована.
+
+## Общие требования
+
+- Секреты (`FABRICATE_API_KEY`, `PETRI_PILOT_*`) только из окружения, не
+  логировать и не сохранять; метаданные запросов хранить без секретов.
+- Для каждого провайдера есть Mock, контрактные тесты идут на записанных
+  ответах.

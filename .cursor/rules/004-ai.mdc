@@ -1,0 +1,49 @@
+---
+description: AI Orchestrator, генерация через OpenAI и Fabricate, пайплайн предложений, AI Analyst
+globs: backend/app/infrastructure/ai/**/*.py, backend/app/application/ai/**/*.py, backend/app/api/**/ai*.py
+alwaysApply: false
+---
+
+# AI и внешние генераторы (LLM output is untrusted)
+
+## Пайплайн
+
+LLM / Fabricate -> DTO -> валидация (схема, домен, инженерия) ->
+`Proposal` -> ревью пользователя -> доменный сервис -> БД.
+
+- Прямой записи из AI или Fabricate в БД нет; ничего не перезаписывается
+  молча.
+- AI-оркестратор один; работает только через типизированные tools.
+- Запрещены: произвольный SQL, shell, запись в файловую систему,
+  INSERT/UPDATE/DELETE мимо доменных сервисов.
+- Не выдумывать ссылки на источники (OREDA/ISO). При нехватке данных
+  возвращать `UNKNOWN` и предлагать: использовать OREDA, engineering
+  estimate или ввести вручную.
+- Статусы значений: `KNOWN`, `INFERRED`, `ESTIMATED`, `UNKNOWN`.
+
+## Fabricate
+
+- Роль: массовая реляционная генерация базы оборудования; результат -
+  SQLite-артефакт, который попадает в staging.
+- Значения из Fabricate получают `source_type=AI_ESTIMATE`,
+  `generated_by=fabricate`, `confidence=LOW`,
+  `source_reference=<conversation_id>`; числа надёжности по умолчанию не
+  импортируются без подтверждения пользователя.
+- Артефакт открывать read-only после `PRAGMA integrity_check`, с белым
+  списком таблиц/колонок и лимитами размера; не подключать к основной БД.
+- Адаптер использует только нужные вызовы (`create_upload`,
+  `start_conversation`, статус/результат, `send_message`,
+  `retry_conversation`, `stop_conversation`, скачивание). При сбое хода
+  `retry_conversation`, не новый `start_conversation`.
+
+## OpenAI и логирование
+
+- Structured outputs + Pydantic DTO; таймауты и ретраи в адаптере.
+- Логировать `ai_model`, токены, latency, вызванные tools; хранить
+  `ai_run_id`, хеш промпта/контекста, модель, время, уверенность.
+
+## AI Analyst
+
+- Отвечает только по сохранённым результатам симуляции и модели, числа не
+  придумывает; ответ содержит ссылки на данные (simulation, версия,
+  сценарий).

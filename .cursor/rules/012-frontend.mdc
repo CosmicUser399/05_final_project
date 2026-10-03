@@ -1,0 +1,25 @@
+---
+description: Правила фронтенда (React, TypeScript, Vite, MUI, React Flow, ECharts)
+globs: frontend/src/**/*.ts, frontend/src/**/*.tsx
+alwaysApply: false
+---
+
+# Frontend
+
+- React + TypeScript (strict) + Vite, React Router, TanStack Query, MUI и
+  MUI X DataGrid, React Flow (`@xyflow/react`), Apache ECharts.
+- Типизированный API-клиент генерируется из OpenAPI; серверные данные
+  только через TanStack Query. Моков вместо реального API нет, когда
+  endpoint уже существует.
+- В React нет инженерных расчётов: метрики, конверсии и валидация
+  приходят с backend. Компоненты только отображают.
+- Переиспользуемые компоненты (`components/`) отделены от
+  функциональных (`features/`).
+- Каждое отображаемое значение метрики указывает simulation, версию
+  модели, сценарий и seed (где применимо).
+- Параметры с provenance показывают источник; `AI_ESTIMATE` визуально
+  отличим от `OREDA`, `MANUFACTURER_DATA`, `USER_DEFINED`.
+- Интерфейс на русском (i18n-готовый); идентификаторы и код на
+  английском. Единицы всегда рядом со значением.
+- Прогресс долгих задач через SSE; API-ключей и секретов во фронтенде нет.
+- Проверки: `tsc`, `eslint`, `vitest`.

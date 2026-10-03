@@ -1,0 +1,45 @@
+---
+description: Доменная модель, провенанс инженерных параметров и валидация
+globs: backend/app/domain/**/*.py, backend/app/application/**/*.py, backend/tests/domain/**/*.py
+alwaysApply: false
+---
+
+# Домен
+
+## Сущности
+
+- Ключевые сущности: `System`, `SystemVersion`, `Equipment`,
+  `EquipmentComponent`, `EquipmentConnection`, `FailureMode`,
+  `FailureDistribution`, `MaintenanceTask`, `DiagnosticTask`,
+  `MaintenanceEffect`, `ProductionFunction`, `ProductionImpact`,
+  `ReliabilityStructure`, `Scenario`.
+- PF Interval - first-class свойство `FailureMode` (встроенный
+  `(value, unit)`), не MTBF, не MTTR, не интервал диагностики.
+- `DiagnosticTask` отдельная сущность; `MaintenanceTask.type` =
+  `INSPECTION | PREVENTIVE | CORRECTIVE`.
+- Распределения именуют параметры (`shape`, `scale`, `lambda`, `mu`,
+  `sigma`), без `parameter_1..4`. Интерфейс: `sample`, `cdf`, `pdf`,
+  `survival`, `mean`.
+- Резервирование - отдельные `ReliabilityStructure(+Member)`
+  (`SERIES`, `PARALLEL`, `K_OF_N`, `STANDBY`), не логика внутри
+  оборудования.
+- Идентификаторы - UUID; у версионных сущностей есть `lineage_id`.
+
+## Provenance
+
+- У каждого инженерного параметра: `source_type`, `source_reference`,
+  `confidence`, `generated_by`, `generated_at`.
+- Типы источника: `OREDA`, `ISO_14224`, `USER_DEFINED`, `AI_ESTIMATE`,
+  `ENGINEERING_ASSUMPTION`, `HISTORICAL_DATA`, `MANUFACTURER_DATA`.
+- `AI_ESTIMATE` и синтетика Fabricate не выдаются за факты.
+- Неизвестное значение = `UNKNOWN`, а не выдуманное число. Идентификаторы
+  ISO 14224 не придумывать.
+
+## Валидация
+
+- Уровни: схема -> домен -> инженерия -> модель -> Petri -> симуляция.
+- Отклонять: вероятность вне [0, 1], PF <= 0, `shape`/`scale` <= 0,
+  длительность <= 0 (если явно не разрешено).
+- Ошибки типизированы: `ValidationError`, `DomainError`,
+  `ModelGenerationError`, `SimulationError` и т. д.; API мапит их на
+  предсказуемые HTTP-коды.

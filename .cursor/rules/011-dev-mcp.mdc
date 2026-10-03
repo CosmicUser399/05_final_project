@@ -1,0 +1,47 @@
+---
+description: Использование MCP Cursor (Fabricate, Petri-Pilot, SQLite) при разработке
+alwaysApply: true
+---
+
+# MCP при разработке (инструменты Cursor)
+
+MCP, подключённые к Cursor, - инструменты разработчика. Рантайм приложения
+использует собственные адаптеры (см. `005-mcp`) и ключи из окружения.
+
+## SQLite MCP
+
+- Только чтение при отладке (`db_info`, `list_tables`, `get_table_schema`,
+  `read_records`, `query` с `SELECT`).
+- Записи и DDL (`create_record`, `update_records`, `delete_records`,
+  `CREATE/ALTER/DROP`) запрещены: только Alembic и сервисы приложения.
+- Файл БД: `data/app.db`; приложение не использует SQLite MCP.
+
+## Fabricate MCP
+
+- Перед стартом вызвать `list_conversation_options`; не угадывать
+  идентификаторы моделей.
+- Схему и длинный ввод прикладывать файлом (`create_upload` +
+  `upload_ids`), не пересказывать в сообщении. Не добавлять требования,
+  которых нет у пользователя.
+- Один `start_conversation` на задачу; при сбое `retry_conversation`, для
+  продолжения `send_message`.
+- `delete_*`, `revert_conversation`, `manage_project_version` только по
+  явной просьбе пользователя. Аккаунтные инструменты не использовать.
+- Результат - синтетические данные; не считать их инженерными фактами.
+
+## Petri-Pilot MCP
+
+- Использовать для проверки и анализа сетей: `petri_validate`,
+  `petri_analyze`, `petri_verify`, `petri_invariants`, `petri_simulate`,
+  `petri_conformance`, `petri_diff`, `petri_canonical`.
+- Не использовать `petri_build`, `petri_codegen`, `petri_frontend`,
+  `petri_app_*`, `petri_extend` и DeFi-инструменты: они пишут на диск или
+  нерелевантны.
+- Не передавать реальные теги и названия оборудования; использовать
+  непрозрачные или тестовые ID.
+
+## Общее
+
+- Не читать и не выводить ключи из `.env` и `.cursor/mcp.json`.
+- Перед первым использованием сервера в сессии смотреть актуальную схему
+  инструмента.
