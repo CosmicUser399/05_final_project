@@ -5,16 +5,19 @@ from __future__ import annotations
 import logging
 
 from sqlalchemy import Engine
-from sqlalchemy import create_engine
 from sqlalchemy import text
 from sqlalchemy.exc import SQLAlchemyError
 
+from app.infrastructure.db.session import create_db_engine
+from app.infrastructure.db.session import create_engine_from_settings
+
+__all__ = [
+    "SqlAlchemyDatabaseProbe",
+    "create_db_engine",
+    "create_engine_from_settings",
+]
+
 logger = logging.getLogger(__name__)
-
-
-def create_db_engine(database_url: str) -> Engine:
-    """Create a SQLAlchemy engine (connections are opened lazily)."""
-    return create_engine(database_url, pool_pre_ping=True)
 
 
 class SqlAlchemyDatabaseProbe:

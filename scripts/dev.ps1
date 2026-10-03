@@ -23,6 +23,12 @@ function Initialize-Database {
         New-Item -ItemType File $db | Out-Null
         Write-Host "Created empty $db"
     }
+    Push-Location (Join-Path $root 'backend')
+    try {
+        uv run alembic upgrade head
+        Write-Host 'Applied Alembic migrations'
+    }
+    finally { Pop-Location }
 }
 
 switch ($Task) {

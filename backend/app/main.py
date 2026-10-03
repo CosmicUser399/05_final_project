@@ -10,10 +10,12 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.api.errors import register_error_handlers
 from app.api.health import router as health_router
 from app.api.middleware import register_middleware
+from app.api.v1.router import router as v1_router
 from app.config import Settings
 from app.config import get_settings
 from app.infrastructure.db.probe import SqlAlchemyDatabaseProbe
-from app.infrastructure.db.probe import create_db_engine
+from app.infrastructure.db.session import create_engine_from_settings
+from app.infrastructure.db.session import create_session_factory
 from app.logging_config import configure_logging
 
 logger = logging.getLogger(__name__)
@@ -31,7 +33,8 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         redoc_url=None,
         openapi_url="/api/openapi.json",
     )
-    engine = create_db_engine(active.resolved_database_url)
+    engine = create_engine_from_settings(active)
+    app.state.session_factory = create_session_factory(engine)
     app.state.database_probe = SqlAlchemyDatabaseProbe(engine)
 
     app.add_middleware(
@@ -42,6 +45,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     )
     register_middleware(app)
     register_error_handlers(app)
+    app.include_router(v1_router, prefix="/api/v1")
     app.include_router(health_router)
     app.include_router(
         health_router, prefix="/api/v1", include_in_schema=False

@@ -11,6 +11,13 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
+from app.domain.errors import DomainError
+from app.domain.errors import ImmutableVersionError
+from app.domain.errors import InvalidTransitionError
+from app.domain.errors import NotFoundError
+from app.domain.errors import UnitError
+from app.domain.errors import ValidationError as DomainValidationError
+
 logger = logging.getLogger(__name__)
 
 
@@ -52,6 +59,31 @@ async def _validation_error_handler(
     )
 
 
+async def _domain_error_handler(
+    request: Request, exc: Exception
+) -> JSONResponse:
+    domain_exc = cast(DomainError, exc)
+    status_code = 400
+    if isinstance(domain_exc, NotFoundError):
+        status_code = 404
+    elif isinstance(domain_exc, (DomainValidationError, UnitError)):
+        status_code = 422
+    elif isinstance(
+        domain_exc,
+        (ImmutableVersionError, InvalidTransitionError),
+    ):
+        status_code = 409
+    return JSONResponse(
+        status_code=status_code,
+        content=error_body(
+            domain_exc.code,
+            domain_exc.message,
+            domain_exc.entity,
+            domain_exc.entity_id,
+        ),
+    )
+
+
 async def _unhandled_error_handler(
     request: Request, exc: Exception
 ) -> JSONResponse:
@@ -73,4 +105,5 @@ def register_error_handlers(app: FastAPI) -> None:
     app.add_exception_handler(
         RequestValidationError, _validation_error_handler
     )
+    app.add_exception_handler(DomainError, _domain_error_handler)
     app.add_exception_handler(Exception, _unhandled_error_handler)
