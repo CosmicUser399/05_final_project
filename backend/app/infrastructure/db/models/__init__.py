@@ -14,6 +14,7 @@ from app.infrastructure.db.models.maintenance import ResourceRequirementRow
 from app.infrastructure.db.models.maintenance import ResourceRow
 from app.infrastructure.db.models.maintenance import SparePartRequirementRow
 from app.infrastructure.db.models.maintenance import SparePartRow
+from app.infrastructure.db.models.petri import PetriModelRow
 from app.infrastructure.db.models.production import ProductionFunctionRow
 from app.infrastructure.db.models.production import ProductionImpactRow
 from app.infrastructure.db.models.reliability import FailureDistributionRow
@@ -52,6 +53,7 @@ __all__ = [
     "MaintenanceEffectRow",
     "MaintenanceEventRow",
     "MaintenanceTaskRow",
+    "PetriModelRow",
     "ProductionFunctionRow",
     "ProductionImpactRow",
     "ProductionLossEventRow",

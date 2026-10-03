@@ -63,7 +63,7 @@ services:
     restart: unless-stopped
 
   # Local Petri-Pilot container. Enabled with: --profile petri.
-  # Image and transport are confirmed by spike P6-01.
+  # Transport: MCP Streamable HTTP on /mcp (see docs/architecture/petri-pilot.md).
   petri-pilot:
     profiles: ["petri"]
     image: ${PETRI_PILOT_IMAGE:-ghcr.io/pflow-xyz/petri-pilot:latest}

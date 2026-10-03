@@ -109,7 +109,7 @@ OpenAI, MCP (проверяется архитектурным тестом).
   entity `id` и переназначенными FK.
 - **Application services** (`app/application/`): systems, versions,
   equipment, failure modes, maintenance, diagnostics, connections,
-  resources, production, reliability - поверх UoW.
+  resources, production, reliability, petri, simulation - поверх UoW.
 - **REST `/api/v1`** (тонкие роутеры, OpenAPI на `/api/docs`):
 
   | Ресурс | Пути |
@@ -124,6 +124,7 @@ OpenAI, MCP (проверяется архитектурным тестом).
   | Resources / spares | `/versions/{id}/resources\|spares`, CRUD по id |
   | Production | `/versions/{id}/production`, `/production-impacts` |
 | Reliability | `POST /versions/{id}/validate`, `POST .../reliability/generate`, `GET .../reliability`, `GET /reliability-models/{id}` |
+  | Petri | `POST /versions/{id}/petri/generate`, `GET .../petri`, `GET /petri/{id}`, `POST /petri/{id}/validate|analyze|verify|conformance|diff|canonical` |
   | Simulations | `POST /simulations` (+ `Idempotency-Key`), `GET /simulations/{id}`, `/status`, `/results`, `/events`, `/stream` (SSE), `POST .../cancel` |
 
   Ошибки: domain → `404` (`ENTITY_NOT_FOUND`), `409` (`VERSION_FROZEN`,
@@ -146,7 +147,13 @@ OpenAI, MCP (проверяется архитектурным тестом).
   M008/M009, `LocalProcessJobRunner` (атомарный claim, heartbeat,
   reclaim), worker, REST + SSE. См. `docs/simulation/monte-carlo.md`.
 
-Следующий шаг - P6 (Petri-Pilot) / P7 (AI + frontend) / P8 (сценарии).
+- **P6 Petri-Pilot:** spike-контракт в
+  `docs/architecture/petri-pilot.md`; `PetriModelGenerator` с
+  непрозрачными ID; `PetriPilotPort` / `PetriPilotMCPAdapter` (белый
+  список) / `MockPetriPilotProvider`; валидация/анализ/verify;
+  conformance-кросс-проверка с RAM event log; таблица `petri_models`.
+
+Следующий шаг - P7 (AI + frontend) / P8 (сценарии) / P9 (Results UI).
 
 ## Требования
 
@@ -204,7 +211,8 @@ backend/
     application/    # use cases (systems, versions, equipment, …)
     domain/         # чистый домен (без SQLAlchemy/FastAPI)
     infrastructure/db/  # ORM, session/PRAGMA, mappers, repos, UoW
-    simulation/     # (P4+) RAM engine
+    infrastructure/mcp/ # Petri-Pilot adapter + mock
+    simulation/     # RAM engine (Monte Carlo)
   alembic/          # миграции схемы
   tests/            # domain, api, infrastructure
 frontend/           # React + TypeScript + Vite + MUI

@@ -91,6 +91,12 @@ class ModelGenerationError(DomainError):
     default_code = "MODEL_GENERATION_ERROR"
 
 
+class ExternalServiceError(DomainError):
+    """External provider timed out or returned an error."""
+
+    default_code = "EXTERNAL_SERVICE_ERROR"
+
+
 class SimulationError(DomainError):
     """Simulation could not be prepared or executed."""
 

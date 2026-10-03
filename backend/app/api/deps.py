@@ -16,6 +16,8 @@ from app.application.diagnostics_service import DiagnosticsService
 from app.application.equipment_service import EquipmentService
 from app.application.failure_modes import FailureModeService
 from app.application.maintenance_service import MaintenanceService
+from app.application.petri_service import PetriService
+from app.application.ports import PetriPilotPort
 from app.application.production_service import ProductionService
 from app.application.reliability_service import ReliabilityService
 from app.application.resources_service import ResourcesService
@@ -25,6 +27,8 @@ from app.application.versions import VersionService
 from app.config import Settings
 from app.config import get_settings
 from app.infrastructure.db.uow import SqlAlchemyUnitOfWork
+from app.infrastructure.mcp.mock_petri_pilot import MockPetriPilotProvider
+from app.infrastructure.mcp.petri_pilot import PetriPilotMCPAdapter
 
 
 def get_app_settings() -> Settings:
@@ -128,6 +132,26 @@ def get_reliability_service(
     return ReliabilityService(uow_factory)
 
 
+def get_petri_pilot(settings: SettingsDep) -> PetriPilotPort:
+    """Provide Petri-Pilot port (mock by default in MVP/tests)."""
+    if settings.petri_pilot_use_mock or not settings.petri_pilot_mcp_url:
+        return MockPetriPilotProvider()
+    return PetriPilotMCPAdapter(settings)
+
+
+def get_petri_service(
+    uow_factory: UowFactoryDep,
+    settings: SettingsDep,
+    pilot: Annotated[PetriPilotPort, Depends(get_petri_pilot)],
+) -> PetriService:
+    """Provide the Petri model application service."""
+    return PetriService(
+        uow_factory,
+        pilot,
+        max_states=settings.petri_pilot_max_states,
+    )
+
+
 def get_simulation_service(
     uow_factory: UowFactoryDep,
     settings: SettingsDep,
@@ -170,6 +194,7 @@ ReliabilityServiceDep = Annotated[
     ReliabilityService,
     Depends(get_reliability_service),
 ]
+PetriServiceDep = Annotated[PetriService, Depends(get_petri_service)]
 SimulationServiceDep = Annotated[
     SimulationService,
     Depends(get_simulation_service),

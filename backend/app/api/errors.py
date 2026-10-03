@@ -12,6 +12,7 @@ from fastapi.responses import JSONResponse
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from app.domain.errors import DomainError
+from app.domain.errors import ExternalServiceError
 from app.domain.errors import ImmutableVersionError
 from app.domain.errors import InvalidTransitionError
 from app.domain.errors import NotFoundError
@@ -80,6 +81,11 @@ async def _domain_error_handler(
         "SIMULATION_CANCELLED",
     }:
         status_code = 409
+    elif isinstance(domain_exc, ExternalServiceError):
+        if domain_exc.code.endswith("_TIMEOUT"):
+            status_code = 504
+        else:
+            status_code = 502
     return JSONResponse(
         status_code=status_code,
         content=error_body(

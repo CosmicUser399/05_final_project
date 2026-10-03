@@ -189,6 +189,51 @@ class ReliabilityModelResponse(BaseModel):
         return cls.model_validate(row)
 
 
+class PetriGenerateRequest(BaseModel):
+    notes: str | None = None
+
+
+class PetriModelResponse(BaseModel):
+    id: UUID
+    version_id: UUID
+    reliability_model_id: UUID | None = None
+    reliability_model_hash: str
+    schema_version: str
+    validation_status: str
+    petri_pilot_version: str | None = None
+    generated_at: datetime
+    notes: str | None = None
+    definition: dict[str, Any] | None = None
+
+    @classmethod
+    def from_row(cls, row: dict[str, Any]) -> PetriModelResponse:
+        return cls.model_validate(row)
+
+
+class PetriAnalyzeRequest(BaseModel):
+    full: bool = False
+    subnet_key: str | None = None
+
+
+class PetriVerifyRequest(BaseModel):
+    properties: list[str] | None = None
+    subnet_key: str | None = None
+
+
+class PetriConformanceRequest(BaseModel):
+    simulation_run_id: UUID
+    subnet_key: str | None = None
+    trial_run_id: int | None = None
+
+
+class PetriDiffRequest(BaseModel):
+    other_petri_model_id: UUID
+
+
+class PetriCanonicalRequest(BaseModel):
+    subnet_key: str | None = None
+
+
 class VersionResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 

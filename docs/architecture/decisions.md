@@ -49,6 +49,9 @@
 - Petri-Pilot - формальная проверка структуры (P/T-сети, mass-action).
   Рантайм использует `PetriPilotMCPAdapter` с белым списком
   инструментов и непрозрачными ID. Не блокирует P4/P5.
+  Контракт spike и формат модели: `docs/architecture/petri-pilot.md`.
+  По умолчанию `PETRI_PILOT_USE_MOCK=true`; живой контейнер - профиль
+  `petri` в compose (MCP Streamable HTTP).
 
 ## ADR-007. Fabricate - генератор структуры, не источник фактов
 

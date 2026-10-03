@@ -7,8 +7,8 @@
    diagnostic interval vs PF, resource capacity).
 
 Levels 4-5 (model, simulation readiness) live in
-``app.domain.reliability.model_validation``. Level 6 (Petri) is
-added with the Petri-Pilot flow.
+``app.domain.reliability.model_validation``. Level 6 (Petri) lives
+in ``app.domain.petri.validation`` and the Petri service.
 """
 
 from collections import Counter

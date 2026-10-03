@@ -67,6 +67,17 @@ class Settings(BaseSettings):
 
     petri_pilot_mcp_url: str | None = None
     petri_pilot_api_key: SecretStr | None = None
+    petri_pilot_timeout_seconds: float = Field(
+        default=30.0,
+        gt=0,
+        le=300,
+    )
+    petri_pilot_max_states: int = Field(
+        default=10_000,
+        ge=100,
+        le=100_000,
+    )
+    petri_pilot_use_mock: bool = True
 
     redis_url: str | None = None
 
