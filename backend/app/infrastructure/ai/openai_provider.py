@@ -26,7 +26,13 @@ _PROPOSAL_SYSTEM = (
     "You propose a technological equipment structure as JSON only. "
     "Do not invent OREDA/ISO numeric reliability parameters. "
     "Use opaque tags like P-101. Keep failure/maintenance drafts "
-    "with value_status UNKNOWN."
+    "with value_status UNKNOWN. "
+    "Include EVERY equipment unit named in the description "
+    "(pumps, motors, pipelines, cables, tanks/vessels, etc.). "
+    "Put the full user description into brief.summary. "
+    "For each repairable unit add a failure_mode and a CORRECTIVE "
+    "maintenance_task. Set critical equipment criticality to "
+    "CRITICAL or HIGH."
 )
 
 
@@ -188,6 +194,10 @@ def generate_equipment_via_openai(
         user_prompt=(
             "Return JSON with keys brief, equipment, components, "
             "connections, failure_modes, maintenance_tasks.\n"
+            "brief must include plant_type, capacity_value, "
+            "capacity_unit, summary, assumptions.\n"
+            "Create one equipment row per named unit; do not "
+            "collapse distinct pipelines/tanks into one row.\n"
             f"Description:\n{description}"
         ),
         schema_name="equipment_proposal",

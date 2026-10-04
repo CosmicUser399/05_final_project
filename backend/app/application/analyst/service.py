@@ -221,7 +221,12 @@ class AiAnalystService:
             tool_results=tool_payloads,
         )
         # Optional LLM polish; grounding gate rejects inventions.
-        polished = self._llm_polish(request.message, tool_payloads, base)
+        polished = self._llm_polish(
+            request.message,
+            tool_payloads,
+            base,
+            history=list(request.history),
+        )
         if polished is None:
             return base
         allowed = collect_allowed_numbers(tool_payloads)
@@ -234,12 +239,29 @@ class AiAnalystService:
         question: str,
         tool_payloads: list[dict[str, Any]],
         base_answer: str,
+        *,
+        history: list[Any] | None = None,
     ) -> str | None:
+        history_text = ""
+        if history:
+            clipped = history[-8:]
+            history_text = (
+                "Dialog history:\n"
+                + "\n".join(
+                    f"{row.role}: {row.content[:500]}" for row in clipped
+                )
+                + "\n"
+            )
         prompt = (
-            "Rewrite the factual answer in clear Russian. "
-            "Use ONLY numbers that appear in tool_results. "
-            "If a number is missing, say data is unavailable. "
+            "Answer the user question in clear Russian prose. "
+            "Use the base answer and tool_results as the only facts. "
+            "Keep EVERY numeric token exactly as in tool_results "
+            "(do not round, percent-convert, or invent values). "
+            "Structure: short direct answer, then key figures, "
+            "then brief caveats if data is incomplete. "
+            "Do not dump raw JSON. "
             'Return JSON {"answer": "..."}.\n'
+            f"{history_text}"
             f"Question: {question}\n"
             f"Base answer:\n{base_answer}\n"
             f"tool_results:\n{tool_payloads}"
@@ -386,19 +408,25 @@ def _heuristic_plan(
         or "compare" in text
     )
     wants_events = bool(re.search(r"событ|event|журнал|лог", text, flags=re.I))
+    wants_fm = bool(
+        re.search(
+            r"failure\s*mode|вид\w*\s+отказ|режим\w*\s+отказ|"
+            r"отказн\w*|modes?",
+            text,
+            flags=re.I,
+        )
+    )
     wants_metrics = bool(
         re.search(
             r"доступн|availab|mtbf|mttr|потер|loss|метрик|"
-            r"ai\b|ao\b|pareto|отказ|production",
+            r"ai\b|ao\b|pareto|production|не выпущ|недовыпуск|"
+            r"продукц",
             text,
             flags=re.I,
         )
     )
     wants_equipment = bool(
-        re.search(r"оборуд|equipment|насос|tag|единиц", text, flags=re.I)
-    )
-    wants_fm = bool(
-        re.search(r"failure|отказн|режим отказа", text, flags=re.I)
+        re.search(r"оборуд|equipment|насос|pump|tag|единиц", text, flags=re.I)
     )
     wants_maint = bool(
         re.search(r"то\b|ремонт|maintenance|обслужив", text, flags=re.I)
@@ -417,7 +445,7 @@ def _heuristic_plan(
             )
         )
     if (
-        (wants_metrics or not planned)
+        (wants_metrics or (not planned and not wants_fm))
         and ctx.simulation_run_id is not None
         and not wants_compare
     ):
@@ -458,7 +486,7 @@ def _heuristic_plan(
         if ctx.version_id is not None:
             args["version_id"] = str(ctx.version_id)
         planned.append(PlannedToolCall(name="system.get", arguments=args))
-    if wants_equipment and ctx.version_id is not None:
+    if (wants_equipment or wants_fm) and ctx.version_id is not None:
         args = {"version_id": str(ctx.version_id), "limit": 50}
         if ctx.equipment_id is not None:
             args["equipment_id"] = str(ctx.equipment_id)

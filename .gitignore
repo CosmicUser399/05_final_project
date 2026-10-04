@@ -43,3 +43,6 @@ e2e/.cache/
 .vscode/
 .DS_Store
 Thumbs.db
+
+# My test results
+z_mytests/

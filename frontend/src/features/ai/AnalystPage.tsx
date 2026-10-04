@@ -17,7 +17,7 @@ import {
   Typography,
 } from '@mui/material'
 import { useMutation, useQuery } from '@tanstack/react-query'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Link as RouterLink, useSearchParams } from 'react-router-dom'
 
 import { ApiError } from '../../api/client'
@@ -36,6 +36,81 @@ interface ChatTurn {
   response?: AnalystChatResponse
 }
 
+const STORAGE_PREFIX = 'ai-analyst-chat:v1'
+
+function storageKey(
+  systemId: string,
+  versionId: string,
+  runId: string,
+): string {
+  return `${STORAGE_PREFIX}:${systemId}:${versionId}:${runId}`
+}
+
+function loadTurns(
+  systemId: string,
+  versionId: string,
+  runId: string,
+): ChatTurn[] {
+  if (!systemId && !versionId && !runId) {
+    return []
+  }
+  try {
+    const raw = localStorage.getItem(storageKey(systemId, versionId, runId))
+    if (!raw) {
+      return []
+    }
+    const parsed = JSON.parse(raw) as ChatTurn[]
+    if (!Array.isArray(parsed)) {
+      return []
+    }
+    return parsed.filter(
+      (row) =>
+        (row.role === 'user' || row.role === 'assistant') &&
+        typeof row.text === 'string',
+    )
+  } catch {
+    return []
+  }
+}
+
+function saveTurns(
+  systemId: string,
+  versionId: string,
+  runId: string,
+  turns: ChatTurn[],
+): void {
+  if (!systemId && !versionId && !runId) {
+    return
+  }
+  try {
+    const slim = turns.map((turn) => ({
+      role: turn.role,
+      text: turn.text,
+      response: turn.response
+        ? {
+            answer: turn.response.answer,
+            grounded: turn.response.grounded,
+            model: turn.response.model,
+            references: turn.response.references,
+            tool_calls: turn.response.tool_calls.map((call) => ({
+              name: call.name,
+              ok: call.ok,
+              arguments: {},
+              result: {},
+              error: call.error,
+            })),
+          }
+        : undefined,
+    }))
+    localStorage.setItem(
+      storageKey(systemId, versionId, runId),
+      JSON.stringify(slim),
+    )
+  } catch {
+    // Ignore quota / private mode errors.
+  }
+}
+
 export function AnalystPage() {
   const [searchParams] = useSearchParams()
   const [systemId, setSystemId] = useState(searchParams.get('systemId') ?? '')
@@ -46,8 +121,22 @@ export function AnalystPage() {
   const [message, setMessage] = useState(
     'Какие метрики доступности и потерь производства показывает симуляция?',
   )
-  const [turns, setTurns] = useState<ChatTurn[]>([])
+  const [turns, setTurns] = useState<ChatTurn[]>(() =>
+    loadTurns(
+      searchParams.get('systemId') ?? '',
+      searchParams.get('versionId') ?? '',
+      searchParams.get('runId') ?? '',
+    ),
+  )
   const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    setTurns(loadTurns(systemId, versionId, runId))
+  }, [systemId, versionId, runId])
+
+  useEffect(() => {
+    saveTurns(systemId, versionId, runId, turns)
+  }, [systemId, versionId, runId, turns])
 
   const systemsQuery = useQuery({
     queryKey: ['systems'],
@@ -75,18 +164,22 @@ export function AnalystPage() {
   )
 
   const chatMutation = useMutation({
-    mutationFn: () =>
+    mutationFn: (payload: { text: string; history: ChatTurn[] }) =>
       aiApi.chat({
-        message,
+        message: payload.text,
         context: {
           system_id: systemId || null,
           version_id: versionId || null,
           simulation_run_id: runId || null,
         },
+        history: payload.history.slice(-20).map((turn) => ({
+          role: turn.role,
+          content: turn.text,
+        })),
       }),
-    onMutate: () => {
+    onMutate: (payload) => {
       setError(null)
-      setTurns((prev) => [...prev, { role: 'user', text: message }])
+      setTurns((prev) => [...prev, { role: 'user', text: payload.text }])
     },
     onSuccess: (response) => {
       setTurns((prev) => [
@@ -97,18 +190,36 @@ export function AnalystPage() {
           response,
         },
       ])
+      setMessage('')
     },
     onError: (err: unknown) => {
       setError(err instanceof ApiError ? err.message : 'Ошибка AI Analyst')
     },
   })
 
+  const ask = () => {
+    const text = message.trim()
+    if (!text || chatMutation.isPending) {
+      return
+    }
+    chatMutation.mutate({ text, history: turns })
+  }
+
+  const clearDialog = () => {
+    setTurns([])
+    try {
+      localStorage.removeItem(storageKey(systemId, versionId, runId))
+    } catch {
+      // ignore
+    }
+  }
+
   return (
     <Stack spacing={2} maxWidth={960}>
       <Typography variant="h4">AI Analyst</Typography>
       <Typography color="text.secondary">
-        Ответы строятся только через typed tools по сохранённым результатам
-        симуляции и модели. Числа вне tool-результатов отклоняются.
+        Диалоговый аналитик по результатам симуляции и модели. Числа берутся
+        только из typed tools; история чата сохраняется в браузере.
       </Typography>
 
       <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
@@ -177,40 +288,14 @@ export function AnalystPage() {
         </FormControl>
       </Stack>
 
-      <TextField
-        label="Вопрос"
-        value={message}
-        onChange={(event) => setMessage(event.target.value)}
-        multiline
-        minRows={3}
-        fullWidth
-      />
-
-      <Stack direction="row" spacing={1}>
-        <Button
-          variant="contained"
-          disabled={!message.trim() || chatMutation.isPending}
-          onClick={() => chatMutation.mutate()}
-        >
-          Спросить
-        </Button>
-        {runId ? (
-          <Button
-            component={RouterLink}
-            to={`/simulations/${runId}`}
-            variant="outlined"
-          >
-            К результатам
-          </Button>
-        ) : null}
-        {chatMutation.isPending ? <CircularProgress size={24} /> : null}
-      </Stack>
-
-      {error ? <Alert severity="error">{error}</Alert> : null}
-
       <Divider />
 
-      <Stack spacing={2}>
+      <Stack spacing={2} minHeight={240}>
+        {turns.length === 0 ? (
+          <Typography color="text.secondary">
+            Задайте вопрос — диалог сохранится для выбранного контекста.
+          </Typography>
+        ) : null}
         {turns.map((turn, index) => (
           <Box
             key={`${turn.role}-${index}`}
@@ -239,6 +324,51 @@ export function AnalystPage() {
             {turn.response ? <AnswerMeta response={turn.response} /> : null}
           </Box>
         ))}
+      </Stack>
+
+      {error ? <Alert severity="error">{error}</Alert> : null}
+
+      <TextField
+        label="Вопрос"
+        value={message}
+        onChange={(event) => setMessage(event.target.value)}
+        multiline
+        minRows={3}
+        fullWidth
+        onKeyDown={(event) => {
+          if (event.key === 'Enter' && !event.shiftKey) {
+            event.preventDefault()
+            ask()
+          }
+        }}
+      />
+
+      <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
+        <Button
+          variant="contained"
+          disabled={!message.trim() || chatMutation.isPending}
+          onClick={ask}
+        >
+          Спросить
+        </Button>
+        <Button
+          variant="outlined"
+          color="inherit"
+          disabled={turns.length === 0 || chatMutation.isPending}
+          onClick={clearDialog}
+        >
+          Очистить диалог
+        </Button>
+        {runId ? (
+          <Button
+            component={RouterLink}
+            to={`/simulations/${runId}`}
+            variant="outlined"
+          >
+            К результатам
+          </Button>
+        ) : null}
+        {chatMutation.isPending ? <CircularProgress size={24} /> : null}
       </Stack>
     </Stack>
   )

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from typing import Any
+from typing import Literal
 from uuid import UUID
 
 from pydantic import BaseModel
@@ -20,6 +21,15 @@ class AnalystChatContext(BaseModel):
     scenario_id: UUID | None = None
     simulation_run_id: UUID | None = None
     equipment_id: UUID | None = None
+
+
+class AnalystChatTurn(BaseModel):
+    """One prior turn in the analyst dialog."""
+
+    model_config = ConfigDict(frozen=True)
+
+    role: Literal["user", "assistant"]
+    content: str = Field(min_length=1, max_length=8000)
 
 
 class AnalystToolCallRecord(BaseModel):
@@ -53,6 +63,10 @@ class AnalystChatRequest(BaseModel):
     message: str = Field(min_length=1, max_length=4000)
     context: AnalystChatContext = Field(
         default_factory=AnalystChatContext,
+    )
+    history: list[AnalystChatTurn] = Field(
+        default_factory=list,
+        max_length=40,
     )
 
 

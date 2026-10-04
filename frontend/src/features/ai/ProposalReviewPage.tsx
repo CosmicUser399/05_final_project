@@ -36,11 +36,18 @@ export function ProposalReviewPage() {
   })
 
   const commitMutation = useMutation({
-    mutationFn: () =>
-      aiApi.commitProposal(proposalId, {
-        system_name: proposalQuery.data?.title,
+    mutationFn: () => {
+      const brief = proposalQuery.data?.payload?.brief as
+        | { summary?: string; plant_type?: string }
+        | undefined
+      const fromBrief =
+        brief?.summary?.split('.')[0]?.trim() ||
+        brief?.plant_type?.replace(/_/g, ' ')
+      return aiApi.commitProposal(proposalId, {
+        system_name: fromBrief || proposalQuery.data?.title,
         create_system: true,
-      }),
+      })
+    },
     onSuccess: (result) => {
       navigate(`/systems/${result.system_id}`)
     },

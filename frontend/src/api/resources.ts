@@ -138,8 +138,11 @@ export const aiApi = {
     proposalId: string,
     body: { system_name?: string; create_system?: boolean },
   ) => apiPost<CommitResult>(`/ai/proposals/${proposalId}/commit`, body),
-  chat: (body: { message: string; context?: AnalystChatContext }) =>
-    apiPost<AnalystChatResponse>('/ai/chat', body),
+  chat: (body: {
+    message: string
+    context?: AnalystChatContext
+    history?: Array<{ role: 'user' | 'assistant'; content: string }>
+  }) => apiPost<AnalystChatResponse>('/ai/chat', body),
 }
 
 export const scenariosApi = {
@@ -275,6 +278,10 @@ export const reliabilityApi = {
   },
   generate: (versionId: string, notes?: string) =>
     apiPost<ReliabilityModel>(`/versions/${versionId}/reliability/generate`, {
+      notes: notes ?? null,
+    }),
+  prepare: (versionId: string, notes?: string) =>
+    apiPost<ReliabilityModel>(`/versions/${versionId}/reliability/prepare`, {
       notes: notes ?? null,
     }),
   validate: (versionId: string) =>

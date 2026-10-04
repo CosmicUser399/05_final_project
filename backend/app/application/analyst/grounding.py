@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import json
 import re
 from typing import Any
 
@@ -53,131 +52,437 @@ def build_deterministic_answer(
     question: str,
     tool_results: list[dict[str, Any]],
 ) -> str:
-    """Compose a Russian answer using only tool payloads (no LLM)."""
-    _ = question
+    """Compose a readable Russian answer from tool payloads only."""
     if not tool_results:
         return (
             "Недостаточно данных в контексте. Укажите симуляцию, "
             "сценарий или версию системы и повторите вопрос."
         )
 
-    lines: list[str] = [
-        "Ответ построен только по результатам typed tools "
-        "(без вымышленных чисел).",
-        "",
+    labels = _equipment_labels(tool_results)
+    ok_results = [
+        entry
+        for entry in tool_results
+        if entry.get("ok") and isinstance(entry.get("result"), dict)
     ]
-    for entry in tool_results:
-        name = str(entry.get("name") or "tool")
-        if not entry.get("ok"):
+    if not ok_results and tool_results:
+        lines = ["Не удалось получить данные по запросу:"]
+        for entry in tool_results:
+            name = str(entry.get("name") or "tool")
             err = entry.get("error") or "ошибка"
-            lines.append(f"- {name}: недоступно ({err}).")
+            lines.append(f"- {name}: {err}")
+        return "\n".join(lines)
+
+    q = question.lower()
+    sections: list[str] = []
+
+    if _asks_failure_modes(q):
+        section = _answer_failure_modes(ok_results, labels, q)
+        if section:
+            sections.append(section)
+    if _asks_production_loss(q):
+        section = _answer_production_loss(ok_results)
+        if section:
+            sections.append(section)
+    if _asks_availability(q):
+        section = _answer_availability(ok_results)
+        if section:
+            sections.append(section)
+    if _asks_equipment(q):
+        section = _answer_equipment(ok_results, q)
+        if section:
+            sections.append(section)
+
+    if not sections:
+        for entry in ok_results:
+            name = str(entry.get("name") or "tool")
+            result = entry.get("result") or {}
+            section = _summarize_tool_readable(name, result, labels)
+            if section:
+                sections.append(section)
+
+    if not sections:
+        return (
+            "По выбранному контексту нет данных, отвечающих на вопрос. "
+            "Проверьте симуляцию, версию модели и формулировку."
+        )
+    return "\n\n".join(sections).strip()
+
+
+def _asks_failure_modes(q: str) -> bool:
+    return bool(
+        re.search(
+            r"failure\s*mode|вид\w*\s+отказ|режим\w*\s+отказ|"
+            r"отказн\w*|modes?",
+            q,
+            flags=re.I,
+        )
+    )
+
+
+def _asks_production_loss(q: str) -> bool:
+    return bool(
+        re.search(
+            r"потер|production|не выпущ|недовыпуск|продукц",
+            q,
+            flags=re.I,
+        )
+    )
+
+
+def _asks_availability(q: str) -> bool:
+    return bool(
+        re.search(
+            r"доступн|availab|\bai\b|\bao\b|mtbf|mttr|метрик|"
+            r"над[её]жн",
+            q,
+            flags=re.I,
+        )
+    )
+
+
+def _asks_equipment(q: str) -> bool:
+    return bool(re.search(r"оборуд|equipment|насос|tag|единиц", q, flags=re.I))
+
+
+def _answer_failure_modes(
+    ok_results: list[dict[str, Any]],
+    labels: dict[str, str],
+    question: str,
+) -> str | None:
+    items: list[dict[str, Any]] = []
+    for entry in ok_results:
+        if entry.get("name") != "failure_mode.search":
             continue
         result = entry.get("result") or {}
-        lines.extend(_summarize_tool(name, result))
-    return "\n".join(lines).strip()
+        items.extend(result.get("items") or [])
+    if not items:
+        # Fall back: mention that modes tool was not available.
+        for entry in ok_results:
+            if entry.get("name") == "equipment.search":
+                eq = _answer_equipment(ok_results, question)
+                if eq:
+                    return (
+                        "В ответе нет перечня видов отказов: "
+                        "нужен инструмент failure_mode.search. "
+                        f"Найденное оборудование:\n{eq}"
+                    )
+        return (
+            "Виды отказов в контексте не найдены. "
+            "Укажите версию системы и повторите вопрос."
+        )
+
+    if re.search(r"насос|pump", question, flags=re.I):
+        pump_ids = {
+            eid for eid, label in labels.items() if _looks_like_pump(label)
+        }
+        if pump_ids:
+            items = [
+                item
+                for item in items
+                if str(item.get("equipment_id") or "") in pump_ids
+            ]
+
+    if not items:
+        return (
+            "Для насосов в выбранной версии виды отказов не найдены "
+            "(или оборудование не сопоставлено)."
+        )
+
+    lines = ["Виды отказов в модели:"]
+    by_eq: dict[str, list[str]] = {}
+    for item in items:
+        eid = str(item.get("equipment_id") or "")
+        label = labels.get(eid) or eid or "оборудование"
+        name = str(item.get("name") or "без названия")
+        detectable = item.get("is_detectable")
+        suffix = ""
+        if detectable is True:
+            suffix = " (обнаруживаемый)"
+        elif detectable is False:
+            suffix = " (необнаруживаемый)"
+        by_eq.setdefault(label, []).append(f"{name}{suffix}")
+
+    for label, modes in sorted(by_eq.items()):
+        lines.append(f"- {label}:")
+        for mode_name in modes:
+            lines.append(f"  • {mode_name}")
+    return "\n".join(lines)
 
 
-def _summarize_tool(name: str, result: dict[str, Any]) -> list[str]:
-    lines: list[str] = [f"- Tool `{name}`:"]
+def _answer_production_loss(
+    ok_results: list[dict[str, Any]],
+) -> str | None:
+    metrics_payload = _first_metrics(ok_results)
+    if metrics_payload is None:
+        return None
+    metrics, seed = metrics_payload
+    loss = metrics.get("production_loss")
+    if not isinstance(loss, dict):
+        return "В результатах симуляции нет метрики production_loss."
+    lines = [
+        f"Потери продукции из-за простоев (симуляция, seed={_fmt(seed)}):",
+        *_format_stat_block(loss, unit="ед. продукции"),
+    ]
+    return "\n".join(lines)
+
+
+def _answer_availability(
+    ok_results: list[dict[str, Any]],
+) -> str | None:
+    metrics_payload = _first_metrics(ok_results)
+    if metrics_payload is None:
+        return None
+    metrics, seed = metrics_payload
+    lines = [
+        f"Ключевые метрики симуляции (seed={_fmt(seed)}):",
+    ]
+    for key, title in (
+        ("ai", "Доступность Ai"),
+        ("ao", "Операционная доступность Ao"),
+        ("mtbf_minutes", "MTBF"),
+        ("mttr_minutes", "MTTR"),
+        ("production_loss", "Потери продукции"),
+    ):
+        value = metrics.get(key)
+        if isinstance(value, dict):
+            unit = "мин" if "minutes" in key else None
+            lines.append(f"{title}:")
+            lines.extend(_format_stat_block(value, unit=unit, indent="  "))
+    rel = metrics.get("reliability_at_horizon")
+    if isinstance(rel, dict) and rel.get("value") is not None:
+        lines.append(
+            "Надёжность на горизонте: "
+            f"value={_fmt(rel.get('value'))}, "
+            f"successes={_fmt(rel.get('successes'))}, "
+            f"trials={_fmt(rel.get('trials'))}."
+        )
+    return "\n".join(lines)
+
+
+def _answer_equipment(
+    ok_results: list[dict[str, Any]],
+    question: str,
+) -> str | None:
+    items: list[dict[str, Any]] = []
+    for entry in ok_results:
+        if entry.get("name") != "equipment.search":
+            continue
+        result = entry.get("result") or {}
+        items.extend(result.get("items") or [])
+    if not items:
+        return None
+    if re.search(r"насос|pump", question, flags=re.I):
+        filtered = [
+            item
+            for item in items
+            if _looks_like_pump(
+                f"{item.get('tag') or ''} {item.get('name') or ''}"
+            )
+        ]
+        if filtered:
+            items = filtered
+    count = None
+    for entry in ok_results:
+        if entry.get("name") == "equipment.search":
+            count = (entry.get("result") or {}).get("count")
+            break
+    header = "Оборудование в версии"
+    if count is not None:
+        header = f"Оборудование в версии (count={_fmt(count)})"
+    lines = [f"{header}:"]
+    for item in items[:20]:
+        tag = item.get("tag") or "?"
+        name = item.get("name") or ""
+        lines.append(f"- {tag}" + (f" — {name}" if name else ""))
+    return "\n".join(lines)
+
+
+def _summarize_tool_readable(
+    name: str,
+    result: dict[str, Any],
+    labels: dict[str, str],
+) -> str:
     if name == "simulation.get_metrics":
         metrics = result.get("metrics") or {}
-        fingerprint = result.get("simulation_fingerprint")
         seed = result.get("random_seed")
-        lines.append(f"  simulation_fingerprint={fingerprint}, seed={seed}.")
-        for key in (
-            "ai",
-            "ao",
-            "production_loss",
-            "mtbf_minutes",
-            "mttr_minutes",
-            "reliability_at_horizon",
+        lines = [
+            f"Сводка метрик симуляции (seed={_fmt(seed)}):",
+        ]
+        for key, title in (
+            ("ai", "Ai"),
+            ("ao", "Ao"),
+            ("production_loss", "Потери продукции"),
+            ("mtbf_minutes", "MTBF, мин"),
+            ("mttr_minutes", "MTTR, мин"),
         ):
             value = metrics.get(key)
-            if value is None:
-                continue
-            lines.append(f"  {key}={_compact_json(value)}")
+            if isinstance(value, dict) and value.get("mean") is not None:
+                lines.append(
+                    f"- {title}: среднее {_fmt(value.get('mean'))}, "
+                    f"медиана {_fmt(value.get('median'))}"
+                )
         pareto = metrics.get("failure_pareto") or []
         if pareto:
-            top = pareto[:5]
-            lines.append(f"  failure_pareto={_compact_json(top)}")
-        equipment = metrics.get("equipment") or []
-        if equipment:
-            lines.append(f"  equipment={_compact_json(equipment[:5])}")
-        return lines
+            lines.append("Топ вкладов в отказы (failure_pareto):")
+            for row in pareto[:5]:
+                key = str(row.get("key") or "")
+                label = labels.get(key) or key
+                lines.append(
+                    f"  • {label}: count={_fmt(row.get('count'))}, "
+                    f"share={_fmt(row.get('share'))}"
+                )
+        return "\n".join(lines)
 
     if name == "simulation.compare":
-        deltas = {
-            "availability_delta": result.get("availability_delta"),
-            "production_loss_delta": result.get("production_loss_delta"),
-            "maintenance_cost_delta": result.get("maintenance_cost_delta"),
-        }
-        lines.append(f"  deltas={_compact_json(deltas)}")
-        for key in (
-            "baseline_run_id",
-            "scenario_run_id",
-            "scenario_id",
+        lines = ["Сравнение сценария с базовой симуляцией:"]
+        for key, title in (
+            ("availability_delta", "Δ доступности"),
+            ("production_loss_delta", "Δ потерь продукции"),
+            ("maintenance_cost_delta", "Δ стоимости ТО"),
         ):
             if result.get(key) is not None:
-                lines.append(f"  {key}={result.get(key)}")
-        return lines
+                lines.append(f"- {title}: {_fmt(result.get(key))}")
+        return "\n".join(lines)
 
     if name == "simulation.get_events":
-        lines.append(
-            f"  events_page count={result.get('count')}, "
-            f"offset={result.get('offset')}, "
-            f"limit={result.get('limit')}."
+        return (
+            "Журнал событий симуляции: "
+            f"записей={_fmt(result.get('count'))}, "
+            f"offset={_fmt(result.get('offset'))}, "
+            f"limit={_fmt(result.get('limit'))}."
         )
-        return lines
 
-    if name in {
-        "equipment.search",
-        "failure_mode.search",
-        "maintenance.search",
-        "reference.search",
-    }:
-        lines.append(
-            f"  count={result.get('count')}, query={result.get('query')!r}."
+    if name == "failure_mode.search":
+        return (
+            _answer_failure_modes(
+                [{"name": name, "ok": True, "result": result}],
+                labels,
+                "",
+            )
+            or ""
         )
-        if result.get("message"):
-            lines.append(f"  note={result.get('message')}")
+
+    if name == "equipment.search":
+        return (
+            _answer_equipment(
+                [{"name": name, "ok": True, "result": result}],
+                "",
+            )
+            or ""
+        )
+
+    if name in {"maintenance.search", "reference.search"}:
         items = result.get("items") or []
+        lines = [f"Результат `{name}`: найдено {_fmt(result.get('count'))}."]
         for item in items[:10]:
             label = (
                 item.get("tag") or item.get("name") or item.get("id") or item
             )
-            lines.append(f"  - {_compact_json(label)}")
-        return lines
+            lines.append(f"- {label}")
+        return "\n".join(lines)
 
     if name == "system.get":
         system = result.get("system") or {}
         version = result.get("version") or {}
+        lines = ["Данные системы:"]
         if system:
-            lines.append(
-                f"  system name={system.get('name')!r} id={system.get('id')}."
-            )
+            lines.append(f"- Система: {system.get('name')!r}")
         if version:
             lines.append(
-                f"  version number={version.get('version_number')} "
-                f"status={version.get('status')} "
-                f"id={version.get('id')}."
+                f"- Версия: v{version.get('version_number')} "
+                f"({version.get('status')})"
             )
-        return lines
+        return "\n".join(lines)
 
     if name == "scenario.get":
-        lines.append(
-            f"  scenario name={result.get('name')!r} id={result.get('id')}."
-        )
-        changes = result.get("changes") or result.get("current_changes") or []
-        if changes:
-            lines.append(f"  changes={_compact_json(changes[:5])}")
-        return lines
+        return f"Сценарий: {result.get('name')!r}."
 
-    lines.append(f"  payload={_compact_json(result)}")
+    return f"Данные инструмента `{name}` получены."
+
+
+def _first_metrics(
+    ok_results: list[dict[str, Any]],
+) -> tuple[dict[str, Any], Any] | None:
+    for entry in ok_results:
+        if entry.get("name") != "simulation.get_metrics":
+            continue
+        result = entry.get("result") or {}
+        metrics = result.get("metrics") or {}
+        if isinstance(metrics, dict):
+            return metrics, result.get("random_seed")
+    return None
+
+
+def _format_stat_block(
+    stats: dict[str, Any],
+    *,
+    unit: str | None = None,
+    indent: str = "- ",
+) -> list[str]:
+    unit_s = f" {unit}" if unit else ""
+    lines: list[str] = []
+    if stats.get("mean") is not None:
+        lines.append(f"{indent}среднее: {_fmt(stats.get('mean'))}{unit_s}")
+    if stats.get("median") is not None:
+        lines.append(f"{indent}медиана: {_fmt(stats.get('median'))}{unit_s}")
+    if stats.get("p5") is not None and stats.get("p95") is not None:
+        lines.append(
+            f"{indent}перцентили p5..p95: {_fmt(stats.get('p5'))} .. "
+            f"{_fmt(stats.get('p95'))}{unit_s}"
+        )
+    if stats.get("ci_low") is not None and stats.get("ci_high") is not None:
+        lines.append(
+            f"{indent}ДИ среднего: {_fmt(stats.get('ci_low'))} … "
+            f"{_fmt(stats.get('ci_high'))}{unit_s}"
+        )
+    if stats.get("sample_size") is not None:
+        lines.append(
+            f"{indent}число прогонов: {_fmt(stats.get('sample_size'))}"
+        )
     return lines
 
 
-def _compact_json(value: Any) -> str:
-    return json.dumps(value, ensure_ascii=False, default=str)
+def _equipment_labels(tool_results: list[dict[str, Any]]) -> dict[str, str]:
+    labels: dict[str, str] = {}
+    for entry in tool_results:
+        if not entry.get("ok"):
+            continue
+        result = entry.get("result") or {}
+        name = entry.get("name")
+        if name == "equipment.search":
+            for item in result.get("items") or []:
+                eid = str(item.get("id") or "")
+                if not eid:
+                    continue
+                tag = item.get("tag") or eid
+                ename = item.get("name")
+                labels[eid] = f"{tag}" + (f" ({ename})" if ename else "")
+        if name == "simulation.get_metrics":
+            metrics = result.get("metrics") or {}
+            for row in metrics.get("equipment") or []:
+                eid = str(row.get("equipment_id") or "")
+                if eid and eid not in labels:
+                    labels[eid] = eid
+    return labels
+
+
+def _looks_like_pump(label: str) -> bool:
+    text = label.lower()
+    if "насос" in text or "pump" in text:
+        return True
+    return bool(re.search(r"\bp-\d+", text, flags=re.I))
+
+
+def _fmt(value: Any) -> str:
+    """Format a tool number in a grounding-compatible way."""
+    if value is None:
+        return "—"
+    if isinstance(value, bool):
+        return str(value)
+    if isinstance(value, int | float):
+        return _canon(value)
+    return str(value)
 
 
 def _walk(node: Any, allowed: set[str]) -> None:

@@ -19,6 +19,7 @@ from app.api.deps import AiGenerationServiceDep
 from app.api.deps import SettingsDep
 from app.application.analyst.context import AnalystChatContext
 from app.application.analyst.context import AnalystChatRequest
+from app.application.analyst.context import AnalystChatTurn
 from app.domain.ai.status import TERMINAL_GENERATION_STATUSES
 
 router = APIRouter(prefix="/ai", tags=["ai"])
@@ -64,12 +65,23 @@ class AnalystContextBody(BaseModel):
     equipment_id: UUID | None = None
 
 
+class AnalystChatTurnBody(BaseModel):
+    """Prior dialog turn sent by the UI."""
+
+    role: str = Field(pattern="^(user|assistant)$")
+    content: str = Field(min_length=1, max_length=8000)
+
+
 class AnalystChatBody(BaseModel):
     """User question for AI Analyst."""
 
     message: str = Field(min_length=1, max_length=4000)
     context: AnalystContextBody = Field(
         default_factory=AnalystContextBody,
+    )
+    history: list[AnalystChatTurnBody] = Field(
+        default_factory=list,
+        max_length=40,
     )
 
 
@@ -193,6 +205,10 @@ def analyst_chat(
     request = AnalystChatRequest(
         message=body.message,
         context=AnalystChatContext.model_validate(body.context.model_dump()),
+        history=[
+            AnalystChatTurn.model_validate(row.model_dump())
+            for row in body.history
+        ],
     )
     response = service.chat(request)
     return response.model_dump(mode="json")
@@ -207,6 +223,10 @@ async def analyst_chat_stream(
     request = AnalystChatRequest(
         message=body.message,
         context=AnalystChatContext.model_validate(body.context.model_dump()),
+        history=[
+            AnalystChatTurn.model_validate(row.model_dump())
+            for row in body.history
+        ],
     )
 
     async def events() -> AsyncIterator[str]:

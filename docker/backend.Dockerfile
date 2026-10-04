@@ -5,7 +5,10 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     UV_COMPILE_BYTECODE=1 \
     UV_LINK_MODE=copy
 
-COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
+# Install uv from PyPI (avoid ghcr.io pull; corporate DNS often
+# fails to resolve ghcr.io during docker build).
+RUN pip install --no-cache-dir --upgrade pip \
+    && pip install --no-cache-dir uv
 
 WORKDIR /srv/backend
 

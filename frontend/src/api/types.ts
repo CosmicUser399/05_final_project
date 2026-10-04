@@ -445,6 +445,11 @@ export interface AnalystChatContext {
   equipment_id?: string | null
 }
 
+export interface AnalystChatTurn {
+  role: 'user' | 'assistant'
+  content: string
+}
+
 export interface AnalystReference {
   kind: string
   entity_id: string | null

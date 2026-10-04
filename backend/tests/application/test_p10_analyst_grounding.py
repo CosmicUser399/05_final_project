@@ -63,7 +63,7 @@ def test_deterministic_answer_uses_tool_numbers_only() -> None:
                 "random_seed": 7,
                 "metrics": {
                     "ai": {"mean": 0.95, "sample_size": 10},
-                    "production_loss": {"mean": 3.2},
+                    "production_loss": {"mean": 3.2, "median": 3.0},
                 },
             },
         }
@@ -74,5 +74,50 @@ def test_deterministic_answer_uses_tool_numbers_only() -> None:
     )
     allowed = collect_allowed_numbers(tools)
     assert is_grounded(answer, allowed)
-    assert "0.95" in answer or "0.95" in str(tools)
+    assert "3.2" in answer
+    assert "Потери продукции" in answer
+    assert "Tool `" not in answer
     assert "777" not in answer
+
+
+def test_deterministic_answer_lists_failure_modes() -> None:
+    tools = [
+        {
+            "name": "equipment.search",
+            "ok": True,
+            "result": {
+                "count": 1,
+                "items": [
+                    {
+                        "id": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
+                        "tag": "P-101",
+                        "name": "Feed pump",
+                    }
+                ],
+            },
+        },
+        {
+            "name": "failure_mode.search",
+            "ok": True,
+            "result": {
+                "count": 1,
+                "items": [
+                    {
+                        "equipment_id": (
+                            "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+                        ),
+                        "name": "Seal leakage",
+                        "is_detectable": True,
+                    }
+                ],
+            },
+        },
+    ]
+    answer = build_deterministic_answer(
+        question="Какие виды отказов у насосов учтены в модели?",
+        tool_results=tools,
+    )
+    assert "Seal leakage" in answer
+    assert "P-101" in answer
+    assert "Tool `" not in answer
+    assert is_grounded(answer, collect_allowed_numbers(tools))

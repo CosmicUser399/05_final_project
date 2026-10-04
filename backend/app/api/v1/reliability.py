@@ -41,6 +41,21 @@ def generate_reliability_model(
     return ReliabilityModelResponse.from_row(row)
 
 
+@router.post(
+    "/versions/{version_id}/reliability/prepare",
+    status_code=status.HTTP_201_CREATED,
+)
+def prepare_reliability_model(
+    version_id: UUID,
+    service: ReliabilityServiceDep,
+    body: ReliabilityGenerateRequest | None = None,
+) -> ReliabilityModelResponse:
+    """Fill missing PF/distributions/CM drafts, then compile."""
+    notes = None if body is None else body.notes
+    row = service.prepare_and_generate(version_id, notes=notes)
+    return ReliabilityModelResponse.from_row(row)
+
+
 @router.get("/versions/{version_id}/reliability")
 def get_latest_reliability_model(
     version_id: UUID,

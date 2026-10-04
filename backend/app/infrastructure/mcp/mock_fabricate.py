@@ -177,7 +177,10 @@ class MockFabricateProvider:
                 tool="download_conversation_file",
                 message="unknown conversation_id",
             )
-        blob = _build_staging_sqlite()
+        message = str(
+            self._conversations[conversation_id].get("message") or ""
+        )
+        blob = _build_staging_sqlite(message)
         return self._ok(
             "download_conversation_file",
             {
@@ -276,7 +279,12 @@ class MockFabricateProvider:
         )
 
 
-def _build_staging_sqlite() -> bytes:
+def _build_staging_sqlite(message: str = "") -> bytes:
+    from app.infrastructure.ai.structure_from_text import (
+        build_proposal_from_description,
+    )
+
+    proposal = build_proposal_from_description(message)
     with tempfile.TemporaryDirectory(prefix="mock_fab_") as tmp:
         path = Path(tmp) / "equipment.sqlite"
         conn = sqlite3.connect(path)
@@ -290,7 +298,8 @@ def _build_staging_sqlite() -> bytes:
                     category TEXT,
                     equipment_class TEXT,
                     criticality TEXT,
-                    quantity INTEGER
+                    quantity INTEGER,
+                    is_repairable INTEGER
                 );
                 CREATE TABLE components (
                     equipment_tag TEXT,
@@ -302,18 +311,68 @@ def _build_staging_sqlite() -> bytes:
                     to_tag TEXT,
                     connection_type TEXT
                 );
-                INSERT INTO equipment VALUES
-                    ('SYS-01', 'Plant root', NULL, 'PROCESS',
-                     NULL, 'CRITICAL', 1),
-                    ('P-101', 'Feed pump', 'SYS-01', 'ROTATING',
-                     'Pump', 'HIGH', 1),
-                    ('E-201', 'Reactor', 'SYS-01', 'STATIC',
-                     'Vessel', 'CRITICAL', 1);
-                INSERT INTO components VALUES ('P-101', 'Seal', 1);
-                INSERT INTO connections VALUES
-                    ('P-101', 'E-201', 'PROCESS');
+                CREATE TABLE failure_modes (
+                    equipment_tag TEXT,
+                    name TEXT,
+                    is_detectable INTEGER
+                );
+                CREATE TABLE maintenance_tasks (
+                    equipment_tag TEXT,
+                    name TEXT,
+                    task_type TEXT
+                );
                 """
             )
+            for row in proposal.get("equipment", []):
+                conn.execute(
+                    "INSERT INTO equipment VALUES (?,?,?,?,?,?,?,?)",
+                    (
+                        row["tag"],
+                        row["name"],
+                        row.get("parent_tag"),
+                        row.get("category"),
+                        row.get("equipment_class"),
+                        row.get("criticality"),
+                        row.get("quantity", 1),
+                        1 if row.get("is_repairable", True) else 0,
+                    ),
+                )
+            for row in proposal.get("components", []):
+                conn.execute(
+                    "INSERT INTO components VALUES (?,?,?)",
+                    (
+                        row["equipment_tag"],
+                        row["name"],
+                        row.get("quantity", 1),
+                    ),
+                )
+            for row in proposal.get("connections", []):
+                conn.execute(
+                    "INSERT INTO connections VALUES (?,?,?)",
+                    (
+                        row["from_tag"],
+                        row["to_tag"],
+                        row.get("connection_type", "PROCESS"),
+                    ),
+                )
+            for row in proposal.get("failure_modes", []):
+                conn.execute(
+                    "INSERT INTO failure_modes VALUES (?,?,?)",
+                    (
+                        row["equipment_tag"],
+                        row["name"],
+                        1 if row.get("is_detectable") else 0,
+                    ),
+                )
+            for row in proposal.get("maintenance_tasks", []):
+                conn.execute(
+                    "INSERT INTO maintenance_tasks VALUES (?,?,?)",
+                    (
+                        row["equipment_tag"],
+                        row["name"],
+                        row.get("task_type", "CORRECTIVE"),
+                    ),
+                )
             conn.commit()
         finally:
             conn.close()

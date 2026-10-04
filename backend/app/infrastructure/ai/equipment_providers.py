@@ -12,10 +12,12 @@ from app.application.ports import EquipmentProposalResult
 from app.application.ports import ExternalCallStatus
 from app.application.ports import FabricateProvider
 from app.domain.ai.dto import EquipmentProposalPayload
+from app.domain.ai.dto import GeneratedSystemBrief
 from app.domain.errors import ValidationError
 from app.infrastructure.ai.mock_ai import MockAIProvider
 from app.infrastructure.ai.openai_provider import OpenAIProvider
 from app.infrastructure.ai.openai_provider import generate_equipment_via_openai
+from app.infrastructure.ai.structure_from_text import parse_brief
 from app.infrastructure.files.staging_importer import StagingImporter
 from app.infrastructure.files.staging_schema import STAGING_SCHEMA_VERSION
 
@@ -201,10 +203,13 @@ class FabricateEquipmentProvider:
                 message="download did not include artifact bytes",
                 conversation_id=conversation_id,
             )
+        brief_data = parse_brief(description)
+        brief = GeneratedSystemBrief.model_validate(brief_data)
         try:
             payload = self._importer.import_bytes(
                 bytes(blob),
                 conversation_id=conversation_id,
+                brief=brief,
             )
         except ValidationError as exc:
             return EquipmentProposalResult(

@@ -15,9 +15,12 @@ from sqlalchemy.orm import sessionmaker
 
 from app.application.connections_service import ConnectionsService
 from app.application.equipment_service import EquipmentService
+from app.application.failure_modes import FailureModeService
+from app.application.maintenance_service import MaintenanceService
 from app.application.ports import EquipmentProposalProvider
 from app.application.ports import ExternalCallStatus
 from app.application.ports import FabricateProvider
+from app.application.production_service import ProductionService
 from app.application.reference_service import ReferenceDataService
 from app.application.systems import SystemService
 from app.application.versions import VersionService
@@ -27,6 +30,7 @@ from app.domain.ai.status import TERMINAL_GENERATION_STATUSES
 from app.domain.ai.status import GenerationJobStatus
 from app.domain.ai.status import ProposalItemDecision
 from app.domain.ai.status import ProposalStatus
+from app.domain.equipment.entities import EquipmentComponent
 from app.domain.errors import NotFoundError
 from app.domain.errors import ValidationError
 from app.domain.provenance import Provenance
@@ -64,6 +68,9 @@ class AiGenerationService:
         self._versions = VersionService(uow_factory)
         self._equipment = EquipmentService(uow_factory)
         self._connections = ConnectionsService(uow_factory)
+        self._failure_modes = FailureModeService(uow_factory)
+        self._maintenance = MaintenanceService(uow_factory)
+        self._production = ProductionService(uow_factory)
         self._reference = ReferenceDataService(session_factory, uow_factory)
 
     def start_generation(
@@ -391,6 +398,18 @@ class AiGenerationService:
 
         version_id = proposal_data.get("version_id")
         system_id = proposal_data.get("system_id")
+        payload_obj = proposal_data.get("payload") or {}
+        brief_obj = (
+            payload_obj.get("brief")
+            if isinstance(payload_obj, dict)
+            else None
+        )
+        system_description = _system_description(brief_obj)
+        resolved_name = _system_name(
+            system_name=system_name,
+            title=str(proposal_data.get("title") or ""),
+            brief=brief_obj,
+        )
         if version_id is None:
             if not create_system:
                 raise ValidationError(
@@ -399,8 +418,10 @@ class AiGenerationService:
                     entity="Proposal",
                     entity_id=str(proposal_id),
                 )
-            name = (system_name or proposal_data["title"])[:200]
-            system = self._systems.create(name)
+            system = self._systems.create(
+                resolved_name,
+                description=system_description,
+            )
             system_id = system.id
             versions_list = self._versions.list_for_system(system.id)
             if not versions_list:
@@ -409,10 +430,22 @@ class AiGenerationService:
                     entity="SystemVersion",
                 )
             version_id = versions_list[0].id
+        elif system_description and system_id is not None:
+            self._systems.update(
+                system_id,
+                description=system_description,
+            )
 
         tag_to_id: dict[str, UUID] = {}
+        equipment_meta: dict[str, dict[str, Any]] = {}
         created_equipment = 0
         created_connections = 0
+        created_failure_modes = 0
+        created_maintenance_tasks = 0
+        created_components = 0
+        created_impacts = 0
+        fm_by_equipment: dict[UUID, UUID] = {}
+        cm_equipment: set[UUID] = set()
 
         equipment_items = sorted(
             (
@@ -457,32 +490,147 @@ class AiGenerationService:
             )
             # Prefer ISO/OREDA mapping over leaving class unlinked.
             self._reference.auto_link_equipment(equipment.id)
-            tag_to_id[str(payload["tag"])] = equipment.id
+            tag = str(payload["tag"])
+            tag_to_id[tag] = equipment.id
+            equipment_meta[tag] = {
+                "id": equipment.id,
+                "criticality": str(
+                    payload.get("criticality", "MEDIUM")
+                ),
+                "is_repairable": bool(
+                    payload.get("is_repairable", True)
+                ),
+                "name": str(payload.get("name") or tag),
+            }
             created_equipment += 1
 
         for item in accepted:
             payload = item.get("edited_payload") or item["payload"]
-            if item["item_type"] != "connection":
+            item_type = item["item_type"]
+            if item_type == "component":
+                eq_id = tag_to_id.get(str(payload.get("equipment_tag")))
+                if eq_id is None:
+                    continue
+                with self._uow_factory() as uow:
+                    component = EquipmentComponent(
+                        version_id=version_id,
+                        equipment_id=eq_id,
+                        name=str(payload["name"]),
+                        description=payload.get("description"),
+                        quantity=int(payload.get("quantity") or 1),
+                    )
+                    uow.content.save_component(component)
+                created_components += 1
                 continue
-            source_id = tag_to_id.get(str(payload["from_tag"]))
-            target_id = tag_to_id.get(str(payload["to_tag"]))
-            if source_id is None or target_id is None:
+            if item_type == "connection":
+                source_id = tag_to_id.get(str(payload["from_tag"]))
+                target_id = tag_to_id.get(str(payload["to_tag"]))
+                if source_id is None or target_id is None:
+                    continue
+                self._connections.create(
+                    version_id,
+                    {
+                        "source_id": source_id,
+                        "target_id": target_id,
+                        "connection_type": payload.get(
+                            "connection_type",
+                            "PROCESS",
+                        ),
+                        "description": payload.get("description"),
+                    },
+                    source="ai_proposal",
+                    reason=f"proposal:{proposal_id}",
+                )
+                created_connections += 1
                 continue
-            self._connections.create(
-                version_id,
-                {
-                    "source_id": source_id,
-                    "target_id": target_id,
-                    "connection_type": payload.get(
-                        "connection_type",
-                        "PROCESS",
-                    ),
-                    "description": payload.get("description"),
-                },
-                source="ai_proposal",
-                reason=f"proposal:{proposal_id}",
-            )
-            created_connections += 1
+            if item_type == "failure_mode":
+                eq_id = tag_to_id.get(str(payload.get("equipment_tag")))
+                if eq_id is None:
+                    continue
+                mode = self._failure_modes.create(
+                    eq_id,
+                    {
+                        "name": str(payload["name"]),
+                        "description": payload.get("description"),
+                        "is_detectable": bool(
+                            payload.get("is_detectable", False)
+                        ),
+                    },
+                    source="ai_proposal",
+                    reason=f"proposal:{proposal_id}",
+                )
+                fm_by_equipment.setdefault(eq_id, mode.id)
+                created_failure_modes += 1
+                continue
+            if item_type == "maintenance_task":
+                eq_id = tag_to_id.get(str(payload.get("equipment_tag")))
+                if eq_id is None:
+                    continue
+                task_type = str(
+                    payload.get("task_type") or "CORRECTIVE"
+                ).upper()
+                # Draft tasks without interval must be ON_FAILURE.
+                if task_type != "CORRECTIVE":
+                    task_type = "CORRECTIVE"
+                mode_id = fm_by_equipment.get(eq_id)
+                self._maintenance.create(
+                    eq_id,
+                    {
+                        "name": str(payload["name"]),
+                        "task_type": task_type,
+                        "trigger": "ON_FAILURE",
+                        "failure_mode_id": mode_id,
+                    },
+                    source="ai_proposal",
+                    reason=f"proposal:{proposal_id}",
+                )
+                cm_equipment.add(eq_id)
+                created_maintenance_tasks += 1
+
+        # Structural drafts for validation readiness (no numeric params).
+        for meta in equipment_meta.values():
+            eq_id = meta["id"]
+            if eq_id not in fm_by_equipment:
+                mode = self._failure_modes.create(
+                    eq_id,
+                    {
+                        "name": (
+                            f"Generic failure ({meta['name']})"
+                        ),
+                        "is_detectable": True,
+                    },
+                    source="ai_proposal",
+                    reason=f"proposal:{proposal_id}:draft",
+                )
+                fm_by_equipment[eq_id] = mode.id
+                created_failure_modes += 1
+            if meta["is_repairable"] and eq_id not in cm_equipment:
+                self._maintenance.create(
+                    eq_id,
+                    {
+                        "name": (
+                            f"Corrective repair ({meta['name']})"
+                        ),
+                        "task_type": "CORRECTIVE",
+                        "trigger": "ON_FAILURE",
+                        "failure_mode_id": fm_by_equipment[eq_id],
+                    },
+                    source="ai_proposal",
+                    reason=f"proposal:{proposal_id}:draft",
+                )
+                cm_equipment.add(eq_id)
+                created_maintenance_tasks += 1
+            if meta["criticality"] in {"CRITICAL", "HIGH"}:
+                self._production.create_impact(
+                    version_id,
+                    {
+                        "equipment_id": eq_id,
+                        "loss_fraction": 1.0,
+                    },
+                    source="ai_proposal",
+                    reason=f"proposal:{proposal_id}:draft",
+                )
+                created_impacts += 1
 
         with self._session_factory() as session:
             repo = AiRepository(session)
@@ -499,6 +647,10 @@ class AiGenerationService:
             "version_id": version_id,
             "created_equipment": created_equipment,
             "created_connections": created_connections,
+            "created_failure_modes": created_failure_modes,
+            "created_maintenance_tasks": created_maintenance_tasks,
+            "created_components": created_components,
+            "created_impacts": created_impacts,
             "status": ProposalStatus.APPLIED.value,
         }
 
@@ -562,6 +714,41 @@ def _proposal_title(
     description: str,
     payload: EquipmentProposalPayload,
 ) -> str:
+    if payload.brief is not None and payload.brief.summary:
+        head = payload.brief.summary.split(".")[0].strip()
+        if head:
+            return f"Proposal: {head}"[:300]
     if payload.brief is not None and payload.brief.plant_type:
         return f"Proposal: {payload.brief.plant_type}"[:300]
     return f"Proposal: {description.strip()[:80]}"
+
+
+def _system_description(brief: Any) -> str | None:
+    if not isinstance(brief, dict):
+        return None
+    summary = brief.get("summary")
+    if isinstance(summary, str) and summary.strip():
+        return summary.strip()[:5000]
+    return None
+
+
+def _system_name(
+    *,
+    system_name: str | None,
+    title: str,
+    brief: Any,
+) -> str:
+    candidate = (system_name or "").strip()
+    if candidate.startswith("Proposal:"):
+        candidate = ""
+    if not candidate and isinstance(brief, dict):
+        summary = brief.get("summary")
+        if isinstance(summary, str) and summary.strip():
+            candidate = summary.split(".")[0].strip()
+        elif isinstance(brief.get("plant_type"), str):
+            candidate = str(brief["plant_type"]).replace("_", " ")
+    if not candidate:
+        candidate = title.strip() or "Generated system"
+        if candidate.startswith("Proposal:"):
+            candidate = candidate.removeprefix("Proposal:").strip()
+    return candidate[:200] or "Generated system"
