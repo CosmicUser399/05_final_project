@@ -31,6 +31,20 @@ class FailureModeService:
                 equipment_id=equipment_id,
             )
 
+    def list_for_version(
+        self,
+        version_id: UUID,
+        *,
+        equipment_id: UUID | None = None,
+    ) -> list[FailureMode]:
+        """List failure modes for a version (optional equipment filter)."""
+        with self._uow_factory() as uow:
+            uow.versions.get(version_id)
+            return uow.content.list_failure_modes(
+                version_id,
+                equipment_id=equipment_id,
+            )
+
     def get(self, failure_mode_id: UUID) -> FailureMode:
         with self._uow_factory() as uow:
             return uow.content.get_failure_mode(failure_mode_id)

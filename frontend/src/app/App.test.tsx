@@ -74,6 +74,17 @@ describe('app shell', () => {
     ).toBeInTheDocument()
   })
 
+  it('renders AI Analyst page', () => {
+    renderAt('/ai/analyst')
+
+    expect(
+      screen.getByRole('heading', {
+        name: 'AI Analyst',
+        level: 4,
+      }),
+    ).toBeInTheDocument()
+  })
+
   it('renders the not-found page for unknown routes', () => {
     renderAt('/unknown/path')
 

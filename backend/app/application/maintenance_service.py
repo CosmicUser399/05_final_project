@@ -31,6 +31,20 @@ class MaintenanceService:
                 equipment_id=equipment_id,
             )
 
+    def list_for_version(
+        self,
+        version_id: UUID,
+        *,
+        equipment_id: UUID | None = None,
+    ) -> list[MaintenanceTask]:
+        """List maintenance tasks for a version (optional equipment)."""
+        with self._uow_factory() as uow:
+            uow.versions.get(version_id)
+            return uow.content.list_maintenance_tasks(
+                version_id,
+                equipment_id=equipment_id,
+            )
+
     def get(self, task_id: UUID) -> MaintenanceTask:
         with self._uow_factory() as uow:
             return uow.content.get_maintenance_task(task_id)

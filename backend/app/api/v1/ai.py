@@ -14,8 +14,11 @@ from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 from pydantic import Field
 
+from app.api.deps import AiAnalystServiceDep
 from app.api.deps import AiGenerationServiceDep
 from app.api.deps import SettingsDep
+from app.application.analyst.context import AnalystChatContext
+from app.application.analyst.context import AnalystChatRequest
 from app.domain.ai.status import TERMINAL_GENERATION_STATUSES
 
 router = APIRouter(prefix="/ai", tags=["ai"])
@@ -49,6 +52,25 @@ class ProposalCommitRequest(BaseModel):
 
     system_name: str | None = Field(default=None, max_length=200)
     create_system: bool = True
+
+
+class AnalystContextBody(BaseModel):
+    """Optional ids scoping analyst tool calls."""
+
+    system_id: UUID | None = None
+    version_id: UUID | None = None
+    scenario_id: UUID | None = None
+    simulation_run_id: UUID | None = None
+    equipment_id: UUID | None = None
+
+
+class AnalystChatBody(BaseModel):
+    """User question for AI Analyst."""
+
+    message: str = Field(min_length=1, max_length=4000)
+    context: AnalystContextBody = Field(
+        default_factory=AnalystContextBody,
+    )
 
 
 @router.post("/generate-system", status_code=status.HTTP_202_ACCEPTED)
@@ -159,4 +181,48 @@ def commit_proposal(
         proposal_id,
         system_name=body.system_name,
         create_system=body.create_system,
+    )
+
+
+@router.post("/chat")
+def analyst_chat(
+    body: AnalystChatBody,
+    service: AiAnalystServiceDep,
+) -> dict[str, Any]:
+    """Answer a question using typed tools and grounded synthesis."""
+    request = AnalystChatRequest(
+        message=body.message,
+        context=AnalystChatContext.model_validate(body.context.model_dump()),
+    )
+    response = service.chat(request)
+    return response.model_dump(mode="json")
+
+
+@router.post("/chat/stream")
+async def analyst_chat_stream(
+    body: AnalystChatBody,
+    service: AiAnalystServiceDep,
+) -> StreamingResponse:
+    """SSE stream of analyst progress and final grounded answer."""
+    request = AnalystChatRequest(
+        message=body.message,
+        context=AnalystChatContext.model_validate(body.context.model_dump()),
+    )
+
+    async def events() -> AsyncIterator[str]:
+        iterator = await asyncio.to_thread(
+            lambda: list(service.iter_sse_events(request))
+        )
+        for event_name, payload in iterator:
+            data = json.dumps(payload, default=str)
+            yield f"event: {event_name}\ndata: {data}\n\n"
+
+    return StreamingResponse(
+        events(),
+        media_type="text/event-stream",
+        headers={
+            "Cache-Control": "no-cache",
+            "Connection": "keep-alive",
+            "X-Accel-Buffering": "no",
+        },
     )

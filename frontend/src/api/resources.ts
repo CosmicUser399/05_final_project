@@ -7,6 +7,8 @@ import {
   apiPostWithHeaders,
 } from './client'
 import type {
+  AnalystChatContext,
+  AnalystChatResponse,
   CommitResult,
   Equipment,
   EquipmentConnection,
@@ -80,6 +82,10 @@ export const aiApi = {
     proposalId: string,
     body: { system_name?: string; create_system?: boolean },
   ) => apiPost<CommitResult>(`/ai/proposals/${proposalId}/commit`, body),
+  chat: (body: {
+    message: string
+    context?: AnalystChatContext
+  }) => apiPost<AnalystChatResponse>('/ai/chat', body),
 }
 
 export const scenariosApi = {

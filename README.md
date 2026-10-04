@@ -23,7 +23,8 @@ Reliability Model -> Petri Model / RAM-симуляция (Monte Carlo).
 | P7 AI + Frontend CRUD | выполнен | OpenAI/Fabricate, proposals, CRUD, граф |
 | P8 Scenarios | выполнен | Scenario overlay, simulate/compare, UI |
 | P9 Results UI | выполнен | дашборд, графики, events, Petri viewer |
-| P10-P12 | не начаты | AI Analyst, OREDA, Excel/Demo |
+| P10 AI Analyst | выполнен | typed tools, grounded chat, SSE, UI |
+| P11-P12 | не начаты | OREDA, Excel/Demo |
 
 ### P0. Bootstrap
 
@@ -177,8 +178,15 @@ OpenAI, MCP (проверяется архитектурным тестом).
   панель определений метрик, provenance (seed/hashes/fingerprint),
   Petri viewer (React Flow, collapse/expand, клик → source entity).
   См. `docs/architecture/results-ui.md`.
+- **P10 AI Analyst:** typed tools
+  (`system.get`, `equipment.search`, `failure_mode.search`,
+  `maintenance.search`, `simulation.get_metrics`,
+  `simulation.get_events`, `simulation.compare`, `scenario.get`,
+  `reference.search`), grounding чисел по tool-результатам,
+  `POST /api/v1/ai/chat` + SSE `/ai/chat/stream`, UI `/ai/analyst`.
+  См. `docs/architecture/ai-analyst.md`, ADR-013.
 
-Следующий шаг - P10 (AI Analyst).
+Следующий шаг - P11 (OREDA / ISO 14224).
 
 ## Требования
 

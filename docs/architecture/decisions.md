@@ -100,6 +100,19 @@
   в MVP — скаляр R(horizon) с CI (временной ряд не персистится).
   Подробности: `docs/architecture/results-ui.md`.
 
+## ADR-013. AI Analyst только через typed tools
+
+- Status: Accepted.
+- Чат-аналитик (`POST /api/v1/ai/chat`, SSE `/ai/chat/stream`)
+  отвечает только по результатам whitelist-tools
+  (`system.get`, `equipment.search`, `failure_mode.search`,
+  `maintenance.search`, `simulation.get_metrics`,
+  `simulation.get_events`, `simulation.compare`, `scenario.get`,
+  `reference.search`). Произвольный SQL/shell/filesystem запрещены.
+- Числа в ответе проходят grounding: каждый числовой токен должен
+  встречаться в tool-результатах; иначе ответ заменяется
+  детерминированной сводкой. См. `docs/architecture/ai-analyst.md`.
+
 ## Контракт P0 (bootstrap)
 
 - API: `GET /health`, `GET /ready` (в том числе под `/api/v1`), заголовок

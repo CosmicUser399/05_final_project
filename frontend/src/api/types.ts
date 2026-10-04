@@ -371,3 +371,34 @@ export interface ScenarioComparison {
   rows: MetricComparisonRow[]
   deltas: Record<string, number | null>
 }
+
+export interface AnalystChatContext {
+  system_id?: string | null
+  version_id?: string | null
+  scenario_id?: string | null
+  simulation_run_id?: string | null
+  equipment_id?: string | null
+}
+
+export interface AnalystReference {
+  kind: string
+  entity_id: string | null
+  label: string
+  detail: Record<string, unknown>
+}
+
+export interface AnalystToolCallRecord {
+  name: string
+  arguments: Record<string, unknown>
+  ok: boolean
+  result: Record<string, unknown>
+  error: string | null
+}
+
+export interface AnalystChatResponse {
+  answer: string
+  references: AnalystReference[]
+  tool_calls: AnalystToolCallRecord[]
+  grounded: boolean
+  model: string | null
+}

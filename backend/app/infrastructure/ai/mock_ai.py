@@ -67,6 +67,18 @@ class MockAIProvider:
         brief = _parse_brief(user_prompt)
         if schema_name == "plant_brief":
             return brief
+        if schema_name == "analyst_tool_plan":
+            # Defer to application heuristic planner.
+            return {"tool_calls": []}
+        if schema_name == "analyst_answer":
+            # Return the deterministic base answer unchanged.
+            marker = "Base answer:\n"
+            answer = user_prompt
+            if marker in user_prompt:
+                answer = user_prompt.split(marker, 1)[1]
+                if "\ntool_results:" in answer:
+                    answer = answer.split("\ntool_results:", 1)[0]
+            return {"answer": answer.strip()}
         if schema_name in {"equipment_proposal", "generate_system"}:
             return {
                 "brief": brief,

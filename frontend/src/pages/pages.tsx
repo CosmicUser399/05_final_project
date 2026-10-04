@@ -20,6 +20,9 @@ export function HomePage() {
         <Button component={RouterLink} to="/ai/generate" variant="outlined">
           AI-генерация
         </Button>
+        <Button component={RouterLink} to="/ai/analyst" variant="outlined">
+          AI Analyst
+        </Button>
         <Button
           component={RouterLink}
           to="/simulations"

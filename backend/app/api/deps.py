@@ -13,6 +13,8 @@ from sqlalchemy.orm import sessionmaker
 
 from app.application.ai_service import AiGenerationService
 from app.application.ai_service import build_default_providers
+from app.application.analyst import AiAnalystService
+from app.application.analyst.tools import AnalystToolExecutor
 from app.application.connections_service import ConnectionsService
 from app.application.diagnostics_service import DiagnosticsService
 from app.application.equipment_service import EquipmentService
@@ -218,6 +220,50 @@ def get_ai_generation_service(
     )
 
 
+def get_analyst_tool_executor(
+    systems: Annotated[SystemService, Depends(get_system_service)],
+    versions: Annotated[VersionService, Depends(get_version_service)],
+    equipment: Annotated[EquipmentService, Depends(get_equipment_service)],
+    failure_modes: Annotated[
+        FailureModeService,
+        Depends(get_failure_mode_service),
+    ],
+    maintenance: Annotated[
+        MaintenanceService,
+        Depends(get_maintenance_service),
+    ],
+    simulations: Annotated[
+        SimulationService,
+        Depends(get_simulation_service),
+    ],
+    scenarios: Annotated[
+        ScenarioService,
+        Depends(get_scenario_service),
+    ],
+) -> AnalystToolExecutor:
+    """Provide whitelisted analyst tool executor."""
+    return AnalystToolExecutor(
+        systems=systems,
+        versions=versions,
+        equipment=equipment,
+        failure_modes=failure_modes,
+        maintenance=maintenance,
+        simulations=simulations,
+        scenarios=scenarios,
+    )
+
+
+def get_ai_analyst_service(
+    tools: Annotated[
+        AnalystToolExecutor,
+        Depends(get_analyst_tool_executor),
+    ],
+    ai: Annotated[AIProvider, Depends(get_ai_provider)],
+) -> AiAnalystService:
+    """Provide AI Analyst application service."""
+    return AiAnalystService(tools=tools, ai=ai)
+
+
 SystemServiceDep = Annotated[SystemService, Depends(get_system_service)]
 VersionServiceDep = Annotated[VersionService, Depends(get_version_service)]
 EquipmentServiceDep = Annotated[
@@ -264,4 +310,8 @@ ScenarioServiceDep = Annotated[
 AiGenerationServiceDep = Annotated[
     AiGenerationService,
     Depends(get_ai_generation_service),
+]
+AiAnalystServiceDep = Annotated[
+    AiAnalystService,
+    Depends(get_ai_analyst_service),
 ]

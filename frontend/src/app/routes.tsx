@@ -1,6 +1,7 @@
 import type { RouteObject } from 'react-router-dom'
 
 import { Layout } from '../components/Layout'
+import { AnalystPage } from '../features/ai/AnalystPage'
 import { GenerateSystemPage } from '../features/ai/GenerateSystemPage'
 import { ProposalReviewPage } from '../features/ai/ProposalReviewPage'
 import { SimulationDetailPage } from '../features/results/SimulationDetailPage'
@@ -20,6 +21,7 @@ export const routes: RouteObject[] = [
       { path: 'systems', element: <SystemsListPage /> },
       { path: 'systems/:systemId', element: <SystemDetailPage /> },
       { path: 'ai/generate', element: <GenerateSystemPage /> },
+      { path: 'ai/analyst', element: <AnalystPage /> },
       { path: 'ai/proposals/:proposalId', element: <ProposalReviewPage /> },
       { path: 'simulations', element: <SimulationsListPage /> },
       { path: 'simulations/:runId', element: <SimulationDetailPage /> },
