@@ -71,8 +71,5 @@ export async function prepareAndCompileReliability(
     }
   }
 
-  return reliabilityApi.generate(
-    versionId,
-    'compiled from UI prepare step',
-  )
+  return reliabilityApi.generate(versionId, 'compiled from UI prepare step')
 }

@@ -17,7 +17,13 @@ interface Props {
 function quantileSeries(
   label: string,
   summary: MetricSummary | undefined,
-): { name: string; p5: number | null; median: number | null; p95: number | null; mean: number | null } {
+): {
+  name: string
+  p5: number | null
+  median: number | null
+  p95: number | null
+  mean: number | null
+} {
   return {
     name: label,
     p5: summary?.p5 ?? null,
@@ -170,10 +176,7 @@ export function ResultsCharts({ status, results }: Props) {
         <Typography variant="subtitle1" gutterBottom>
           Распределения (квантили по прогонам)
         </Typography>
-        <ReactECharts
-          option={distributionOption}
-          style={{ height: 360 }}
-        />
+        <ReactECharts option={distributionOption} style={{ height: 360 }} />
       </Box>
 
       <Box>
@@ -186,8 +189,8 @@ export function ResultsCharts({ status, results }: Props) {
           <ReactECharts option={paretoOption} style={{ height: 360 }} />
         )}
         <Typography variant="caption" color="text.secondary">
-          key = failure_mode / equipment id с backend; share уже
-          посчитан на сервере.
+          key = failure_mode / equipment id с backend; share уже посчитан на
+          сервере.
         </Typography>
       </Box>
 
@@ -201,14 +204,14 @@ export function ResultsCharts({ status, results }: Props) {
           <ReactECharts option={loadOption} style={{ height: 360 }} />
         )}
         <Typography variant="caption" color="text.secondary">
-          Потребление запчастей смотрите в Event explorer
-          (типы SPARE_*). Агрегаты spare Pareto в MVP не считаются.
+          Потребление запчастей смотрите в Event explorer (типы SPARE_*).
+          Агрегаты spare Pareto в MVP не считаются.
         </Typography>
       </Box>
 
       <Typography variant="body2" color="text.secondary">
-        Repair p90={formatNum(metrics.repair_p90_minutes)} мин;
-        p95={formatNum(metrics.repair_p95_minutes)} мин
+        Repair p90={formatNum(metrics.repair_p90_minutes)} мин; p95=
+        {formatNum(metrics.repair_p95_minutes)} мин
       </Typography>
     </Stack>
   )

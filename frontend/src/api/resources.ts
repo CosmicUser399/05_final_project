@@ -59,10 +59,7 @@ export const connectionsApi = {
   list: (versionId: string) =>
     apiGet<EquipmentConnection[]>(`/versions/${versionId}/connections`),
   create: (versionId: string, body: Record<string, unknown>) =>
-    apiPost<EquipmentConnection>(
-      `/versions/${versionId}/connections`,
-      body,
-    ),
+    apiPost<EquipmentConnection>(`/versions/${versionId}/connections`, body),
   remove: (id: string) => apiDelete(`/connections/${id}`),
 }
 
@@ -110,11 +107,7 @@ export const referenceApi = {
   linkEquipment: (
     equipmentId: string,
     body: { taxonomy_node_id: string; reason?: string },
-  ) =>
-    apiPost<Equipment>(
-      `/reference/equipment/${equipmentId}/link`,
-      body,
-    ),
+  ) => apiPost<Equipment>(`/reference/equipment/${equipmentId}/link`, body),
   applyParameter: (
     parameterId: string,
     body: { failure_mode_id: string; reason?: string },
@@ -145,17 +138,14 @@ export const aiApi = {
     proposalId: string,
     body: { system_name?: string; create_system?: boolean },
   ) => apiPost<CommitResult>(`/ai/proposals/${proposalId}/commit`, body),
-  chat: (body: {
-    message: string
-    context?: AnalystChatContext
-  }) => apiPost<AnalystChatResponse>('/ai/chat', body),
+  chat: (body: { message: string; context?: AnalystChatContext }) =>
+    apiPost<AnalystChatResponse>('/ai/chat', body),
 }
 
 export const scenariosApi = {
   list: (versionId: string) =>
     apiGet<Scenario[]>(`/versions/${versionId}/scenarios`),
-  get: (scenarioId: string) =>
-    apiGet<Scenario>(`/scenarios/${scenarioId}`),
+  get: (scenarioId: string) => apiGet<Scenario>(`/scenarios/${scenarioId}`),
   create: (
     versionId: string,
     body: {
@@ -177,8 +167,7 @@ export const scenariosApi = {
         parameters: Record<string, unknown>
       }>
     },
-  ) =>
-    apiPost<Scenario>(`/scenarios/${scenarioId}/versions`, body),
+  ) => apiPost<Scenario>(`/scenarios/${scenarioId}/versions`, body),
   simulate: (
     scenarioId: string,
     body: {
@@ -188,11 +177,7 @@ export const scenariosApi = {
       random_seed?: number
       parallel_runs?: number
     },
-  ) =>
-    apiPost<SimulationStatus>(
-      `/scenarios/${scenarioId}/simulate`,
-      body,
-    ),
+  ) => apiPost<SimulationStatus>(`/scenarios/${scenarioId}/simulate`, body),
   compare: (
     scenarioId: string,
     params?: { baseline_run_id?: string; scenario_run_id?: string },
@@ -213,9 +198,7 @@ export const scenariosApi = {
 
 export const simulationsApi = {
   list: (versionId: string) =>
-    apiGet<SimulationStatus[]>(
-      `/versions/${versionId}/simulations`,
-    ),
+    apiGet<SimulationStatus[]>(`/versions/${versionId}/simulations`),
   create: (
     body: {
       version_id: string
@@ -231,12 +214,9 @@ export const simulationsApi = {
     apiPostWithHeaders<SimulationStatus>(
       '/simulations',
       body,
-      idempotencyKey
-        ? { 'Idempotency-Key': idempotencyKey }
-        : undefined,
+      idempotencyKey ? { 'Idempotency-Key': idempotencyKey } : undefined,
     ),
-  get: (runId: string) =>
-    apiGet<SimulationStatus>(`/simulations/${runId}`),
+  get: (runId: string) => apiGet<SimulationStatus>(`/simulations/${runId}`),
   status: (runId: string) =>
     apiGet<SimulationStatus>(`/simulations/${runId}/status`),
   results: (runId: string) =>
@@ -264,9 +244,7 @@ export const simulationsApi = {
       query.set('equipment_id', params.equipment_id)
     }
     const suffix = query.size > 0 ? `?${query.toString()}` : ''
-    return apiGet<SimulationEventsPage>(
-      `/simulations/${runId}/events${suffix}`,
-    )
+    return apiGet<SimulationEventsPage>(`/simulations/${runId}/events${suffix}`)
   },
   cancel: (runId: string) =>
     apiPost<SimulationStatus>(`/simulations/${runId}/cancel`),
@@ -279,14 +257,11 @@ export const petriApi = {
     apiPost<PetriModel>(`/versions/${versionId}/petri/generate`, {
       notes: notes ?? null,
     }),
-  get: (petriId: string) =>
-    apiGet<PetriModel>(`/petri/${petriId}`),
+  get: (petriId: string) => apiGet<PetriModel>(`/petri/${petriId}`),
 }
 
 export const reliabilityApi = {
-  getLatest: async (
-    versionId: string,
-  ): Promise<ReliabilityModel | null> => {
+  getLatest: async (versionId: string): Promise<ReliabilityModel | null> => {
     try {
       return await apiGet<ReliabilityModel>(
         `/versions/${versionId}/reliability`,
@@ -299,24 +274,18 @@ export const reliabilityApi = {
     }
   },
   generate: (versionId: string, notes?: string) =>
-    apiPost<ReliabilityModel>(
-      `/versions/${versionId}/reliability/generate`,
-      { notes: notes ?? null },
-    ),
+    apiPost<ReliabilityModel>(`/versions/${versionId}/reliability/generate`, {
+      notes: notes ?? null,
+    }),
   validate: (versionId: string) =>
     apiPost<ValidationReport>(`/versions/${versionId}/validate`),
 }
 
 export const failureModesApi = {
   list: (equipmentId: string) =>
-    apiGet<FailureMode[]>(
-      `/equipment/${equipmentId}/failure-modes`,
-    ),
+    apiGet<FailureMode[]>(`/equipment/${equipmentId}/failure-modes`),
   create: (equipmentId: string, body: Record<string, unknown>) =>
-    apiPost<FailureMode>(
-      `/equipment/${equipmentId}/failure-modes`,
-      body,
-    ),
+    apiPost<FailureMode>(`/equipment/${equipmentId}/failure-modes`, body),
 }
 
 export const maintenanceApi = {
@@ -326,9 +295,7 @@ export const maintenanceApi = {
 
 export const productionApi = {
   listImpacts: (versionId: string) =>
-    apiGet<ProductionImpact[]>(
-      `/versions/${versionId}/production-impacts`,
-    ),
+    apiGet<ProductionImpact[]>(`/versions/${versionId}/production-impacts`),
   createImpact: (
     versionId: string,
     body: { equipment_id: string; loss_fraction: number },
@@ -337,4 +304,77 @@ export const productionApi = {
       `/versions/${versionId}/production-impacts`,
       body,
     ),
+}
+
+export interface ExcelImportResult {
+  version_id: string
+  imported: {
+    equipment: number
+    failure_modes: number
+    diagnostics: number
+    [key: string]: number
+  }
+  dataset_label?: string | null
+  for_software_testing?: boolean
+}
+
+export interface DemoSeedResult {
+  system_id: string
+  version_id: string
+  dataset_label: string
+  for_software_testing: boolean
+  equipment_count: number
+  pf_demo_tag: string
+}
+
+export const excelApi = {
+  exportWorkbook: async (versionId: string): Promise<Blob> => {
+    const response = await fetch(`/api/v1/versions/${versionId}/excel`, {
+      headers: { Accept: 'application/octet-stream' },
+    })
+    if (!response.ok) {
+      throw new ApiError(
+        response.status,
+        'EXCEL_EXPORT_FAILED',
+        response.statusText,
+      )
+    }
+    return response.blob()
+  },
+  importWorkbook: async (
+    versionId: string,
+    file: File,
+  ): Promise<ExcelImportResult> => {
+    const form = new FormData()
+    form.append('file', file)
+    const response = await fetch(`/api/v1/versions/${versionId}/excel/import`, {
+      method: 'POST',
+      headers: { Accept: 'application/json' },
+      body: form,
+    })
+    if (!response.ok) {
+      const body: unknown = await response.json().catch(() => null)
+      if (
+        typeof body === 'object' &&
+        body !== null &&
+        'error' in body &&
+        typeof (body as { error: { code: string; message: string } }).error
+          ?.code === 'string'
+      ) {
+        const err = (body as { error: { code: string; message: string } }).error
+        throw new ApiError(response.status, err.code, err.message)
+      }
+      throw new ApiError(
+        response.status,
+        'EXCEL_IMPORT_FAILED',
+        response.statusText,
+      )
+    }
+    return (await response.json()) as ExcelImportResult
+  },
+}
+
+export const demoApi = {
+  seedUpp100: (body: { write_seed_file?: boolean } = {}) =>
+    apiPost<DemoSeedResult>('/demo/upp100', body),
 }

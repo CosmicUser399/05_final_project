@@ -13,6 +13,7 @@ import { useParams } from 'react-router-dom'
 import { systemsApi } from '../../api/resources'
 import { EquipmentGraph } from '../equipment/EquipmentGraph'
 import { EquipmentTable } from '../equipment/EquipmentTable'
+import { ExcelExchangePanel } from '../excel/ExcelExchangePanel'
 import { ReliabilityPanel } from '../reliability/ReliabilityPanel'
 
 export function SystemDetailPage() {
@@ -55,9 +56,7 @@ export function SystemDetailPage() {
         {systemQuery.data.description || 'Без описания'}
       </Typography>
       {versionId ? (
-        <Typography variant="body2">
-          Активная версия: {versionId}
-        </Typography>
+        <Typography variant="body2">Активная версия: {versionId}</Typography>
       ) : (
         <Alert severity="warning">У системы нет версий</Alert>
       )}
@@ -65,15 +64,15 @@ export function SystemDetailPage() {
         <Tab label="Оборудование" />
         <Tab label="Граф" />
         <Tab label="Надёжность" />
+        <Tab label="Excel" />
       </Tabs>
-      {versionId && tab === 0 ? (
-        <EquipmentTable versionId={versionId} />
-      ) : null}
-      {versionId && tab === 1 ? (
-        <EquipmentGraph versionId={versionId} />
-      ) : null}
+      {versionId && tab === 0 ? <EquipmentTable versionId={versionId} /> : null}
+      {versionId && tab === 1 ? <EquipmentGraph versionId={versionId} /> : null}
       {versionId && tab === 2 ? (
         <ReliabilityPanel versionId={versionId} />
+      ) : null}
+      {versionId && tab === 3 ? (
+        <ExcelExchangePanel versionId={versionId} />
       ) : null}
     </Stack>
   )

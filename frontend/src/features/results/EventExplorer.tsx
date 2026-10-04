@@ -79,13 +79,7 @@ export function EventExplorer({ status }: Props) {
   const [equipmentId, setEquipmentId] = useState('')
 
   const eventsQuery = useQuery({
-    queryKey: [
-      'simulation-events',
-      status.id,
-      offset,
-      eventType,
-      equipmentId,
-    ],
+    queryKey: ['simulation-events', status.id, offset, eventType, equipmentId],
     queryFn: () =>
       simulationsApi.events(status.id, {
         offset,

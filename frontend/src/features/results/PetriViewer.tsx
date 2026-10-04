@@ -83,28 +83,26 @@ function subnetToFlow(subnet: PetriSubnet): {
     },
   }))
 
-  const transitionNodes: Node[] = subnet.transitions.map(
-    (transition) => ({
-      id: transition.id,
-      data: {
-        label: `${transition.role}\n${transition.id}`,
-        kind: 'transition',
-        source_entity_type: transition.source_entity_type,
-        source_entity_id: transition.source_entity_id,
-      },
-      position: { x: 0, y: 0 },
-      style: {
-        width: NODE_WIDTH,
-        borderRadius: 2,
-        border: '2px solid #b35c1e',
-        background: '#fff8f1',
-        fontSize: 11,
-        whiteSpace: 'pre-line',
-        textAlign: 'center',
-        padding: 6,
-      },
-    }),
-  )
+  const transitionNodes: Node[] = subnet.transitions.map((transition) => ({
+    id: transition.id,
+    data: {
+      label: `${transition.role}\n${transition.id}`,
+      kind: 'transition',
+      source_entity_type: transition.source_entity_type,
+      source_entity_id: transition.source_entity_id,
+    },
+    position: { x: 0, y: 0 },
+    style: {
+      width: NODE_WIDTH,
+      borderRadius: 2,
+      border: '2px solid #b35c1e',
+      background: '#fff8f1',
+      fontSize: 11,
+      whiteSpace: 'pre-line',
+      textAlign: 'center',
+      padding: 6,
+    },
+  }))
 
   const edges: Edge[] = subnet.arcs.map((arc) => ({
     id: arc.id,
@@ -114,10 +112,7 @@ function subnetToFlow(subnet: PetriSubnet): {
     markerEnd: { type: MarkerType.ArrowClosed },
   }))
 
-  const nodes = layoutGraph(
-    [...placeNodes, ...transitionNodes],
-    edges,
-  )
+  const nodes = layoutGraph([...placeNodes, ...transitionNodes], edges)
   return { nodes, edges }
 }
 
@@ -157,13 +152,9 @@ export function PetriViewer({ versionId }: Props) {
   })
 
   const definition = petriQuery.data?.definition ?? null
-  const subnets = useMemo(
-    () => definition?.subnets ?? [],
-    [definition],
-  )
+  const subnets = useMemo(() => definition?.subnets ?? [], [definition])
   const activeKey = subnetKey || subnets[0]?.key || ''
-  const activeSubnet =
-    subnets.find((item) => item.key === activeKey) ?? null
+  const activeSubnet = subnets.find((item) => item.key === activeKey) ?? null
 
   const { nodes, edges } = useMemo(() => {
     if (!activeSubnet || collapsed) {
@@ -237,9 +228,8 @@ export function PetriViewer({ versionId }: Props) {
       <Typography variant="h6">Petri viewer</Typography>
       <Typography variant="body2" color="text.secondary">
         validation={model.validation_status}; model_hash=
-        {model.reliability_model_hash.slice(0, 12)}…; places =
-        окружности, transitions = прямоугольники. Клик показывает
-        source entity.
+        {model.reliability_model_hash.slice(0, 12)}…; places = окружности,
+        transitions = прямоугольники. Клик показывает source entity.
       </Typography>
       <Stack direction={{ xs: 'column', md: 'row' }} spacing={1}>
         <FormControl size="small" sx={{ minWidth: 260 }} disabled={collapsed}>
@@ -281,9 +271,7 @@ export function PetriViewer({ versionId }: Props) {
           {selected.source_entity_id
             ? ` / ${selected.source_entity_id}`
             : ' (нет привязки)'}
-          {selectedEquipmentId
-            ? `; equipment=${selectedEquipmentId}`
-            : ''}
+          {selectedEquipmentId ? `; equipment=${selectedEquipmentId}` : ''}
         </Alert>
       ) : null}
       <Box sx={{ flex: 1, border: '1px solid', borderColor: 'divider' }}>

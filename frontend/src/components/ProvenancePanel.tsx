@@ -32,9 +32,7 @@ export function ProvenancePanel({
 
   return (
     <Stack spacing={0.5}>
-      <Typography variant="body2">
-        Значение: {valueLabel}
-      </Typography>
+      <Typography variant="body2">Значение: {valueLabel}</Typography>
       <Stack direction="row" spacing={1} alignItems="center">
         <Typography variant="body2">Источник:</Typography>
         <ProvenanceBadge sourceType={sourceType} confidence={confidence} />

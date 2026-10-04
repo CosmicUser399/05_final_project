@@ -44,9 +44,7 @@ export function SimulationDetailPage() {
   })
 
   const status = statusQuery.data ?? null
-  const streaming = Boolean(
-    status && !TERMINAL.has(status.status),
-  )
+  const streaming = Boolean(status && !TERMINAL.has(status.status))
   const streamStatus = useSimulationStream(runId, streaming)
   const effectiveStatus = streamStatus ?? status
 
@@ -136,10 +134,7 @@ export function SimulationDetailPage() {
 
       {tab === 0 ? (
         completed && results ? (
-          <MetricsDashboard
-            status={effectiveStatus}
-            results={results}
-          />
+          <MetricsDashboard status={effectiveStatus} results={results} />
         ) : (
           <Alert severity="info">
             Дашборд доступен после завершения (COMPLETED).
@@ -151,18 +146,13 @@ export function SimulationDetailPage() {
         completed && results ? (
           <ResultsCharts status={effectiveStatus} results={results} />
         ) : (
-          <Alert severity="info">
-            Графики доступны после завершения.
-          </Alert>
+          <Alert severity="info">Графики доступны после завершения.</Alert>
         )
       ) : null}
 
       {tab === 2 ? (
         completed && results ? (
-          <EquipmentMetricsTable
-            status={effectiveStatus}
-            results={results}
-          />
+          <EquipmentMetricsTable status={effectiveStatus} results={results} />
         ) : (
           <Alert severity="info">
             Метрики оборудования доступны после завершения.

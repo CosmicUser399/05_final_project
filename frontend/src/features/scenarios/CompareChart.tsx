@@ -32,9 +32,7 @@ export function CompareChart({ rows }: CompareChartProps) {
     return null
   }
 
-  const categories = selected.map(
-    (row) => LABELS[row.metric] ?? row.metric,
-  )
+  const categories = selected.map((row) => LABELS[row.metric] ?? row.metric)
   const option = {
     tooltip: { trigger: 'axis' },
     legend: { data: ['Baseline', 'Scenario'] },

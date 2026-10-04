@@ -1,0 +1,9 @@
+Валидация: есть замечания (8)
+CRITICAL_WITHOUT_PRODUCTION_IMPACT: critical equipment must have a production impact
+CRITICAL_WITHOUT_PRODUCTION_IMPACT: critical equipment must have a production impact
+CRITICAL_WITHOUT_PRODUCTION_IMPACT: critical equipment needs production impact
+CRITICAL_WITHOUT_PRODUCTION_IMPACT: critical equipment needs production impact
+NO_FAILURE_MODES: simulation needs at least one failure mode
+REPAIRABLE_WITHOUT_CM: repairable equipment needs a corrective task
+REPAIRABLE_WITHOUT_CM: repairable equipment needs a corrective task
+REPAIRABLE_WITHOUT_CM: repairable equipment needs a corrective task

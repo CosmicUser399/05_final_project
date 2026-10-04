@@ -70,8 +70,9 @@ export function ScenariosListPage() {
   const [versionId, setVersionId] = useState('')
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
-  const [changeType, setChangeType] =
-    useState<ScenarioChangeType>('CHANGE_DIAGNOSTIC_INTERVAL')
+  const [changeType, setChangeType] = useState<ScenarioChangeType>(
+    'CHANGE_DIAGNOSTIC_INTERVAL',
+  )
   const [targetLineageId, setTargetLineageId] = useState('')
   const [paramValue, setParamValue] = useState('14')
   const [paramUnit, setParamUnit] = useState('DAYS')
@@ -113,8 +114,7 @@ export function ScenariosListPage() {
       const parameters =
         changeType === 'CHANGE_DETECTION_PROBABILITY'
           ? { detection_probability: Number(paramValue) }
-          : changeType === 'DISABLE_TASK' ||
-              changeType === 'ENABLE_TASK'
+          : changeType === 'DISABLE_TASK' || changeType === 'ENABLE_TASK'
             ? {}
             : { value: Number(paramValue), unit: paramUnit }
       return scenariosApi.create(selectedVersionId, {
@@ -139,9 +139,7 @@ export function ScenariosListPage() {
     },
     onError: (err: unknown) => {
       setError(
-        err instanceof ApiError
-          ? err.message
-          : 'Не удалось создать сценарий',
+        err instanceof ApiError ? err.message : 'Не удалось создать сценарий',
       )
     },
   })
@@ -150,8 +148,8 @@ export function ScenariosListPage() {
     <Stack spacing={2}>
       <Typography variant="h4">Сценарии</Typography>
       <Typography color="text.secondary">
-        Overlay поверх замороженной версии: baseline не меняется.
-        Сравнение Availability, Production Loss и других метрик.
+        Overlay поверх замороженной версии: baseline не меняется. Сравнение
+        Availability, Production Loss и других метрик.
       </Typography>
 
       <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
@@ -273,8 +271,7 @@ export function ScenariosListPage() {
         </Box>
       ) : (
         <Alert severity="info">
-          Выберите систему и версию с скомпилированной моделью
-          надёжности.
+          Выберите систему и версию с скомпилированной моделью надёжности.
         </Alert>
       )}
 

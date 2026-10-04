@@ -38,15 +38,11 @@ interface ChatTurn {
 
 export function AnalystPage() {
   const [searchParams] = useSearchParams()
-  const [systemId, setSystemId] = useState(
-    searchParams.get('systemId') ?? '',
-  )
+  const [systemId, setSystemId] = useState(searchParams.get('systemId') ?? '')
   const [versionId, setVersionId] = useState(
     searchParams.get('versionId') ?? '',
   )
-  const [runId, setRunId] = useState(
-    searchParams.get('runId') ?? '',
-  )
+  const [runId, setRunId] = useState(searchParams.get('runId') ?? '')
   const [message, setMessage] = useState(
     'Какие метрики доступности и потерь производства показывает симуляция?',
   )
@@ -103,11 +99,7 @@ export function AnalystPage() {
       ])
     },
     onError: (err: unknown) => {
-      setError(
-        err instanceof ApiError
-          ? err.message
-          : 'Ошибка AI Analyst',
-      )
+      setError(err instanceof ApiError ? err.message : 'Ошибка AI Analyst')
     },
   })
 
@@ -115,9 +107,8 @@ export function AnalystPage() {
     <Stack spacing={2} maxWidth={960}>
       <Typography variant="h4">AI Analyst</Typography>
       <Typography color="text.secondary">
-        Ответы строятся только через typed tools по сохранённым
-        результатам симуляции и модели. Числа вне tool-результатов
-        отклоняются.
+        Ответы строятся только через typed tools по сохранённым результатам
+        симуляции и модели. Числа вне tool-результатов отклоняются.
       </Typography>
 
       <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
@@ -226,9 +217,7 @@ export function AnalystPage() {
             sx={{
               p: 1.5,
               bgcolor:
-                turn.role === 'user'
-                  ? 'action.hover'
-                  : 'background.paper',
+                turn.role === 'user' ? 'action.hover' : 'background.paper',
               borderLeft: 3,
               borderColor:
                 turn.role === 'user' ? 'primary.main' : 'success.main',
@@ -247,9 +236,7 @@ export function AnalystPage() {
             >
               {turn.text}
             </Typography>
-            {turn.response ? (
-              <AnswerMeta response={turn.response} />
-            ) : null}
+            {turn.response ? <AnswerMeta response={turn.response} /> : null}
           </Box>
         ))}
       </Stack>
@@ -264,11 +251,7 @@ function AnswerMeta({ response }: { response: AnalystChatResponse }) {
         <Chip
           size="small"
           color={response.grounded ? 'success' : 'warning'}
-          label={
-            response.grounded
-              ? 'Grounded'
-              : 'Not grounded'
-          }
+          label={response.grounded ? 'Grounded' : 'Not grounded'}
         />
         {response.model ? (
           <Chip size="small" label={`model: ${response.model}`} />
@@ -282,7 +265,10 @@ function AnswerMeta({ response }: { response: AnalystChatResponse }) {
       {response.references.length > 0 ? (
         <List dense disablePadding>
           {response.references.map((ref: AnalystReference) => (
-            <ListItem key={`${ref.kind}-${ref.entity_id}-${ref.label}`} disableGutters>
+            <ListItem
+              key={`${ref.kind}-${ref.entity_id}-${ref.label}`}
+              disableGutters
+            >
               <ListItemText
                 primary={`${ref.kind}: ${ref.label}`}
                 secondary={ref.entity_id}

@@ -2,11 +2,7 @@ import { useEffect, useState } from 'react'
 
 import type { SimulationStatus } from '../../api/types'
 
-const TERMINAL = new Set([
-  'COMPLETED',
-  'FAILED',
-  'CANCELLED',
-])
+const TERMINAL = new Set(['COMPLETED', 'FAILED', 'CANCELLED'])
 
 /**
  * Subscribe to SSE progress for a simulation run.
@@ -26,9 +22,7 @@ export function useSimulationStream(
     if (typeof EventSource === 'undefined') {
       return
     }
-    const source = new EventSource(
-      `/api/v1/simulations/${runId}/stream`,
-    )
+    const source = new EventSource(`/api/v1/simulations/${runId}/stream`)
 
     const onProgress = (event: MessageEvent<string>) => {
       try {

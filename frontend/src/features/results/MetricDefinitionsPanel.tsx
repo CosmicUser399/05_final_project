@@ -15,8 +15,7 @@ export function MetricDefinitionsPanel() {
     <Stack spacing={2}>
       <Typography variant="h6">Определения метрик</Typography>
       <Typography variant="body2" color="text.secondary">
-        Формулы совпадают с backend / ADR; фронтенд не пересчитывает
-        значения.
+        Формулы совпадают с backend / ADR; фронтенд не пересчитывает значения.
       </Typography>
       <Table size="small">
         <TableHead>

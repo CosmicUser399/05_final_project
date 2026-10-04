@@ -16,8 +16,10 @@ from app.application.ai_service import build_default_providers
 from app.application.analyst import AiAnalystService
 from app.application.analyst.tools import AnalystToolExecutor
 from app.application.connections_service import ConnectionsService
+from app.application.demo_service import DemoService
 from app.application.diagnostics_service import DiagnosticsService
 from app.application.equipment_service import EquipmentService
+from app.application.excel_service import ExcelService
 from app.application.failure_modes import FailureModeService
 from app.application.maintenance_service import MaintenanceService
 from app.application.petri_service import PetriService
@@ -230,6 +232,19 @@ def get_reference_data_service(
     return ReferenceDataService(session_factory, uow_factory)
 
 
+def get_excel_service(uow_factory: UowFactoryDep) -> ExcelService:
+    """Provide Excel import/export service."""
+    return ExcelService(uow_factory)
+
+
+def get_demo_service(
+    uow_factory: UowFactoryDep,
+    excel: Annotated[ExcelService, Depends(get_excel_service)],
+) -> DemoService:
+    """Provide demo dataset seed service."""
+    return DemoService(uow_factory, excel)
+
+
 def get_analyst_tool_executor(
     systems: Annotated[SystemService, Depends(get_system_service)],
     versions: Annotated[VersionService, Depends(get_version_service)],
@@ -334,3 +349,5 @@ ReferenceDataServiceDep = Annotated[
     ReferenceDataService,
     Depends(get_reference_data_service),
 ]
+ExcelServiceDep = Annotated[ExcelService, Depends(get_excel_service)]
+DemoServiceDep = Annotated[DemoService, Depends(get_demo_service)]

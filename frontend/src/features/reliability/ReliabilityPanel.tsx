@@ -1,9 +1,4 @@
-import {
-  Alert,
-  Button,
-  Stack,
-  Typography,
-} from '@mui/material'
+import { Alert, Button, Stack, Typography } from '@mui/material'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
 
@@ -51,8 +46,7 @@ export function ReliabilityPanel({ versionId }: Props) {
   })
 
   const compileMutation = useMutation({
-    mutationFn: () =>
-      reliabilityApi.generate(versionId, 'compiled from UI'),
+    mutationFn: () => reliabilityApi.generate(versionId, 'compiled from UI'),
     onSuccess: async () => {
       setError(null)
       setReport(null)
@@ -95,9 +89,9 @@ export function ReliabilityPanel({ versionId }: Props) {
     <Stack spacing={1.5}>
       <Typography variant="h6">Reliability Model</Typography>
       <Typography variant="body2" color="text.secondary">
-        Симуляция требует скомпилированный снимок
-        (`POST /reliability/generate`). Без failure modes и production
-        impact для критичного оборудования компиляция отклоняется.
+        Симуляция требует скомпилированный снимок (`POST
+        /reliability/generate`). Без failure modes и production impact для
+        критичного оборудования компиляция отклоняется.
       </Typography>
       {model ? (
         <Alert severity="success">
@@ -133,8 +127,8 @@ export function ReliabilityPanel({ versionId }: Props) {
         </Button>
       </Stack>
       <Typography variant="caption" color="text.secondary">
-        «Подготовить…» добавит минимальные failure mode / CM / production
-        impact там, где их нет, затем скомпилирует снимок.
+        «Подготовить…» добавит минимальные failure mode / CM / production impact
+        там, где их нет, затем скомпилирует снимок.
       </Typography>
       {error ? <Alert severity="error">{error}</Alert> : null}
       {report ? (

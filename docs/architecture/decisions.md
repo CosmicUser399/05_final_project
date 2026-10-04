@@ -1,10 +1,10 @@
-# Архитектурные решения (ADR, черновики)
+# Архитектурные решения (ADR)
 
-Статусы: `Proposed` - предложено, `Accepted` - принято. Полная
-формулировка и финализация - в P12-05. Источник: план разработки
-(`.cursor/plans/`), `Technical_Specification_01.md`,
-`Cursor_Development_Package_01.md`. При конфликте действуют решения
-плана.
+Статусы: `Proposed` - предложено, `Accepted` - принято.
+Финализация P12-05: ADR-001..015 ниже зафиксированы как Accepted.
+Источник: план разработки (`.cursor/plans/`),
+`Technical_Specification_01.md`, `Cursor_Development_Package_01.md`.
+При конфликте действуют решения плана.
 
 ## ADR-001. Модульный монолит
 
@@ -123,6 +123,21 @@
   OREDA rates; only `OREDARepository` / `ISO14224Repository` load them.
 - AI prefers reference matches; otherwise `AI_ESTIMATE` / `UNKNOWN`.
   See `docs/architecture/oreda-iso.md`.
+
+## ADR-015. Excel as exchange format, demo seed as fixture
+
+- Status: Accepted.
+- Excel (`openpyxl`) is a boundary adapter: export/import only; never
+  a database. Import path is parse → DTO → validation → preview →
+  commit into an empty DRAFT. Round-trip preserves supported fields
+  (`docs/api/excel.md`).
+- УПП-100 demo (`scripts/seed/upp100`, `POST /demo/upp100`) is a
+  versioned synthetic fixture for software testing, including PF-demo
+  P-101 (TS §86). It is not engineering certification data.
+- Package §101 acceptance is covered by API E2E
+  (`tests/api/test_p12_acceptance.py`) plus Playwright UI smoke and
+  `scripts/docker-smoke.ps1`. Load test 10k runs remains the existing
+  `@pytest.mark.slow` performance test.
 
 ## Контракт P0 (bootstrap)
 

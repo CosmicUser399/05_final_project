@@ -25,7 +25,7 @@ Reliability Model -> Petri Model / RAM-симуляция (Monte Carlo).
 | P9 Results UI | выполнен | дашборд, графики, events, Petri viewer |
 | P10 AI Analyst | выполнен | typed tools, grounded chat, SSE, UI |
 | P11 Reference Data | выполнен | OREDA/ISO ingest, browser, provenance |
-| P12 Excel/Demo | не начат | Excel, demo seed, E2E |
+| P12 Excel/Demo | выполнен | Excel, УПП-100, PF-демо, E2E, Docker smoke |
 
 ### P0. Bootstrap
 
@@ -192,8 +192,15 @@ OpenAI, MCP (проверяется архитектурным тестом).
   ProvenancePanel, AI: suggestions + auto-link taxonomy,
   `reference.search` в Analyst. См. `docs/architecture/oreda-iso.md`,
   ADR-014.
-
-Следующий шаг - P12 (Excel, Demo, Quality).
+- **P12 Excel / Demo / Quality:** Excel export/import (`openpyxl`,
+  sheets Package §60, preview→commit, round-trip тест), демо УПП-100
+  (`POST /demo/upp100`, seed `scripts/seed/upp100`, ~61 ед.,
+  PF-демо P-101), API acceptance Package §101
+  (`tests/api/test_p12_acceptance.py`), Playwright UI smoke (`e2e/`),
+  Docker smoke (`scripts/docker-smoke.ps1` / `make docker-smoke`),
+  нагрузка 10k (`pytest -m slow`), документация Package §92 и
+  финализация ADR-001..015. См. `docs/api/excel.md`,
+  `docs/demo/upp100.md`, ADR-015.
 
 ## Требования
 
@@ -257,14 +264,17 @@ backend/
     infrastructure/ai/  # OpenAI + equipment proposal providers
     infrastructure/mcp/ # Petri-Pilot / Fabricate adapters + mocks
     infrastructure/files/ # Fabricate staging importer
+    infrastructure/excel/ # Excel workbook adapter
+    infrastructure/demo/  # УПП-100 seed builder
     infrastructure/reference_data/ # OREDA/ISO repos + demo seeds
     simulation/     # RAM engine (Monte Carlo)
 reference_data/     # local PDFs (gitignored) + README workflow
   alembic/          # миграции схемы
   tests/            # domain, api, infrastructure
 frontend/           # React + TS + MUI X DataGrid + React Flow
+e2e/                # Playwright UI smoke
 docs/               # architecture, api, domain, simulation, decisions
-scripts/            # check.ps1, dev.ps1
+scripts/            # check.ps1, dev.ps1, docker-smoke.ps1, seed/upp100
 docker/             # Dockerfile-ы и nginx.conf
 data/               # локальная SQLite (data/app.db), не в git
 ```

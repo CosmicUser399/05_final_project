@@ -49,8 +49,7 @@ const compareColumns: GridColDef<MetricComparisonRow>[] = [
     headerName: 'Метрика',
     flex: 1.2,
     minWidth: 180,
-    valueGetter: (_value, row) =>
-      METRIC_LABELS[row.metric] ?? row.metric,
+    valueGetter: (_value, row) => METRIC_LABELS[row.metric] ?? row.metric,
   },
   {
     field: 'baseline',
@@ -78,9 +77,7 @@ export function ScenarioDetailPage() {
   const [runs, setRuns] = useState('20')
   const [seed, setSeed] = useState('42')
   const [job, setJob] = useState<SimulationStatus | null>(null)
-  const [comparison, setComparison] = useState<ScenarioComparison | null>(
-    null,
-  )
+  const [comparison, setComparison] = useState<ScenarioComparison | null>(null)
   const [error, setError] = useState<string | null>(null)
 
   const scenarioQuery = useQuery({
@@ -143,9 +140,7 @@ export function ScenarioDetailPage() {
         const next = await simulationsApi.get(job.id)
         setJob(next)
       } catch (err) {
-        setError(
-          err instanceof ApiError ? err.message : 'Ошибка статуса',
-        )
+        setError(err instanceof ApiError ? err.message : 'Ошибка статуса')
       }
     }, 1000)
     return () => window.clearInterval(timer)
@@ -179,8 +174,7 @@ export function ScenarioDetailPage() {
         Версия системы: {scenario.version_id}
       </Typography>
       <Typography variant="body2">
-        scenario_hash:{' '}
-        {scenario.current_version?.scenario_hash ?? '—'}
+        scenario_hash: {scenario.current_version?.scenario_hash ?? '—'}
       </Typography>
 
       <Typography variant="h6">Изменения (overlay)</Typography>
@@ -197,9 +191,7 @@ export function ScenarioDetailPage() {
                 py: 1,
               }}
             >
-              <Typography variant="subtitle2">
-                {change.change_type}
-              </Typography>
+              <Typography variant="subtitle2">{change.change_type}</Typography>
               <Typography variant="body2" color="text.secondary">
                 lineage: {change.target_lineage_id}
               </Typography>
@@ -267,8 +259,8 @@ export function ScenarioDetailPage() {
             </Button>
           }
         >
-          Симуляция {job.id}: {job.status} (
-          {job.completed_runs}/{job.total_runs}), seed={job.random_seed}
+          Симуляция {job.id}: {job.status} ({job.completed_runs}/
+          {job.total_runs}), seed={job.random_seed}
         </Alert>
       ) : null}
 
@@ -277,11 +269,9 @@ export function ScenarioDetailPage() {
       {comparison ? (
         <Stack spacing={2}>
           <Typography variant="body2">
-            Δ Availability:{' '}
-            {formatNum(comparison.deltas.availability)}; Δ Production
-            Loss: {formatNum(comparison.deltas.production_loss)}; Δ
-            Maintenance Cost:{' '}
-            {formatNum(comparison.deltas.maintenance_cost)}
+            Δ Availability: {formatNum(comparison.deltas.availability)}; Δ
+            Production Loss: {formatNum(comparison.deltas.production_loss)}; Δ
+            Maintenance Cost: {formatNum(comparison.deltas.maintenance_cost)}
           </Typography>
           <Typography variant="caption" color="text.secondary">
             baseline run {comparison.baseline_run_id}; scenario run{' '}

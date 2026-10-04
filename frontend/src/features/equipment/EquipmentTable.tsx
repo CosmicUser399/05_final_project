@@ -1,9 +1,5 @@
 import { Alert, Box, Button, Stack, TextField } from '@mui/material'
-import {
-  DataGrid,
-  type GridColDef,
-  type GridRowModel,
-} from '@mui/x-data-grid'
+import { DataGrid, type GridColDef, type GridRowModel } from '@mui/x-data-grid'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
 
@@ -33,7 +29,9 @@ export function EquipmentTable({ versionId }: Props) {
       setTag('')
       setName('')
       setError(null)
-      await queryClient.invalidateQueries({ queryKey: ['equipment', versionId] })
+      await queryClient.invalidateQueries({
+        queryKey: ['equipment', versionId],
+      })
     },
     onError: (err: unknown) => {
       setError(err instanceof ApiError ? err.message : 'Ошибка создания')
@@ -44,7 +42,9 @@ export function EquipmentTable({ versionId }: Props) {
     mutationFn: ({ id, body }: { id: string; body: Record<string, unknown> }) =>
       equipmentApi.update(id, body),
     onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: ['equipment', versionId] })
+      await queryClient.invalidateQueries({
+        queryKey: ['equipment', versionId],
+      })
     },
     onError: (err: unknown) => {
       setError(err instanceof ApiError ? err.message : 'Ошибка обновления')
@@ -86,9 +86,7 @@ export function EquipmentTable({ versionId }: Props) {
       headerName: 'ISO node',
       width: 120,
       valueGetter: (_value, row) =>
-        row.taxonomy_node_id
-          ? String(row.taxonomy_node_id).slice(0, 8)
-          : '—',
+        row.taxonomy_node_id ? String(row.taxonomy_node_id).slice(0, 8) : '—',
     },
     {
       field: 'criticality',
@@ -105,7 +103,10 @@ export function EquipmentTable({ versionId }: Props) {
     },
   ]
 
-  const processRowUpdate = async (newRow: GridRowModel, oldRow: GridRowModel) => {
+  const processRowUpdate = async (
+    newRow: GridRowModel,
+    oldRow: GridRowModel,
+  ) => {
     const changed: Record<string, unknown> = {}
     for (const key of [
       'tag',

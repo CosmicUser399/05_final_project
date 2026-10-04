@@ -34,9 +34,7 @@ interface MetricRow {
   scalar?: number | null
 }
 
-function rowsFromMetrics(
-  metrics: SystemAggregateMetrics,
-): MetricRow[] {
+function rowsFromMetrics(metrics: SystemAggregateMetrics): MetricRow[] {
   return [
     {
       key: 'reliability',

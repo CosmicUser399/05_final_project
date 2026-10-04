@@ -19,11 +19,7 @@ function meanOf(
   field: keyof EquipmentAggregateMetrics,
 ): number | null {
   const value = row[field]
-  if (
-    typeof value === 'object' &&
-    value !== null &&
-    'mean' in value
-  ) {
+  if (typeof value === 'object' && value !== null && 'mean' in value) {
     return value.mean
   }
   return null
@@ -46,29 +42,25 @@ const columns: GridColDef<EquipmentAggregateMetrics>[] = [
     field: 'mtbf_minutes',
     headerName: 'MTBF mean, мин',
     flex: 1,
-    valueGetter: (_value, row) =>
-      formatNum(meanOf(row, 'mtbf_minutes')),
+    valueGetter: (_value, row) => formatNum(meanOf(row, 'mtbf_minutes')),
   },
   {
     field: 'mttr_minutes',
     headerName: 'MTTR mean, мин',
     flex: 1,
-    valueGetter: (_value, row) =>
-      formatNum(meanOf(row, 'mttr_minutes')),
+    valueGetter: (_value, row) => formatNum(meanOf(row, 'mttr_minutes')),
   },
   {
     field: 'downtime_minutes',
     headerName: 'Downtime mean, мин',
     flex: 1,
-    valueGetter: (_value, row) =>
-      formatNum(meanOf(row, 'downtime_minutes')),
+    valueGetter: (_value, row) => formatNum(meanOf(row, 'downtime_minutes')),
   },
   {
     field: 'failure_count',
     headerName: 'Failures mean',
     flex: 0.9,
-    valueGetter: (_value, row) =>
-      formatNum(meanOf(row, 'failure_count')),
+    valueGetter: (_value, row) => formatNum(meanOf(row, 'failure_count')),
   },
   {
     field: 'pm_count',

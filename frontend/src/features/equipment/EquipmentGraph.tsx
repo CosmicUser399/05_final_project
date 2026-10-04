@@ -100,8 +100,7 @@ export function EquipmentGraph({ versionId }: Props) {
             item.criticality === 'CRITICAL' || item.criticality === 'HIGH'
               ? '2px solid #c62828'
               : '1px solid #90a4ae',
-          background:
-            item.criticality === 'CRITICAL' ? '#ffebee' : '#ffffff',
+          background: item.criticality === 'CRITICAL' ? '#ffebee' : '#ffffff',
           fontSize: 12,
           whiteSpace: 'pre-line',
           textAlign: 'center',
@@ -163,8 +162,8 @@ export function EquipmentGraph({ versionId }: Props) {
         </FormControl>
       </Box>
       <Typography variant="body2" color="text.secondary">
-        Красная рамка — высокая/критическая критичность. Пунктир —
-        иерархия parent.
+        Красная рамка — высокая/критическая критичность. Пунктир — иерархия
+        parent.
       </Typography>
       <Box sx={{ flex: 1, border: '1px solid', borderColor: 'divider' }}>
         <ReactFlow nodes={nodes} edges={edges} fitView>

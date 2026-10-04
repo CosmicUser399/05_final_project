@@ -12,12 +12,10 @@ export function RunProvenance({ status, results }: Props) {
   const seed = results?.random_seed ?? status.random_seed
   const modelHash = results?.model_hash ?? status.model_hash
   const scenarioHash = results?.scenario_hash ?? status.scenario_hash
-  const configHash =
-    results?.configuration_hash ?? status.configuration_hash
+  const configHash = results?.configuration_hash ?? status.configuration_hash
   const fingerprint =
     results?.simulation_fingerprint ?? status.simulation_fingerprint
-  const software =
-    results?.software_version ?? status.software_version
+  const software = results?.software_version ?? status.software_version
 
   return (
     <Stack spacing={0.5}>

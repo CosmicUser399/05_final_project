@@ -48,10 +48,7 @@ export function GenerateSystemPage() {
     if (!job || job.status === 'READY_FOR_REVIEW') {
       return
     }
-    if (
-      job.status === 'FAILED' ||
-      job.status === 'CANCELLED'
-    ) {
+    if (job.status === 'FAILED' || job.status === 'CANCELLED') {
       return
     }
     const timer = window.setInterval(async () => {
@@ -118,10 +115,7 @@ export function GenerateSystemPage() {
             Задача {job.id} · {job.status}
             {job.progress_message ? ` · ${job.progress_message}` : ''}
           </Typography>
-          <LinearProgress
-            variant="determinate"
-            value={job.progress_pct ?? 0}
-          />
+          <LinearProgress variant="determinate" value={job.progress_pct ?? 0} />
           {job.error_message ? (
             <Alert severity="error">{job.error_message}</Alert>
           ) : null}

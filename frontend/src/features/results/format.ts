@@ -16,9 +16,7 @@ export function formatNum(
   return value.toPrecision(digits)
 }
 
-export function formatPct(
-  value: number | null | undefined,
-): string {
+export function formatPct(value: number | null | undefined): string {
   if (value === null || value === undefined || !Number.isFinite(value)) {
     return '—'
   }

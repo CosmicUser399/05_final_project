@@ -1,10 +1,4 @@
-import {
-  Alert,
-  Box,
-  Button,
-  Stack,
-  Typography,
-} from '@mui/material'
+import { Alert, Box, Button, Stack, Typography } from '@mui/material'
 import { DataGrid, type GridColDef } from '@mui/x-data-grid'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
@@ -29,15 +23,12 @@ export function ProposalReviewPage() {
   })
 
   const decideMutation = useMutation({
-    mutationFn: ({
-      itemId,
-      decision,
-    }: {
-      itemId: string
-      decision: string
-    }) => aiApi.decideItem(itemId, { decision }),
+    mutationFn: ({ itemId, decision }: { itemId: string; decision: string }) =>
+      aiApi.decideItem(itemId, { decision }),
     onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: ['proposal', proposalId] })
+      await queryClient.invalidateQueries({
+        queryKey: ['proposal', proposalId],
+      })
     },
     onError: (err: unknown) => {
       setError(err instanceof ApiError ? err.message : 'Ошибка решения')
@@ -58,9 +49,7 @@ export function ProposalReviewPage() {
     },
   })
 
-  const [selectedItem, setSelectedItem] = useState<ProposalItem | null>(
-    null,
-  )
+  const [selectedItem, setSelectedItem] = useState<ProposalItem | null>(null)
   const rows = proposalQuery.data?.items ?? []
   const acceptedCount = rows.filter((item) =>
     ['ACCEPTED', 'EDITED'].includes(item.decision),
@@ -150,8 +139,8 @@ export function ProposalReviewPage() {
       </Stack>
       <Typography color="text.secondary">
         Примите или отклоните строки. Сначала справочник OREDA/ISO, затем
-        AI_ESTIMATE с низкой уверенностью. Числовые параметры из
-        Fabricate/AI по умолчанию не импортируются.
+        AI_ESTIMATE с низкой уверенностью. Числовые параметры из Fabricate/AI по
+        умолчанию не импортируются.
       </Typography>
       {proposalQuery.data?.reference_priority ? (
         <Alert severity="info">
@@ -169,9 +158,7 @@ export function ProposalReviewPage() {
             columns={columns}
             loading={proposalQuery.isLoading}
             disableRowSelectionOnClick
-            onRowClick={(params) =>
-              setSelectedItem(params.row as ProposalItem)
-            }
+            onRowClick={(params) => setSelectedItem(params.row as ProposalItem)}
             pageSizeOptions={[25, 50]}
             initialState={{
               pagination: { paginationModel: { pageSize: 25 } },
@@ -203,8 +190,7 @@ export function ProposalReviewPage() {
           />
           {selectedItem?.reference_suggestions?.length ? (
             <Typography variant="caption" color="text.secondary">
-              Подсказок справочника:{' '}
-              {selectedItem.reference_suggestions.length}
+              Подсказок справочника: {selectedItem.reference_suggestions.length}
             </Typography>
           ) : (
             <Typography variant="caption" color="text.secondary">

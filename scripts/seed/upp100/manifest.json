@@ -1,0 +1,4932 @@
+{
+  "dataset_label": "upp100-v1",
+  "for_software_testing": true,
+  "system": {
+    "name": "Установка производства полистирола - 100",
+    "description": "Типовая установка производства полистирола из стирола, мощность 100 тыс. тонн в год. Датасет для тестирования ПО, не для инженерной сертификации."
+  },
+  "equipment": [
+    {
+      "tag": "P-101",
+      "name": "Feed pump P-101",
+      "description": "Demo feed pump for software testing",
+      "parent_tag": null,
+      "category": "Pump",
+      "equipment_class": "centrifugal_pump",
+      "equipment_type": "Feed pump",
+      "location": "УПП-100",
+      "quantity": 1,
+      "criticality": "CRITICAL",
+      "operating_mode": "CONTINUOUS",
+      "standby_mode": "NONE",
+      "is_repairable": true
+    },
+    {
+      "tag": "P-102",
+      "name": "Feed pump P-102",
+      "description": "Demo feed pump for software testing",
+      "parent_tag": null,
+      "category": "Pump",
+      "equipment_class": "centrifugal_pump",
+      "equipment_type": "Feed pump",
+      "location": "УПП-100",
+      "quantity": 1,
+      "criticality": "CRITICAL",
+      "operating_mode": "CONTINUOUS",
+      "standby_mode": "NONE",
+      "is_repairable": true
+    },
+    {
+      "tag": "P-103",
+      "name": "Feed pump P-103",
+      "description": "Demo feed pump for software testing",
+      "parent_tag": null,
+      "category": "Pump",
+      "equipment_class": "centrifugal_pump",
+      "equipment_type": "Feed pump",
+      "location": "УПП-100",
+      "quantity": 1,
+      "criticality": "CRITICAL",
+      "operating_mode": "CONTINUOUS",
+      "standby_mode": "NONE",
+      "is_repairable": true
+    },
+    {
+      "tag": "P-104",
+      "name": "Feed pump P-104",
+      "description": "Demo feed pump for software testing",
+      "parent_tag": null,
+      "category": "Pump",
+      "equipment_class": "centrifugal_pump",
+      "equipment_type": "Feed pump",
+      "location": "УПП-100",
+      "quantity": 1,
+      "criticality": "CRITICAL",
+      "operating_mode": "CONTINUOUS",
+      "standby_mode": "NONE",
+      "is_repairable": true
+    },
+    {
+      "tag": "P-105",
+      "name": "Feed pump P-105",
+      "description": "Demo feed pump for software testing",
+      "parent_tag": null,
+      "category": "Pump",
+      "equipment_class": "centrifugal_pump",
+      "equipment_type": "Feed pump",
+      "location": "УПП-100",
+      "quantity": 1,
+      "criticality": "CRITICAL",
+      "operating_mode": "CONTINUOUS",
+      "standby_mode": "NONE",
+      "is_repairable": true
+    },
+    {
+      "tag": "P-106",
+      "name": "Feed pump P-106",
+      "description": "Demo feed pump for software testing",
+      "parent_tag": null,
+      "category": "Pump",
+      "equipment_class": "centrifugal_pump",
+      "equipment_type": "Feed pump",
+      "location": "УПП-100",
+      "quantity": 1,
+      "criticality": "CRITICAL",
+      "operating_mode": "CONTINUOUS",
+      "standby_mode": "NONE",
+      "is_repairable": true
+    },
+    {
+      "tag": "R-201",
+      "name": "Reactor R-201",
+      "description": "Demo reactor for software testing",
+      "parent_tag": null,
+      "category": "Reactor",
+      "equipment_class": "reactor",
+      "equipment_type": "Reactor",
+      "location": "УПП-100",
+      "quantity": 1,
+      "criticality": "CRITICAL",
+      "operating_mode": "CONTINUOUS",
+      "standby_mode": "NONE",
+      "is_repairable": true
+    },
+    {
+      "tag": "R-202",
+      "name": "Reactor R-202",
+      "description": "Demo reactor for software testing",
+      "parent_tag": null,
+      "category": "Reactor",
+      "equipment_class": "reactor",
+      "equipment_type": "Reactor",
+      "location": "УПП-100",
+      "quantity": 1,
+      "criticality": "CRITICAL",
+      "operating_mode": "CONTINUOUS",
+      "standby_mode": "NONE",
+      "is_repairable": true
+    },
+    {
+      "tag": "R-203",
+      "name": "Reactor R-203",
+      "description": "Demo reactor for software testing",
+      "parent_tag": null,
+      "category": "Reactor",
+      "equipment_class": "reactor",
+      "equipment_type": "Reactor",
+      "location": "УПП-100",
+      "quantity": 1,
+      "criticality": "CRITICAL",
+      "operating_mode": "CONTINUOUS",
+      "standby_mode": "NONE",
+      "is_repairable": true
+    },
+    {
+      "tag": "R-204",
+      "name": "Reactor R-204",
+      "description": "Demo reactor for software testing",
+      "parent_tag": null,
+      "category": "Reactor",
+      "equipment_class": "reactor",
+      "equipment_type": "Reactor",
+      "location": "УПП-100",
+      "quantity": 1,
+      "criticality": "CRITICAL",
+      "operating_mode": "CONTINUOUS",
+      "standby_mode": "NONE",
+      "is_repairable": true
+    },
+    {
+      "tag": "AG-211",
+      "name": "Agitator AG-211",
+      "description": "Demo agitator for software testing",
+      "parent_tag": null,
+      "category": "Agitator",
+      "equipment_class": "agitator",
+      "equipment_type": "Agitator",
+      "location": "УПП-100",
+      "quantity": 1,
+      "criticality": "HIGH",
+      "operating_mode": "CONTINUOUS",
+      "standby_mode": "NONE",
+      "is_repairable": true
+    },
+    {
+      "tag": "AG-212",
+      "name": "Agitator AG-212",
+      "description": "Demo agitator for software testing",
+      "parent_tag": null,
+      "category": "Agitator",
+      "equipment_class": "agitator",
+      "equipment_type": "Agitator",
+      "location": "УПП-100",
+      "quantity": 1,
+      "criticality": "HIGH",
+      "operating_mode": "CONTINUOUS",
+      "standby_mode": "NONE",
+      "is_repairable": true
+    },
+    {
+      "tag": "AG-213",
+      "name": "Agitator AG-213",
+      "description": "Demo agitator for software testing",
+      "parent_tag": null,
+      "category": "Agitator",
+      "equipment_class": "agitator",
+      "equipment_type": "Agitator",
+      "location": "УПП-100",
+      "quantity": 1,
+      "criticality": "HIGH",
+      "operating_mode": "CONTINUOUS",
+      "standby_mode": "NONE",
+      "is_repairable": true
+    },
+    {
+      "tag": "AG-214",
+      "name": "Agitator AG-214",
+      "description": "Demo agitator for software testing",
+      "parent_tag": null,
+      "category": "Agitator",
+      "equipment_class": "agitator",
+      "equipment_type": "Agitator",
+      "location": "УПП-100",
+      "quantity": 1,
+      "criticality": "HIGH",
+      "operating_mode": "CONTINUOUS",
+      "standby_mode": "NONE",
+      "is_repairable": true
+    },
+    {
+      "tag": "E-301",
+      "name": "Heat exchanger E-301",
+      "description": "Demo heat exchanger for software testing",
+      "parent_tag": null,
+      "category": "HeatExchanger",
+      "equipment_class": "heat_exchanger",
+      "equipment_type": "Heat exchanger",
+      "location": "УПП-100",
+      "quantity": 1,
+      "criticality": "HIGH",
+      "operating_mode": "CONTINUOUS",
+      "standby_mode": "NONE",
+      "is_repairable": true
+    },
+    {
+      "tag": "E-302",
+      "name": "Heat exchanger E-302",
+      "description": "Demo heat exchanger for software testing",
+      "parent_tag": null,
+      "category": "HeatExchanger",
+      "equipment_class": "heat_exchanger",
+      "equipment_type": "Heat exchanger",
+      "location": "УПП-100",
+      "quantity": 1,
+      "criticality": "HIGH",
+      "operating_mode": "CONTINUOUS",
+      "standby_mode": "NONE",
+      "is_repairable": true
+    },
+    {
+      "tag": "E-303",
+      "name": "Heat exchanger E-303",
+      "description": "Demo heat exchanger for software testing",
+      "parent_tag": null,
+      "category": "HeatExchanger",
+      "equipment_class": "heat_exchanger",
+      "equipment_type": "Heat exchanger",
+      "location": "УПП-100",
+      "quantity": 1,
+      "criticality": "HIGH",
+      "operating_mode": "CONTINUOUS",
+      "standby_mode": "NONE",
+      "is_repairable": true
+    },
+    {
+      "tag": "E-304",
+      "name": "Heat exchanger E-304",
+      "description": "Demo heat exchanger for software testing",
+      "parent_tag": null,
+      "category": "HeatExchanger",
+      "equipment_class": "heat_exchanger",
+      "equipment_type": "Heat exchanger",
+      "location": "УПП-100",
+      "quantity": 1,
+      "criticality": "HIGH",
+      "operating_mode": "CONTINUOUS",
+      "standby_mode": "NONE",
+      "is_repairable": true
+    },
+    {
+      "tag": "E-305",
+      "name": "Heat exchanger E-305",
+      "description": "Demo heat exchanger for software testing",
+      "parent_tag": null,
+      "category": "HeatExchanger",
+      "equipment_class": "heat_exchanger",
+      "equipment_type": "Heat exchanger",
+      "location": "УПП-100",
+      "quantity": 1,
+      "criticality": "HIGH",
+      "operating_mode": "CONTINUOUS",
+      "standby_mode": "NONE",
+      "is_repairable": true
+    },
+    {
+      "tag": "E-306",
+      "name": "Heat exchanger E-306",
+      "description": "Demo heat exchanger for software testing",
+      "parent_tag": null,
+      "category": "HeatExchanger",
+      "equipment_class": "heat_exchanger",
+      "equipment_type": "Heat exchanger",
+      "location": "УПП-100",
+      "quantity": 1,
+      "criticality": "HIGH",
+      "operating_mode": "CONTINUOUS",
+      "standby_mode": "NONE",
+      "is_repairable": true
+    },
+    {
+      "tag": "E-307",
+      "name": "Heat exchanger E-307",
+      "description": "Demo heat exchanger for software testing",
+      "parent_tag": null,
+      "category": "HeatExchanger",
+      "equipment_class": "heat_exchanger",
+      "equipment_type": "Heat exchanger",
+      "location": "УПП-100",
+      "quantity": 1,
+      "criticality": "HIGH",
+      "operating_mode": "CONTINUOUS",
+      "standby_mode": "NONE",
+      "is_repairable": true
+    },
+    {
+      "tag": "E-308",
+      "name": "Heat exchanger E-308",
+      "description": "Demo heat exchanger for software testing",
+      "parent_tag": null,
+      "category": "HeatExchanger",
+      "equipment_class": "heat_exchanger",
+      "equipment_type": "Heat exchanger",
+      "location": "УПП-100",
+      "quantity": 1,
+      "criticality": "HIGH",
+      "operating_mode": "CONTINUOUS",
+      "standby_mode": "NONE",
+      "is_repairable": true
+    },
+    {
+      "tag": "C-401",
+      "name": "Compressor C-401",
+      "description": "Demo compressor for software testing",
+      "parent_tag": null,
+      "category": "Compressor",
+      "equipment_class": "compressor",
+      "equipment_type": "Compressor",
+      "location": "УПП-100",
+      "quantity": 1,
+      "criticality": "CRITICAL",
+      "operating_mode": "CONTINUOUS",
+      "standby_mode": "NONE",
+      "is_repairable": true
+    },
+    {
+      "tag": "C-402",
+      "name": "Compressor C-402",
+      "description": "Demo compressor for software testing",
+      "parent_tag": null,
+      "category": "Compressor",
+      "equipment_class": "compressor",
+      "equipment_type": "Compressor",
+      "location": "УПП-100",
+      "quantity": 1,
+      "criticality": "CRITICAL",
+      "operating_mode": "CONTINUOUS",
+      "standby_mode": "NONE",
+      "is_repairable": true
+    },
+    {
+      "tag": "C-403",
+      "name": "Compressor C-403",
+      "description": "Demo compressor for software testing",
+      "parent_tag": null,
+      "category": "Compressor",
+      "equipment_class": "compressor",
+      "equipment_type": "Compressor",
+      "location": "УПП-100",
+      "quantity": 1,
+      "criticality": "CRITICAL",
+      "operating_mode": "CONTINUOUS",
+      "standby_mode": "NONE",
+      "is_repairable": true
+    },
+    {
+      "tag": "C-404",
+      "name": "Compressor C-404",
+      "description": "Demo compressor for software testing",
+      "parent_tag": null,
+      "category": "Compressor",
+      "equipment_class": "compressor",
+      "equipment_type": "Compressor",
+      "location": "УПП-100",
+      "quantity": 1,
+      "criticality": "CRITICAL",
+      "operating_mode": "CONTINUOUS",
+      "standby_mode": "NONE",
+      "is_repairable": true
+    },
+    {
+      "tag": "CW-501",
+      "name": "Cooling system CW-501",
+      "description": "Demo cooling system for software testing",
+      "parent_tag": null,
+      "category": "Cooling",
+      "equipment_class": "cooling_system",
+      "equipment_type": "Cooling system",
+      "location": "УПП-100",
+      "quantity": 1,
+      "criticality": "HIGH",
+      "operating_mode": "CONTINUOUS",
+      "standby_mode": "NONE",
+      "is_repairable": true
+    },
+    {
+      "tag": "CW-502",
+      "name": "Cooling system CW-502",
+      "description": "Demo cooling system for software testing",
+      "parent_tag": null,
+      "category": "Cooling",
+      "equipment_class": "cooling_system",
+      "equipment_type": "Cooling system",
+      "location": "УПП-100",
+      "quantity": 1,
+      "criticality": "HIGH",
+      "operating_mode": "CONTINUOUS",
+      "standby_mode": "NONE",
+      "is_repairable": true
+    },
+    {
+      "tag": "CW-503",
+      "name": "Cooling system CW-503",
+      "description": "Demo cooling system for software testing",
+      "parent_tag": null,
+      "category": "Cooling",
+      "equipment_class": "cooling_system",
+      "equipment_type": "Cooling system",
+      "location": "УПП-100",
+      "quantity": 1,
+      "criticality": "HIGH",
+      "operating_mode": "CONTINUOUS",
+      "standby_mode": "NONE",
+      "is_repairable": true
+    },
+    {
+      "tag": "FV-601",
+      "name": "Control valve FV-601",
+      "description": "Demo control valve for software testing",
+      "parent_tag": null,
+      "category": "Valve",
+      "equipment_class": "control_valve",
+      "equipment_type": "Control valve",
+      "location": "УПП-100",
+      "quantity": 1,
+      "criticality": "MEDIUM",
+      "operating_mode": "CONTINUOUS",
+      "standby_mode": "NONE",
+      "is_repairable": true
+    },
+    {
+      "tag": "FV-602",
+      "name": "Control valve FV-602",
+      "description": "Demo control valve for software testing",
+      "parent_tag": null,
+      "category": "Valve",
+      "equipment_class": "control_valve",
+      "equipment_type": "Control valve",
+      "location": "УПП-100",
+      "quantity": 1,
+      "criticality": "MEDIUM",
+      "operating_mode": "CONTINUOUS",
+      "standby_mode": "NONE",
+      "is_repairable": true
+    },
+    {
+      "tag": "FV-603",
+      "name": "Control valve FV-603",
+      "description": "Demo control valve for software testing",
+      "parent_tag": null,
+      "category": "Valve",
+      "equipment_class": "control_valve",
+      "equipment_type": "Control valve",
+      "location": "УПП-100",
+      "quantity": 1,
+      "criticality": "MEDIUM",
+      "operating_mode": "CONTINUOUS",
+      "standby_mode": "NONE",
+      "is_repairable": true
+    },
+    {
+      "tag": "FV-604",
+      "name": "Control valve FV-604",
+      "description": "Demo control valve for software testing",
+      "parent_tag": null,
+      "category": "Valve",
+      "equipment_class": "control_valve",
+      "equipment_type": "Control valve",
+      "location": "УПП-100",
+      "quantity": 1,
+      "criticality": "MEDIUM",
+      "operating_mode": "CONTINUOUS",
+      "standby_mode": "NONE",
+      "is_repairable": true
+    },
+    {
+      "tag": "FV-605",
+      "name": "Control valve FV-605",
+      "description": "Demo control valve for software testing",
+      "parent_tag": null,
+      "category": "Valve",
+      "equipment_class": "control_valve",
+      "equipment_type": "Control valve",
+      "location": "УПП-100",
+      "quantity": 1,
+      "criticality": "MEDIUM",
+      "operating_mode": "CONTINUOUS",
+      "standby_mode": "NONE",
+      "is_repairable": true
+    },
+    {
+      "tag": "FV-606",
+      "name": "Control valve FV-606",
+      "description": "Demo control valve for software testing",
+      "parent_tag": null,
+      "category": "Valve",
+      "equipment_class": "control_valve",
+      "equipment_type": "Control valve",
+      "location": "УПП-100",
+      "quantity": 1,
+      "criticality": "MEDIUM",
+      "operating_mode": "CONTINUOUS",
+      "standby_mode": "NONE",
+      "is_repairable": true
+    },
+    {
+      "tag": "FV-607",
+      "name": "Control valve FV-607",
+      "description": "Demo control valve for software testing",
+      "parent_tag": null,
+      "category": "Valve",
+      "equipment_class": "control_valve",
+      "equipment_type": "Control valve",
+      "location": "УПП-100",
+      "quantity": 1,
+      "criticality": "MEDIUM",
+      "operating_mode": "CONTINUOUS",
+      "standby_mode": "NONE",
+      "is_repairable": true
+    },
+    {
+      "tag": "FV-608",
+      "name": "Control valve FV-608",
+      "description": "Demo control valve for software testing",
+      "parent_tag": null,
+      "category": "Valve",
+      "equipment_class": "control_valve",
+      "equipment_type": "Control valve",
+      "location": "УПП-100",
+      "quantity": 1,
+      "criticality": "MEDIUM",
+      "operating_mode": "CONTINUOUS",
+      "standby_mode": "NONE",
+      "is_repairable": true
+    },
+    {
+      "tag": "FV-609",
+      "name": "Control valve FV-609",
+      "description": "Demo control valve for software testing",
+      "parent_tag": null,
+      "category": "Valve",
+      "equipment_class": "control_valve",
+      "equipment_type": "Control valve",
+      "location": "УПП-100",
+      "quantity": 1,
+      "criticality": "MEDIUM",
+      "operating_mode": "CONTINUOUS",
+      "standby_mode": "NONE",
+      "is_repairable": true
+    },
+    {
+      "tag": "FV-610",
+      "name": "Control valve FV-610",
+      "description": "Demo control valve for software testing",
+      "parent_tag": null,
+      "category": "Valve",
+      "equipment_class": "control_valve",
+      "equipment_type": "Control valve",
+      "location": "УПП-100",
+      "quantity": 1,
+      "criticality": "MEDIUM",
+      "operating_mode": "CONTINUOUS",
+      "standby_mode": "NONE",
+      "is_repairable": true
+    },
+    {
+      "tag": "T-701",
+      "name": "Storage tank T-701",
+      "description": "Demo storage tank for software testing",
+      "parent_tag": null,
+      "category": "Tank",
+      "equipment_class": "storage_tank",
+      "equipment_type": "Storage tank",
+      "location": "УПП-100",
+      "quantity": 1,
+      "criticality": "MEDIUM",
+      "operating_mode": "CONTINUOUS",
+      "standby_mode": "NONE",
+      "is_repairable": true
+    },
+    {
+      "tag": "T-702",
+      "name": "Storage tank T-702",
+      "description": "Demo storage tank for software testing",
+      "parent_tag": null,
+      "category": "Tank",
+      "equipment_class": "storage_tank",
+      "equipment_type": "Storage tank",
+      "location": "УПП-100",
+      "quantity": 1,
+      "criticality": "MEDIUM",
+      "operating_mode": "CONTINUOUS",
+      "standby_mode": "NONE",
+      "is_repairable": true
+    },
+    {
+      "tag": "T-703",
+      "name": "Storage tank T-703",
+      "description": "Demo storage tank for software testing",
+      "parent_tag": null,
+      "category": "Tank",
+      "equipment_class": "storage_tank",
+      "equipment_type": "Storage tank",
+      "location": "УПП-100",
+      "quantity": 1,
+      "criticality": "MEDIUM",
+      "operating_mode": "CONTINUOUS",
+      "standby_mode": "NONE",
+      "is_repairable": true
+    },
+    {
+      "tag": "T-704",
+      "name": "Storage tank T-704",
+      "description": "Demo storage tank for software testing",
+      "parent_tag": null,
+      "category": "Tank",
+      "equipment_class": "storage_tank",
+      "equipment_type": "Storage tank",
+      "location": "УПП-100",
+      "quantity": 1,
+      "criticality": "MEDIUM",
+      "operating_mode": "CONTINUOUS",
+      "standby_mode": "NONE",
+      "is_repairable": true
+    },
+    {
+      "tag": "T-705",
+      "name": "Storage tank T-705",
+      "description": "Demo storage tank for software testing",
+      "parent_tag": null,
+      "category": "Tank",
+      "equipment_class": "storage_tank",
+      "equipment_type": "Storage tank",
+      "location": "УПП-100",
+      "quantity": 1,
+      "criticality": "MEDIUM",
+      "operating_mode": "CONTINUOUS",
+      "standby_mode": "NONE",
+      "is_repairable": true
+    },
+    {
+      "tag": "T-706",
+      "name": "Storage tank T-706",
+      "description": "Demo storage tank for software testing",
+      "parent_tag": null,
+      "category": "Tank",
+      "equipment_class": "storage_tank",
+      "equipment_type": "Storage tank",
+      "location": "УПП-100",
+      "quantity": 1,
+      "criticality": "MEDIUM",
+      "operating_mode": "CONTINUOUS",
+      "standby_mode": "NONE",
+      "is_repairable": true
+    },
+    {
+      "tag": "M-801",
+      "name": "Electrical motor M-801",
+      "description": "Demo electrical motor for software testing",
+      "parent_tag": null,
+      "category": "Motor",
+      "equipment_class": "electric_motor",
+      "equipment_type": "Electrical motor",
+      "location": "УПП-100",
+      "quantity": 1,
+      "criticality": "HIGH",
+      "operating_mode": "CONTINUOUS",
+      "standby_mode": "NONE",
+      "is_repairable": true
+    },
+    {
+      "tag": "M-802",
+      "name": "Electrical motor M-802",
+      "description": "Demo electrical motor for software testing",
+      "parent_tag": null,
+      "category": "Motor",
+      "equipment_class": "electric_motor",
+      "equipment_type": "Electrical motor",
+      "location": "УПП-100",
+      "quantity": 1,
+      "criticality": "HIGH",
+      "operating_mode": "CONTINUOUS",
+      "standby_mode": "NONE",
+      "is_repairable": true
+    },
+    {
+      "tag": "M-803",
+      "name": "Electrical motor M-803",
+      "description": "Demo electrical motor for software testing",
+      "parent_tag": null,
+      "category": "Motor",
+      "equipment_class": "electric_motor",
+      "equipment_type": "Electrical motor",
+      "location": "УПП-100",
+      "quantity": 1,
+      "criticality": "HIGH",
+      "operating_mode": "CONTINUOUS",
+      "standby_mode": "NONE",
+      "is_repairable": true
+    },
+    {
+      "tag": "M-804",
+      "name": "Electrical motor M-804",
+      "description": "Demo electrical motor for software testing",
+      "parent_tag": null,
+      "category": "Motor",
+      "equipment_class": "electric_motor",
+      "equipment_type": "Electrical motor",
+      "location": "УПП-100",
+      "quantity": 1,
+      "criticality": "HIGH",
+      "operating_mode": "CONTINUOUS",
+      "standby_mode": "NONE",
+      "is_repairable": true
+    },
+    {
+      "tag": "M-805",
+      "name": "Electrical motor M-805",
+      "description": "Demo electrical motor for software testing",
+      "parent_tag": null,
+      "category": "Motor",
+      "equipment_class": "electric_motor",
+      "equipment_type": "Electrical motor",
+      "location": "УПП-100",
+      "quantity": 1,
+      "criticality": "HIGH",
+      "operating_mode": "CONTINUOUS",
+      "standby_mode": "NONE",
+      "is_repairable": true
+    },
+    {
+      "tag": "M-806",
+      "name": "Electrical motor M-806",
+      "description": "Demo electrical motor for software testing",
+      "parent_tag": null,
+      "category": "Motor",
+      "equipment_class": "electric_motor",
+      "equipment_type": "Electrical motor",
+      "location": "УПП-100",
+      "quantity": 1,
+      "criticality": "HIGH",
+      "operating_mode": "CONTINUOUS",
+      "standby_mode": "NONE",
+      "is_repairable": true
+    },
+    {
+      "tag": "M-807",
+      "name": "Electrical motor M-807",
+      "description": "Demo electrical motor for software testing",
+      "parent_tag": null,
+      "category": "Motor",
+      "equipment_class": "electric_motor",
+      "equipment_type": "Electrical motor",
+      "location": "УПП-100",
+      "quantity": 1,
+      "criticality": "HIGH",
+      "operating_mode": "CONTINUOUS",
+      "standby_mode": "NONE",
+      "is_repairable": true
+    },
+    {
+      "tag": "M-808",
+      "name": "Electrical motor M-808",
+      "description": "Demo electrical motor for software testing",
+      "parent_tag": null,
+      "category": "Motor",
+      "equipment_class": "electric_motor",
+      "equipment_type": "Electrical motor",
+      "location": "УПП-100",
+      "quantity": 1,
+      "criticality": "HIGH",
+      "operating_mode": "CONTINUOUS",
+      "standby_mode": "NONE",
+      "is_repairable": true
+    },
+    {
+      "tag": "I-901",
+      "name": "Instrumentation I-901",
+      "description": "Demo instrumentation for software testing",
+      "parent_tag": null,
+      "category": "Instrumentation",
+      "equipment_class": "instrumentation",
+      "equipment_type": "Instrumentation",
+      "location": "УПП-100",
+      "quantity": 1,
+      "criticality": "MEDIUM",
+      "operating_mode": "CONTINUOUS",
+      "standby_mode": "NONE",
+      "is_repairable": true
+    },
+    {
+      "tag": "I-902",
+      "name": "Instrumentation I-902",
+      "description": "Demo instrumentation for software testing",
+      "parent_tag": null,
+      "category": "Instrumentation",
+      "equipment_class": "instrumentation",
+      "equipment_type": "Instrumentation",
+      "location": "УПП-100",
+      "quantity": 1,
+      "criticality": "MEDIUM",
+      "operating_mode": "CONTINUOUS",
+      "standby_mode": "NONE",
+      "is_repairable": true
+    },
+    {
+      "tag": "I-903",
+      "name": "Instrumentation I-903",
+      "description": "Demo instrumentation for software testing",
+      "parent_tag": null,
+      "category": "Instrumentation",
+      "equipment_class": "instrumentation",
+      "equipment_type": "Instrumentation",
+      "location": "УПП-100",
+      "quantity": 1,
+      "criticality": "MEDIUM",
+      "operating_mode": "CONTINUOUS",
+      "standby_mode": "NONE",
+      "is_repairable": true
+    },
+    {
+      "tag": "I-904",
+      "name": "Instrumentation I-904",
+      "description": "Demo instrumentation for software testing",
+      "parent_tag": null,
+      "category": "Instrumentation",
+      "equipment_class": "instrumentation",
+      "equipment_type": "Instrumentation",
+      "location": "УПП-100",
+      "quantity": 1,
+      "criticality": "MEDIUM",
+      "operating_mode": "CONTINUOUS",
+      "standby_mode": "NONE",
+      "is_repairable": true
+    },
+    {
+      "tag": "I-905",
+      "name": "Instrumentation I-905",
+      "description": "Demo instrumentation for software testing",
+      "parent_tag": null,
+      "category": "Instrumentation",
+      "equipment_class": "instrumentation",
+      "equipment_type": "Instrumentation",
+      "location": "УПП-100",
+      "quantity": 1,
+      "criticality": "MEDIUM",
+      "operating_mode": "CONTINUOUS",
+      "standby_mode": "NONE",
+      "is_repairable": true
+    },
+    {
+      "tag": "I-906",
+      "name": "Instrumentation I-906",
+      "description": "Demo instrumentation for software testing",
+      "parent_tag": null,
+      "category": "Instrumentation",
+      "equipment_class": "instrumentation",
+      "equipment_type": "Instrumentation",
+      "location": "УПП-100",
+      "quantity": 1,
+      "criticality": "MEDIUM",
+      "operating_mode": "CONTINUOUS",
+      "standby_mode": "NONE",
+      "is_repairable": true
+    },
+    {
+      "tag": "I-907",
+      "name": "Instrumentation I-907",
+      "description": "Demo instrumentation for software testing",
+      "parent_tag": null,
+      "category": "Instrumentation",
+      "equipment_class": "instrumentation",
+      "equipment_type": "Instrumentation",
+      "location": "УПП-100",
+      "quantity": 1,
+      "criticality": "MEDIUM",
+      "operating_mode": "CONTINUOUS",
+      "standby_mode": "NONE",
+      "is_repairable": true
+    },
+    {
+      "tag": "I-908",
+      "name": "Instrumentation I-908",
+      "description": "Demo instrumentation for software testing",
+      "parent_tag": null,
+      "category": "Instrumentation",
+      "equipment_class": "instrumentation",
+      "equipment_type": "Instrumentation",
+      "location": "УПП-100",
+      "quantity": 1,
+      "criticality": "MEDIUM",
+      "operating_mode": "CONTINUOUS",
+      "standby_mode": "NONE",
+      "is_repairable": true
+    }
+  ],
+  "components": [
+    {
+      "equipment_tag": "P-101",
+      "name": "Mechanical seal",
+      "description": "PF-demo seal assembly",
+      "quantity": 1
+    }
+  ],
+  "connections": [
+    {
+      "from_tag": "P-101",
+      "to_tag": "P-102",
+      "connection_type": "DEPENDENCY",
+      "description": "demo spanning link"
+    },
+    {
+      "from_tag": "P-101",
+      "to_tag": "P-103",
+      "connection_type": "DEPENDENCY",
+      "description": "demo spanning link"
+    },
+    {
+      "from_tag": "P-101",
+      "to_tag": "P-104",
+      "connection_type": "DEPENDENCY",
+      "description": "demo spanning link"
+    },
+    {
+      "from_tag": "P-101",
+      "to_tag": "P-105",
+      "connection_type": "DEPENDENCY",
+      "description": "demo spanning link"
+    },
+    {
+      "from_tag": "P-101",
+      "to_tag": "P-106",
+      "connection_type": "DEPENDENCY",
+      "description": "demo spanning link"
+    },
+    {
+      "from_tag": "P-101",
+      "to_tag": "R-201",
+      "connection_type": "DEPENDENCY",
+      "description": "demo spanning link"
+    },
+    {
+      "from_tag": "P-101",
+      "to_tag": "R-202",
+      "connection_type": "DEPENDENCY",
+      "description": "demo spanning link"
+    },
+    {
+      "from_tag": "P-101",
+      "to_tag": "R-203",
+      "connection_type": "DEPENDENCY",
+      "description": "demo spanning link"
+    },
+    {
+      "from_tag": "P-101",
+      "to_tag": "R-204",
+      "connection_type": "DEPENDENCY",
+      "description": "demo spanning link"
+    },
+    {
+      "from_tag": "P-101",
+      "to_tag": "AG-211",
+      "connection_type": "DEPENDENCY",
+      "description": "demo spanning link"
+    },
+    {
+      "from_tag": "P-101",
+      "to_tag": "AG-212",
+      "connection_type": "DEPENDENCY",
+      "description": "demo spanning link"
+    },
+    {
+      "from_tag": "P-101",
+      "to_tag": "AG-213",
+      "connection_type": "DEPENDENCY",
+      "description": "demo spanning link"
+    },
+    {
+      "from_tag": "P-101",
+      "to_tag": "AG-214",
+      "connection_type": "DEPENDENCY",
+      "description": "demo spanning link"
+    },
+    {
+      "from_tag": "P-101",
+      "to_tag": "E-301",
+      "connection_type": "DEPENDENCY",
+      "description": "demo spanning link"
+    },
+    {
+      "from_tag": "P-101",
+      "to_tag": "E-302",
+      "connection_type": "DEPENDENCY",
+      "description": "demo spanning link"
+    },
+    {
+      "from_tag": "P-101",
+      "to_tag": "E-303",
+      "connection_type": "DEPENDENCY",
+      "description": "demo spanning link"
+    },
+    {
+      "from_tag": "P-101",
+      "to_tag": "E-304",
+      "connection_type": "DEPENDENCY",
+      "description": "demo spanning link"
+    },
+    {
+      "from_tag": "P-101",
+      "to_tag": "E-305",
+      "connection_type": "DEPENDENCY",
+      "description": "demo spanning link"
+    },
+    {
+      "from_tag": "P-101",
+      "to_tag": "E-306",
+      "connection_type": "DEPENDENCY",
+      "description": "demo spanning link"
+    },
+    {
+      "from_tag": "P-101",
+      "to_tag": "E-307",
+      "connection_type": "DEPENDENCY",
+      "description": "demo spanning link"
+    },
+    {
+      "from_tag": "P-101",
+      "to_tag": "E-308",
+      "connection_type": "DEPENDENCY",
+      "description": "demo spanning link"
+    },
+    {
+      "from_tag": "P-101",
+      "to_tag": "C-401",
+      "connection_type": "DEPENDENCY",
+      "description": "demo spanning link"
+    },
+    {
+      "from_tag": "P-101",
+      "to_tag": "C-402",
+      "connection_type": "DEPENDENCY",
+      "description": "demo spanning link"
+    },
+    {
+      "from_tag": "P-101",
+      "to_tag": "C-403",
+      "connection_type": "DEPENDENCY",
+      "description": "demo spanning link"
+    },
+    {
+      "from_tag": "P-101",
+      "to_tag": "C-404",
+      "connection_type": "DEPENDENCY",
+      "description": "demo spanning link"
+    },
+    {
+      "from_tag": "P-101",
+      "to_tag": "CW-501",
+      "connection_type": "DEPENDENCY",
+      "description": "demo spanning link"
+    },
+    {
+      "from_tag": "P-101",
+      "to_tag": "CW-502",
+      "connection_type": "DEPENDENCY",
+      "description": "demo spanning link"
+    },
+    {
+      "from_tag": "P-101",
+      "to_tag": "CW-503",
+      "connection_type": "DEPENDENCY",
+      "description": "demo spanning link"
+    },
+    {
+      "from_tag": "P-101",
+      "to_tag": "FV-601",
+      "connection_type": "DEPENDENCY",
+      "description": "demo spanning link"
+    },
+    {
+      "from_tag": "P-101",
+      "to_tag": "FV-602",
+      "connection_type": "DEPENDENCY",
+      "description": "demo spanning link"
+    },
+    {
+      "from_tag": "P-101",
+      "to_tag": "FV-603",
+      "connection_type": "DEPENDENCY",
+      "description": "demo spanning link"
+    },
+    {
+      "from_tag": "P-101",
+      "to_tag": "FV-604",
+      "connection_type": "DEPENDENCY",
+      "description": "demo spanning link"
+    },
+    {
+      "from_tag": "P-101",
+      "to_tag": "FV-605",
+      "connection_type": "DEPENDENCY",
+      "description": "demo spanning link"
+    },
+    {
+      "from_tag": "P-101",
+      "to_tag": "FV-606",
+      "connection_type": "DEPENDENCY",
+      "description": "demo spanning link"
+    },
+    {
+      "from_tag": "P-101",
+      "to_tag": "FV-607",
+      "connection_type": "DEPENDENCY",
+      "description": "demo spanning link"
+    },
+    {
+      "from_tag": "P-101",
+      "to_tag": "FV-608",
+      "connection_type": "DEPENDENCY",
+      "description": "demo spanning link"
+    },
+    {
+      "from_tag": "P-101",
+      "to_tag": "FV-609",
+      "connection_type": "DEPENDENCY",
+      "description": "demo spanning link"
+    },
+    {
+      "from_tag": "P-101",
+      "to_tag": "FV-610",
+      "connection_type": "DEPENDENCY",
+      "description": "demo spanning link"
+    },
+    {
+      "from_tag": "P-101",
+      "to_tag": "T-701",
+      "connection_type": "DEPENDENCY",
+      "description": "demo spanning link"
+    },
+    {
+      "from_tag": "P-101",
+      "to_tag": "T-702",
+      "connection_type": "DEPENDENCY",
+      "description": "demo spanning link"
+    },
+    {
+      "from_tag": "P-101",
+      "to_tag": "T-703",
+      "connection_type": "DEPENDENCY",
+      "description": "demo spanning link"
+    },
+    {
+      "from_tag": "P-101",
+      "to_tag": "T-704",
+      "connection_type": "DEPENDENCY",
+      "description": "demo spanning link"
+    },
+    {
+      "from_tag": "P-101",
+      "to_tag": "T-705",
+      "connection_type": "DEPENDENCY",
+      "description": "demo spanning link"
+    },
+    {
+      "from_tag": "P-101",
+      "to_tag": "T-706",
+      "connection_type": "DEPENDENCY",
+      "description": "demo spanning link"
+    },
+    {
+      "from_tag": "P-101",
+      "to_tag": "M-801",
+      "connection_type": "DEPENDENCY",
+      "description": "demo spanning link"
+    },
+    {
+      "from_tag": "P-101",
+      "to_tag": "M-802",
+      "connection_type": "DEPENDENCY",
+      "description": "demo spanning link"
+    },
+    {
+      "from_tag": "P-101",
+      "to_tag": "M-803",
+      "connection_type": "DEPENDENCY",
+      "description": "demo spanning link"
+    },
+    {
+      "from_tag": "P-101",
+      "to_tag": "M-804",
+      "connection_type": "DEPENDENCY",
+      "description": "demo spanning link"
+    },
+    {
+      "from_tag": "P-101",
+      "to_tag": "M-805",
+      "connection_type": "DEPENDENCY",
+      "description": "demo spanning link"
+    },
+    {
+      "from_tag": "P-101",
+      "to_tag": "M-806",
+      "connection_type": "DEPENDENCY",
+      "description": "demo spanning link"
+    },
+    {
+      "from_tag": "P-101",
+      "to_tag": "M-807",
+      "connection_type": "DEPENDENCY",
+      "description": "demo spanning link"
+    },
+    {
+      "from_tag": "P-101",
+      "to_tag": "M-808",
+      "connection_type": "DEPENDENCY",
+      "description": "demo spanning link"
+    },
+    {
+      "from_tag": "P-101",
+      "to_tag": "I-901",
+      "connection_type": "DEPENDENCY",
+      "description": "demo spanning link"
+    },
+    {
+      "from_tag": "P-101",
+      "to_tag": "I-902",
+      "connection_type": "DEPENDENCY",
+      "description": "demo spanning link"
+    },
+    {
+      "from_tag": "P-101",
+      "to_tag": "I-903",
+      "connection_type": "DEPENDENCY",
+      "description": "demo spanning link"
+    },
+    {
+      "from_tag": "P-101",
+      "to_tag": "I-904",
+      "connection_type": "DEPENDENCY",
+      "description": "demo spanning link"
+    },
+    {
+      "from_tag": "P-101",
+      "to_tag": "I-905",
+      "connection_type": "DEPENDENCY",
+      "description": "demo spanning link"
+    },
+    {
+      "from_tag": "P-101",
+      "to_tag": "I-906",
+      "connection_type": "DEPENDENCY",
+      "description": "demo spanning link"
+    },
+    {
+      "from_tag": "P-101",
+      "to_tag": "I-907",
+      "connection_type": "DEPENDENCY",
+      "description": "demo spanning link"
+    },
+    {
+      "from_tag": "P-101",
+      "to_tag": "I-908",
+      "connection_type": "DEPENDENCY",
+      "description": "demo spanning link"
+    },
+    {
+      "from_tag": "P-102",
+      "to_tag": "R-201",
+      "connection_type": "PROCESS",
+      "description": "demo typed link"
+    },
+    {
+      "from_tag": "R-201",
+      "to_tag": "E-301",
+      "connection_type": "PROCESS",
+      "description": "demo typed link"
+    },
+    {
+      "from_tag": "E-301",
+      "to_tag": "T-701",
+      "connection_type": "PROCESS",
+      "description": "demo typed link"
+    },
+    {
+      "from_tag": "C-401",
+      "to_tag": "R-201",
+      "connection_type": "UTILITY",
+      "description": "demo typed link"
+    },
+    {
+      "from_tag": "CW-501",
+      "to_tag": "E-301",
+      "connection_type": "UTILITY",
+      "description": "demo typed link"
+    },
+    {
+      "from_tag": "M-801",
+      "to_tag": "P-101",
+      "connection_type": "ELECTRICAL",
+      "description": "demo typed link"
+    },
+    {
+      "from_tag": "I-901",
+      "to_tag": "P-101",
+      "connection_type": "SIGNAL",
+      "description": "demo typed link"
+    },
+    {
+      "from_tag": "FV-601",
+      "to_tag": "P-101",
+      "connection_type": "CONTROL",
+      "description": "demo typed link"
+    },
+    {
+      "from_tag": "AG-211",
+      "to_tag": "R-201",
+      "connection_type": "DEPENDENCY",
+      "description": "demo typed link"
+    }
+  ],
+  "failure_modes": [
+    {
+      "equipment_tag": "P-101",
+      "name": "Generic wear",
+      "description": "Demo wear-out mode",
+      "is_detectable": false,
+      "component_name": null,
+      "pf_value": null,
+      "pf_unit": null
+    },
+    {
+      "equipment_tag": "P-102",
+      "name": "Generic wear",
+      "description": "Demo wear-out mode",
+      "is_detectable": false,
+      "component_name": null,
+      "pf_value": null,
+      "pf_unit": null
+    },
+    {
+      "equipment_tag": "P-103",
+      "name": "Generic wear",
+      "description": "Demo wear-out mode",
+      "is_detectable": false,
+      "component_name": null,
+      "pf_value": null,
+      "pf_unit": null
+    },
+    {
+      "equipment_tag": "P-104",
+      "name": "Generic wear",
+      "description": "Demo wear-out mode",
+      "is_detectable": false,
+      "component_name": null,
+      "pf_value": null,
+      "pf_unit": null
+    },
+    {
+      "equipment_tag": "P-105",
+      "name": "Generic wear",
+      "description": "Demo wear-out mode",
+      "is_detectable": false,
+      "component_name": null,
+      "pf_value": null,
+      "pf_unit": null
+    },
+    {
+      "equipment_tag": "P-106",
+      "name": "Generic wear",
+      "description": "Demo wear-out mode",
+      "is_detectable": false,
+      "component_name": null,
+      "pf_value": null,
+      "pf_unit": null
+    },
+    {
+      "equipment_tag": "R-201",
+      "name": "Generic wear",
+      "description": "Demo wear-out mode",
+      "is_detectable": false,
+      "component_name": null,
+      "pf_value": null,
+      "pf_unit": null
+    },
+    {
+      "equipment_tag": "R-202",
+      "name": "Generic wear",
+      "description": "Demo wear-out mode",
+      "is_detectable": false,
+      "component_name": null,
+      "pf_value": null,
+      "pf_unit": null
+    },
+    {
+      "equipment_tag": "R-203",
+      "name": "Generic wear",
+      "description": "Demo wear-out mode",
+      "is_detectable": false,
+      "component_name": null,
+      "pf_value": null,
+      "pf_unit": null
+    },
+    {
+      "equipment_tag": "R-204",
+      "name": "Generic wear",
+      "description": "Demo wear-out mode",
+      "is_detectable": false,
+      "component_name": null,
+      "pf_value": null,
+      "pf_unit": null
+    },
+    {
+      "equipment_tag": "AG-211",
+      "name": "Generic wear",
+      "description": "Demo wear-out mode",
+      "is_detectable": false,
+      "component_name": null,
+      "pf_value": null,
+      "pf_unit": null
+    },
+    {
+      "equipment_tag": "AG-212",
+      "name": "Generic wear",
+      "description": "Demo wear-out mode",
+      "is_detectable": false,
+      "component_name": null,
+      "pf_value": null,
+      "pf_unit": null
+    },
+    {
+      "equipment_tag": "AG-213",
+      "name": "Generic wear",
+      "description": "Demo wear-out mode",
+      "is_detectable": false,
+      "component_name": null,
+      "pf_value": null,
+      "pf_unit": null
+    },
+    {
+      "equipment_tag": "AG-214",
+      "name": "Generic wear",
+      "description": "Demo wear-out mode",
+      "is_detectable": false,
+      "component_name": null,
+      "pf_value": null,
+      "pf_unit": null
+    },
+    {
+      "equipment_tag": "E-301",
+      "name": "Generic wear",
+      "description": "Demo wear-out mode",
+      "is_detectable": false,
+      "component_name": null,
+      "pf_value": null,
+      "pf_unit": null
+    },
+    {
+      "equipment_tag": "E-302",
+      "name": "Generic wear",
+      "description": "Demo wear-out mode",
+      "is_detectable": false,
+      "component_name": null,
+      "pf_value": null,
+      "pf_unit": null
+    },
+    {
+      "equipment_tag": "E-303",
+      "name": "Generic wear",
+      "description": "Demo wear-out mode",
+      "is_detectable": false,
+      "component_name": null,
+      "pf_value": null,
+      "pf_unit": null
+    },
+    {
+      "equipment_tag": "E-304",
+      "name": "Generic wear",
+      "description": "Demo wear-out mode",
+      "is_detectable": false,
+      "component_name": null,
+      "pf_value": null,
+      "pf_unit": null
+    },
+    {
+      "equipment_tag": "E-305",
+      "name": "Generic wear",
+      "description": "Demo wear-out mode",
+      "is_detectable": false,
+      "component_name": null,
+      "pf_value": null,
+      "pf_unit": null
+    },
+    {
+      "equipment_tag": "E-306",
+      "name": "Generic wear",
+      "description": "Demo wear-out mode",
+      "is_detectable": false,
+      "component_name": null,
+      "pf_value": null,
+      "pf_unit": null
+    },
+    {
+      "equipment_tag": "E-307",
+      "name": "Generic wear",
+      "description": "Demo wear-out mode",
+      "is_detectable": false,
+      "component_name": null,
+      "pf_value": null,
+      "pf_unit": null
+    },
+    {
+      "equipment_tag": "E-308",
+      "name": "Generic wear",
+      "description": "Demo wear-out mode",
+      "is_detectable": false,
+      "component_name": null,
+      "pf_value": null,
+      "pf_unit": null
+    },
+    {
+      "equipment_tag": "C-401",
+      "name": "Generic wear",
+      "description": "Demo wear-out mode",
+      "is_detectable": false,
+      "component_name": null,
+      "pf_value": null,
+      "pf_unit": null
+    },
+    {
+      "equipment_tag": "C-402",
+      "name": "Generic wear",
+      "description": "Demo wear-out mode",
+      "is_detectable": false,
+      "component_name": null,
+      "pf_value": null,
+      "pf_unit": null
+    },
+    {
+      "equipment_tag": "C-403",
+      "name": "Generic wear",
+      "description": "Demo wear-out mode",
+      "is_detectable": false,
+      "component_name": null,
+      "pf_value": null,
+      "pf_unit": null
+    },
+    {
+      "equipment_tag": "C-404",
+      "name": "Generic wear",
+      "description": "Demo wear-out mode",
+      "is_detectable": false,
+      "component_name": null,
+      "pf_value": null,
+      "pf_unit": null
+    },
+    {
+      "equipment_tag": "CW-501",
+      "name": "Generic wear",
+      "description": "Demo wear-out mode",
+      "is_detectable": false,
+      "component_name": null,
+      "pf_value": null,
+      "pf_unit": null
+    },
+    {
+      "equipment_tag": "CW-502",
+      "name": "Generic wear",
+      "description": "Demo wear-out mode",
+      "is_detectable": false,
+      "component_name": null,
+      "pf_value": null,
+      "pf_unit": null
+    },
+    {
+      "equipment_tag": "CW-503",
+      "name": "Generic wear",
+      "description": "Demo wear-out mode",
+      "is_detectable": false,
+      "component_name": null,
+      "pf_value": null,
+      "pf_unit": null
+    },
+    {
+      "equipment_tag": "FV-601",
+      "name": "Generic wear",
+      "description": "Demo wear-out mode",
+      "is_detectable": false,
+      "component_name": null,
+      "pf_value": null,
+      "pf_unit": null
+    },
+    {
+      "equipment_tag": "FV-602",
+      "name": "Generic wear",
+      "description": "Demo wear-out mode",
+      "is_detectable": false,
+      "component_name": null,
+      "pf_value": null,
+      "pf_unit": null
+    },
+    {
+      "equipment_tag": "FV-603",
+      "name": "Generic wear",
+      "description": "Demo wear-out mode",
+      "is_detectable": false,
+      "component_name": null,
+      "pf_value": null,
+      "pf_unit": null
+    },
+    {
+      "equipment_tag": "FV-604",
+      "name": "Generic wear",
+      "description": "Demo wear-out mode",
+      "is_detectable": false,
+      "component_name": null,
+      "pf_value": null,
+      "pf_unit": null
+    },
+    {
+      "equipment_tag": "FV-605",
+      "name": "Generic wear",
+      "description": "Demo wear-out mode",
+      "is_detectable": false,
+      "component_name": null,
+      "pf_value": null,
+      "pf_unit": null
+    },
+    {
+      "equipment_tag": "FV-606",
+      "name": "Generic wear",
+      "description": "Demo wear-out mode",
+      "is_detectable": false,
+      "component_name": null,
+      "pf_value": null,
+      "pf_unit": null
+    },
+    {
+      "equipment_tag": "FV-607",
+      "name": "Generic wear",
+      "description": "Demo wear-out mode",
+      "is_detectable": false,
+      "component_name": null,
+      "pf_value": null,
+      "pf_unit": null
+    },
+    {
+      "equipment_tag": "FV-608",
+      "name": "Generic wear",
+      "description": "Demo wear-out mode",
+      "is_detectable": false,
+      "component_name": null,
+      "pf_value": null,
+      "pf_unit": null
+    },
+    {
+      "equipment_tag": "FV-609",
+      "name": "Generic wear",
+      "description": "Demo wear-out mode",
+      "is_detectable": false,
+      "component_name": null,
+      "pf_value": null,
+      "pf_unit": null
+    },
+    {
+      "equipment_tag": "FV-610",
+      "name": "Generic wear",
+      "description": "Demo wear-out mode",
+      "is_detectable": false,
+      "component_name": null,
+      "pf_value": null,
+      "pf_unit": null
+    },
+    {
+      "equipment_tag": "T-701",
+      "name": "Generic wear",
+      "description": "Demo wear-out mode",
+      "is_detectable": false,
+      "component_name": null,
+      "pf_value": null,
+      "pf_unit": null
+    },
+    {
+      "equipment_tag": "T-702",
+      "name": "Generic wear",
+      "description": "Demo wear-out mode",
+      "is_detectable": false,
+      "component_name": null,
+      "pf_value": null,
+      "pf_unit": null
+    },
+    {
+      "equipment_tag": "T-703",
+      "name": "Generic wear",
+      "description": "Demo wear-out mode",
+      "is_detectable": false,
+      "component_name": null,
+      "pf_value": null,
+      "pf_unit": null
+    },
+    {
+      "equipment_tag": "T-704",
+      "name": "Generic wear",
+      "description": "Demo wear-out mode",
+      "is_detectable": false,
+      "component_name": null,
+      "pf_value": null,
+      "pf_unit": null
+    },
+    {
+      "equipment_tag": "T-705",
+      "name": "Generic wear",
+      "description": "Demo wear-out mode",
+      "is_detectable": false,
+      "component_name": null,
+      "pf_value": null,
+      "pf_unit": null
+    },
+    {
+      "equipment_tag": "T-706",
+      "name": "Generic wear",
+      "description": "Demo wear-out mode",
+      "is_detectable": false,
+      "component_name": null,
+      "pf_value": null,
+      "pf_unit": null
+    },
+    {
+      "equipment_tag": "M-801",
+      "name": "Generic wear",
+      "description": "Demo wear-out mode",
+      "is_detectable": false,
+      "component_name": null,
+      "pf_value": null,
+      "pf_unit": null
+    },
+    {
+      "equipment_tag": "M-802",
+      "name": "Generic wear",
+      "description": "Demo wear-out mode",
+      "is_detectable": false,
+      "component_name": null,
+      "pf_value": null,
+      "pf_unit": null
+    },
+    {
+      "equipment_tag": "M-803",
+      "name": "Generic wear",
+      "description": "Demo wear-out mode",
+      "is_detectable": false,
+      "component_name": null,
+      "pf_value": null,
+      "pf_unit": null
+    },
+    {
+      "equipment_tag": "M-804",
+      "name": "Generic wear",
+      "description": "Demo wear-out mode",
+      "is_detectable": false,
+      "component_name": null,
+      "pf_value": null,
+      "pf_unit": null
+    },
+    {
+      "equipment_tag": "M-805",
+      "name": "Generic wear",
+      "description": "Demo wear-out mode",
+      "is_detectable": false,
+      "component_name": null,
+      "pf_value": null,
+      "pf_unit": null
+    },
+    {
+      "equipment_tag": "M-806",
+      "name": "Generic wear",
+      "description": "Demo wear-out mode",
+      "is_detectable": false,
+      "component_name": null,
+      "pf_value": null,
+      "pf_unit": null
+    },
+    {
+      "equipment_tag": "M-807",
+      "name": "Generic wear",
+      "description": "Demo wear-out mode",
+      "is_detectable": false,
+      "component_name": null,
+      "pf_value": null,
+      "pf_unit": null
+    },
+    {
+      "equipment_tag": "M-808",
+      "name": "Generic wear",
+      "description": "Demo wear-out mode",
+      "is_detectable": false,
+      "component_name": null,
+      "pf_value": null,
+      "pf_unit": null
+    },
+    {
+      "equipment_tag": "I-901",
+      "name": "Generic wear",
+      "description": "Demo wear-out mode",
+      "is_detectable": false,
+      "component_name": null,
+      "pf_value": null,
+      "pf_unit": null
+    },
+    {
+      "equipment_tag": "I-902",
+      "name": "Generic wear",
+      "description": "Demo wear-out mode",
+      "is_detectable": false,
+      "component_name": null,
+      "pf_value": null,
+      "pf_unit": null
+    },
+    {
+      "equipment_tag": "I-903",
+      "name": "Generic wear",
+      "description": "Demo wear-out mode",
+      "is_detectable": false,
+      "component_name": null,
+      "pf_value": null,
+      "pf_unit": null
+    },
+    {
+      "equipment_tag": "I-904",
+      "name": "Generic wear",
+      "description": "Demo wear-out mode",
+      "is_detectable": false,
+      "component_name": null,
+      "pf_value": null,
+      "pf_unit": null
+    },
+    {
+      "equipment_tag": "I-905",
+      "name": "Generic wear",
+      "description": "Demo wear-out mode",
+      "is_detectable": false,
+      "component_name": null,
+      "pf_value": null,
+      "pf_unit": null
+    },
+    {
+      "equipment_tag": "I-906",
+      "name": "Generic wear",
+      "description": "Demo wear-out mode",
+      "is_detectable": false,
+      "component_name": null,
+      "pf_value": null,
+      "pf_unit": null
+    },
+    {
+      "equipment_tag": "I-907",
+      "name": "Generic wear",
+      "description": "Demo wear-out mode",
+      "is_detectable": false,
+      "component_name": null,
+      "pf_value": null,
+      "pf_unit": null
+    },
+    {
+      "equipment_tag": "I-908",
+      "name": "Generic wear",
+      "description": "Demo wear-out mode",
+      "is_detectable": false,
+      "component_name": null,
+      "pf_value": null,
+      "pf_unit": null
+    },
+    {
+      "equipment_tag": "P-101",
+      "name": "Mechanical seal degradation",
+      "description": "PF-demo: seal degradation with vibro monitoring",
+      "is_detectable": true,
+      "component_name": "Mechanical seal",
+      "pf_value": 14.0,
+      "pf_unit": "DAYS"
+    }
+  ],
+  "failure_distributions": [
+    {
+      "equipment_tag": "P-101",
+      "failure_mode_name": "Generic wear",
+      "distribution": {
+        "type": "WEIBULL",
+        "shape": 1.5,
+        "scale": 8000.0,
+        "unit": "HOURS"
+      },
+      "source_type": "ENGINEERING_ASSUMPTION",
+      "confidence": "LOW",
+      "source_reference": "upp100-v1",
+      "generated_by": "upp100-seed"
+    },
+    {
+      "equipment_tag": "P-102",
+      "failure_mode_name": "Generic wear",
+      "distribution": {
+        "type": "WEIBULL",
+        "shape": 1.5,
+        "scale": 8000.0,
+        "unit": "HOURS"
+      },
+      "source_type": "ENGINEERING_ASSUMPTION",
+      "confidence": "LOW",
+      "source_reference": "upp100-v1",
+      "generated_by": "upp100-seed"
+    },
+    {
+      "equipment_tag": "P-103",
+      "failure_mode_name": "Generic wear",
+      "distribution": {
+        "type": "WEIBULL",
+        "shape": 1.5,
+        "scale": 8000.0,
+        "unit": "HOURS"
+      },
+      "source_type": "ENGINEERING_ASSUMPTION",
+      "confidence": "LOW",
+      "source_reference": "upp100-v1",
+      "generated_by": "upp100-seed"
+    },
+    {
+      "equipment_tag": "P-104",
+      "failure_mode_name": "Generic wear",
+      "distribution": {
+        "type": "WEIBULL",
+        "shape": 1.5,
+        "scale": 8000.0,
+        "unit": "HOURS"
+      },
+      "source_type": "ENGINEERING_ASSUMPTION",
+      "confidence": "LOW",
+      "source_reference": "upp100-v1",
+      "generated_by": "upp100-seed"
+    },
+    {
+      "equipment_tag": "P-105",
+      "failure_mode_name": "Generic wear",
+      "distribution": {
+        "type": "WEIBULL",
+        "shape": 1.5,
+        "scale": 8000.0,
+        "unit": "HOURS"
+      },
+      "source_type": "ENGINEERING_ASSUMPTION",
+      "confidence": "LOW",
+      "source_reference": "upp100-v1",
+      "generated_by": "upp100-seed"
+    },
+    {
+      "equipment_tag": "P-106",
+      "failure_mode_name": "Generic wear",
+      "distribution": {
+        "type": "WEIBULL",
+        "shape": 1.5,
+        "scale": 8000.0,
+        "unit": "HOURS"
+      },
+      "source_type": "ENGINEERING_ASSUMPTION",
+      "confidence": "LOW",
+      "source_reference": "upp100-v1",
+      "generated_by": "upp100-seed"
+    },
+    {
+      "equipment_tag": "R-201",
+      "failure_mode_name": "Generic wear",
+      "distribution": {
+        "type": "WEIBULL",
+        "shape": 1.5,
+        "scale": 8000.0,
+        "unit": "HOURS"
+      },
+      "source_type": "ENGINEERING_ASSUMPTION",
+      "confidence": "LOW",
+      "source_reference": "upp100-v1",
+      "generated_by": "upp100-seed"
+    },
+    {
+      "equipment_tag": "R-202",
+      "failure_mode_name": "Generic wear",
+      "distribution": {
+        "type": "WEIBULL",
+        "shape": 1.5,
+        "scale": 8000.0,
+        "unit": "HOURS"
+      },
+      "source_type": "ENGINEERING_ASSUMPTION",
+      "confidence": "LOW",
+      "source_reference": "upp100-v1",
+      "generated_by": "upp100-seed"
+    },
+    {
+      "equipment_tag": "R-203",
+      "failure_mode_name": "Generic wear",
+      "distribution": {
+        "type": "WEIBULL",
+        "shape": 1.5,
+        "scale": 8000.0,
+        "unit": "HOURS"
+      },
+      "source_type": "ENGINEERING_ASSUMPTION",
+      "confidence": "LOW",
+      "source_reference": "upp100-v1",
+      "generated_by": "upp100-seed"
+    },
+    {
+      "equipment_tag": "R-204",
+      "failure_mode_name": "Generic wear",
+      "distribution": {
+        "type": "WEIBULL",
+        "shape": 1.5,
+        "scale": 8000.0,
+        "unit": "HOURS"
+      },
+      "source_type": "ENGINEERING_ASSUMPTION",
+      "confidence": "LOW",
+      "source_reference": "upp100-v1",
+      "generated_by": "upp100-seed"
+    },
+    {
+      "equipment_tag": "AG-211",
+      "failure_mode_name": "Generic wear",
+      "distribution": {
+        "type": "WEIBULL",
+        "shape": 1.5,
+        "scale": 8000.0,
+        "unit": "HOURS"
+      },
+      "source_type": "ENGINEERING_ASSUMPTION",
+      "confidence": "LOW",
+      "source_reference": "upp100-v1",
+      "generated_by": "upp100-seed"
+    },
+    {
+      "equipment_tag": "AG-212",
+      "failure_mode_name": "Generic wear",
+      "distribution": {
+        "type": "WEIBULL",
+        "shape": 1.5,
+        "scale": 8000.0,
+        "unit": "HOURS"
+      },
+      "source_type": "ENGINEERING_ASSUMPTION",
+      "confidence": "LOW",
+      "source_reference": "upp100-v1",
+      "generated_by": "upp100-seed"
+    },
+    {
+      "equipment_tag": "AG-213",
+      "failure_mode_name": "Generic wear",
+      "distribution": {
+        "type": "WEIBULL",
+        "shape": 1.5,
+        "scale": 8000.0,
+        "unit": "HOURS"
+      },
+      "source_type": "ENGINEERING_ASSUMPTION",
+      "confidence": "LOW",
+      "source_reference": "upp100-v1",
+      "generated_by": "upp100-seed"
+    },
+    {
+      "equipment_tag": "AG-214",
+      "failure_mode_name": "Generic wear",
+      "distribution": {
+        "type": "WEIBULL",
+        "shape": 1.5,
+        "scale": 8000.0,
+        "unit": "HOURS"
+      },
+      "source_type": "ENGINEERING_ASSUMPTION",
+      "confidence": "LOW",
+      "source_reference": "upp100-v1",
+      "generated_by": "upp100-seed"
+    },
+    {
+      "equipment_tag": "E-301",
+      "failure_mode_name": "Generic wear",
+      "distribution": {
+        "type": "WEIBULL",
+        "shape": 1.5,
+        "scale": 8000.0,
+        "unit": "HOURS"
+      },
+      "source_type": "ENGINEERING_ASSUMPTION",
+      "confidence": "LOW",
+      "source_reference": "upp100-v1",
+      "generated_by": "upp100-seed"
+    },
+    {
+      "equipment_tag": "E-302",
+      "failure_mode_name": "Generic wear",
+      "distribution": {
+        "type": "WEIBULL",
+        "shape": 1.5,
+        "scale": 8000.0,
+        "unit": "HOURS"
+      },
+      "source_type": "ENGINEERING_ASSUMPTION",
+      "confidence": "LOW",
+      "source_reference": "upp100-v1",
+      "generated_by": "upp100-seed"
+    },
+    {
+      "equipment_tag": "E-303",
+      "failure_mode_name": "Generic wear",
+      "distribution": {
+        "type": "WEIBULL",
+        "shape": 1.5,
+        "scale": 8000.0,
+        "unit": "HOURS"
+      },
+      "source_type": "ENGINEERING_ASSUMPTION",
+      "confidence": "LOW",
+      "source_reference": "upp100-v1",
+      "generated_by": "upp100-seed"
+    },
+    {
+      "equipment_tag": "E-304",
+      "failure_mode_name": "Generic wear",
+      "distribution": {
+        "type": "WEIBULL",
+        "shape": 1.5,
+        "scale": 8000.0,
+        "unit": "HOURS"
+      },
+      "source_type": "ENGINEERING_ASSUMPTION",
+      "confidence": "LOW",
+      "source_reference": "upp100-v1",
+      "generated_by": "upp100-seed"
+    },
+    {
+      "equipment_tag": "E-305",
+      "failure_mode_name": "Generic wear",
+      "distribution": {
+        "type": "WEIBULL",
+        "shape": 1.5,
+        "scale": 8000.0,
+        "unit": "HOURS"
+      },
+      "source_type": "ENGINEERING_ASSUMPTION",
+      "confidence": "LOW",
+      "source_reference": "upp100-v1",
+      "generated_by": "upp100-seed"
+    },
+    {
+      "equipment_tag": "E-306",
+      "failure_mode_name": "Generic wear",
+      "distribution": {
+        "type": "WEIBULL",
+        "shape": 1.5,
+        "scale": 8000.0,
+        "unit": "HOURS"
+      },
+      "source_type": "ENGINEERING_ASSUMPTION",
+      "confidence": "LOW",
+      "source_reference": "upp100-v1",
+      "generated_by": "upp100-seed"
+    },
+    {
+      "equipment_tag": "E-307",
+      "failure_mode_name": "Generic wear",
+      "distribution": {
+        "type": "WEIBULL",
+        "shape": 1.5,
+        "scale": 8000.0,
+        "unit": "HOURS"
+      },
+      "source_type": "ENGINEERING_ASSUMPTION",
+      "confidence": "LOW",
+      "source_reference": "upp100-v1",
+      "generated_by": "upp100-seed"
+    },
+    {
+      "equipment_tag": "E-308",
+      "failure_mode_name": "Generic wear",
+      "distribution": {
+        "type": "WEIBULL",
+        "shape": 1.5,
+        "scale": 8000.0,
+        "unit": "HOURS"
+      },
+      "source_type": "ENGINEERING_ASSUMPTION",
+      "confidence": "LOW",
+      "source_reference": "upp100-v1",
+      "generated_by": "upp100-seed"
+    },
+    {
+      "equipment_tag": "C-401",
+      "failure_mode_name": "Generic wear",
+      "distribution": {
+        "type": "WEIBULL",
+        "shape": 1.5,
+        "scale": 8000.0,
+        "unit": "HOURS"
+      },
+      "source_type": "ENGINEERING_ASSUMPTION",
+      "confidence": "LOW",
+      "source_reference": "upp100-v1",
+      "generated_by": "upp100-seed"
+    },
+    {
+      "equipment_tag": "C-402",
+      "failure_mode_name": "Generic wear",
+      "distribution": {
+        "type": "WEIBULL",
+        "shape": 1.5,
+        "scale": 8000.0,
+        "unit": "HOURS"
+      },
+      "source_type": "ENGINEERING_ASSUMPTION",
+      "confidence": "LOW",
+      "source_reference": "upp100-v1",
+      "generated_by": "upp100-seed"
+    },
+    {
+      "equipment_tag": "C-403",
+      "failure_mode_name": "Generic wear",
+      "distribution": {
+        "type": "WEIBULL",
+        "shape": 1.5,
+        "scale": 8000.0,
+        "unit": "HOURS"
+      },
+      "source_type": "ENGINEERING_ASSUMPTION",
+      "confidence": "LOW",
+      "source_reference": "upp100-v1",
+      "generated_by": "upp100-seed"
+    },
+    {
+      "equipment_tag": "C-404",
+      "failure_mode_name": "Generic wear",
+      "distribution": {
+        "type": "WEIBULL",
+        "shape": 1.5,
+        "scale": 8000.0,
+        "unit": "HOURS"
+      },
+      "source_type": "ENGINEERING_ASSUMPTION",
+      "confidence": "LOW",
+      "source_reference": "upp100-v1",
+      "generated_by": "upp100-seed"
+    },
+    {
+      "equipment_tag": "CW-501",
+      "failure_mode_name": "Generic wear",
+      "distribution": {
+        "type": "WEIBULL",
+        "shape": 1.5,
+        "scale": 8000.0,
+        "unit": "HOURS"
+      },
+      "source_type": "ENGINEERING_ASSUMPTION",
+      "confidence": "LOW",
+      "source_reference": "upp100-v1",
+      "generated_by": "upp100-seed"
+    },
+    {
+      "equipment_tag": "CW-502",
+      "failure_mode_name": "Generic wear",
+      "distribution": {
+        "type": "WEIBULL",
+        "shape": 1.5,
+        "scale": 8000.0,
+        "unit": "HOURS"
+      },
+      "source_type": "ENGINEERING_ASSUMPTION",
+      "confidence": "LOW",
+      "source_reference": "upp100-v1",
+      "generated_by": "upp100-seed"
+    },
+    {
+      "equipment_tag": "CW-503",
+      "failure_mode_name": "Generic wear",
+      "distribution": {
+        "type": "WEIBULL",
+        "shape": 1.5,
+        "scale": 8000.0,
+        "unit": "HOURS"
+      },
+      "source_type": "ENGINEERING_ASSUMPTION",
+      "confidence": "LOW",
+      "source_reference": "upp100-v1",
+      "generated_by": "upp100-seed"
+    },
+    {
+      "equipment_tag": "FV-601",
+      "failure_mode_name": "Generic wear",
+      "distribution": {
+        "type": "WEIBULL",
+        "shape": 1.5,
+        "scale": 8000.0,
+        "unit": "HOURS"
+      },
+      "source_type": "ENGINEERING_ASSUMPTION",
+      "confidence": "LOW",
+      "source_reference": "upp100-v1",
+      "generated_by": "upp100-seed"
+    },
+    {
+      "equipment_tag": "FV-602",
+      "failure_mode_name": "Generic wear",
+      "distribution": {
+        "type": "WEIBULL",
+        "shape": 1.5,
+        "scale": 8000.0,
+        "unit": "HOURS"
+      },
+      "source_type": "ENGINEERING_ASSUMPTION",
+      "confidence": "LOW",
+      "source_reference": "upp100-v1",
+      "generated_by": "upp100-seed"
+    },
+    {
+      "equipment_tag": "FV-603",
+      "failure_mode_name": "Generic wear",
+      "distribution": {
+        "type": "WEIBULL",
+        "shape": 1.5,
+        "scale": 8000.0,
+        "unit": "HOURS"
+      },
+      "source_type": "ENGINEERING_ASSUMPTION",
+      "confidence": "LOW",
+      "source_reference": "upp100-v1",
+      "generated_by": "upp100-seed"
+    },
+    {
+      "equipment_tag": "FV-604",
+      "failure_mode_name": "Generic wear",
+      "distribution": {
+        "type": "WEIBULL",
+        "shape": 1.5,
+        "scale": 8000.0,
+        "unit": "HOURS"
+      },
+      "source_type": "ENGINEERING_ASSUMPTION",
+      "confidence": "LOW",
+      "source_reference": "upp100-v1",
+      "generated_by": "upp100-seed"
+    },
+    {
+      "equipment_tag": "FV-605",
+      "failure_mode_name": "Generic wear",
+      "distribution": {
+        "type": "WEIBULL",
+        "shape": 1.5,
+        "scale": 8000.0,
+        "unit": "HOURS"
+      },
+      "source_type": "ENGINEERING_ASSUMPTION",
+      "confidence": "LOW",
+      "source_reference": "upp100-v1",
+      "generated_by": "upp100-seed"
+    },
+    {
+      "equipment_tag": "FV-606",
+      "failure_mode_name": "Generic wear",
+      "distribution": {
+        "type": "WEIBULL",
+        "shape": 1.5,
+        "scale": 8000.0,
+        "unit": "HOURS"
+      },
+      "source_type": "ENGINEERING_ASSUMPTION",
+      "confidence": "LOW",
+      "source_reference": "upp100-v1",
+      "generated_by": "upp100-seed"
+    },
+    {
+      "equipment_tag": "FV-607",
+      "failure_mode_name": "Generic wear",
+      "distribution": {
+        "type": "WEIBULL",
+        "shape": 1.5,
+        "scale": 8000.0,
+        "unit": "HOURS"
+      },
+      "source_type": "ENGINEERING_ASSUMPTION",
+      "confidence": "LOW",
+      "source_reference": "upp100-v1",
+      "generated_by": "upp100-seed"
+    },
+    {
+      "equipment_tag": "FV-608",
+      "failure_mode_name": "Generic wear",
+      "distribution": {
+        "type": "WEIBULL",
+        "shape": 1.5,
+        "scale": 8000.0,
+        "unit": "HOURS"
+      },
+      "source_type": "ENGINEERING_ASSUMPTION",
+      "confidence": "LOW",
+      "source_reference": "upp100-v1",
+      "generated_by": "upp100-seed"
+    },
+    {
+      "equipment_tag": "FV-609",
+      "failure_mode_name": "Generic wear",
+      "distribution": {
+        "type": "WEIBULL",
+        "shape": 1.5,
+        "scale": 8000.0,
+        "unit": "HOURS"
+      },
+      "source_type": "ENGINEERING_ASSUMPTION",
+      "confidence": "LOW",
+      "source_reference": "upp100-v1",
+      "generated_by": "upp100-seed"
+    },
+    {
+      "equipment_tag": "FV-610",
+      "failure_mode_name": "Generic wear",
+      "distribution": {
+        "type": "WEIBULL",
+        "shape": 1.5,
+        "scale": 8000.0,
+        "unit": "HOURS"
+      },
+      "source_type": "ENGINEERING_ASSUMPTION",
+      "confidence": "LOW",
+      "source_reference": "upp100-v1",
+      "generated_by": "upp100-seed"
+    },
+    {
+      "equipment_tag": "T-701",
+      "failure_mode_name": "Generic wear",
+      "distribution": {
+        "type": "WEIBULL",
+        "shape": 1.5,
+        "scale": 8000.0,
+        "unit": "HOURS"
+      },
+      "source_type": "ENGINEERING_ASSUMPTION",
+      "confidence": "LOW",
+      "source_reference": "upp100-v1",
+      "generated_by": "upp100-seed"
+    },
+    {
+      "equipment_tag": "T-702",
+      "failure_mode_name": "Generic wear",
+      "distribution": {
+        "type": "WEIBULL",
+        "shape": 1.5,
+        "scale": 8000.0,
+        "unit": "HOURS"
+      },
+      "source_type": "ENGINEERING_ASSUMPTION",
+      "confidence": "LOW",
+      "source_reference": "upp100-v1",
+      "generated_by": "upp100-seed"
+    },
+    {
+      "equipment_tag": "T-703",
+      "failure_mode_name": "Generic wear",
+      "distribution": {
+        "type": "WEIBULL",
+        "shape": 1.5,
+        "scale": 8000.0,
+        "unit": "HOURS"
+      },
+      "source_type": "ENGINEERING_ASSUMPTION",
+      "confidence": "LOW",
+      "source_reference": "upp100-v1",
+      "generated_by": "upp100-seed"
+    },
+    {
+      "equipment_tag": "T-704",
+      "failure_mode_name": "Generic wear",
+      "distribution": {
+        "type": "WEIBULL",
+        "shape": 1.5,
+        "scale": 8000.0,
+        "unit": "HOURS"
+      },
+      "source_type": "ENGINEERING_ASSUMPTION",
+      "confidence": "LOW",
+      "source_reference": "upp100-v1",
+      "generated_by": "upp100-seed"
+    },
+    {
+      "equipment_tag": "T-705",
+      "failure_mode_name": "Generic wear",
+      "distribution": {
+        "type": "WEIBULL",
+        "shape": 1.5,
+        "scale": 8000.0,
+        "unit": "HOURS"
+      },
+      "source_type": "ENGINEERING_ASSUMPTION",
+      "confidence": "LOW",
+      "source_reference": "upp100-v1",
+      "generated_by": "upp100-seed"
+    },
+    {
+      "equipment_tag": "T-706",
+      "failure_mode_name": "Generic wear",
+      "distribution": {
+        "type": "WEIBULL",
+        "shape": 1.5,
+        "scale": 8000.0,
+        "unit": "HOURS"
+      },
+      "source_type": "ENGINEERING_ASSUMPTION",
+      "confidence": "LOW",
+      "source_reference": "upp100-v1",
+      "generated_by": "upp100-seed"
+    },
+    {
+      "equipment_tag": "M-801",
+      "failure_mode_name": "Generic wear",
+      "distribution": {
+        "type": "WEIBULL",
+        "shape": 1.5,
+        "scale": 8000.0,
+        "unit": "HOURS"
+      },
+      "source_type": "ENGINEERING_ASSUMPTION",
+      "confidence": "LOW",
+      "source_reference": "upp100-v1",
+      "generated_by": "upp100-seed"
+    },
+    {
+      "equipment_tag": "M-802",
+      "failure_mode_name": "Generic wear",
+      "distribution": {
+        "type": "WEIBULL",
+        "shape": 1.5,
+        "scale": 8000.0,
+        "unit": "HOURS"
+      },
+      "source_type": "ENGINEERING_ASSUMPTION",
+      "confidence": "LOW",
+      "source_reference": "upp100-v1",
+      "generated_by": "upp100-seed"
+    },
+    {
+      "equipment_tag": "M-803",
+      "failure_mode_name": "Generic wear",
+      "distribution": {
+        "type": "WEIBULL",
+        "shape": 1.5,
+        "scale": 8000.0,
+        "unit": "HOURS"
+      },
+      "source_type": "ENGINEERING_ASSUMPTION",
+      "confidence": "LOW",
+      "source_reference": "upp100-v1",
+      "generated_by": "upp100-seed"
+    },
+    {
+      "equipment_tag": "M-804",
+      "failure_mode_name": "Generic wear",
+      "distribution": {
+        "type": "WEIBULL",
+        "shape": 1.5,
+        "scale": 8000.0,
+        "unit": "HOURS"
+      },
+      "source_type": "ENGINEERING_ASSUMPTION",
+      "confidence": "LOW",
+      "source_reference": "upp100-v1",
+      "generated_by": "upp100-seed"
+    },
+    {
+      "equipment_tag": "M-805",
+      "failure_mode_name": "Generic wear",
+      "distribution": {
+        "type": "WEIBULL",
+        "shape": 1.5,
+        "scale": 8000.0,
+        "unit": "HOURS"
+      },
+      "source_type": "ENGINEERING_ASSUMPTION",
+      "confidence": "LOW",
+      "source_reference": "upp100-v1",
+      "generated_by": "upp100-seed"
+    },
+    {
+      "equipment_tag": "M-806",
+      "failure_mode_name": "Generic wear",
+      "distribution": {
+        "type": "WEIBULL",
+        "shape": 1.5,
+        "scale": 8000.0,
+        "unit": "HOURS"
+      },
+      "source_type": "ENGINEERING_ASSUMPTION",
+      "confidence": "LOW",
+      "source_reference": "upp100-v1",
+      "generated_by": "upp100-seed"
+    },
+    {
+      "equipment_tag": "M-807",
+      "failure_mode_name": "Generic wear",
+      "distribution": {
+        "type": "WEIBULL",
+        "shape": 1.5,
+        "scale": 8000.0,
+        "unit": "HOURS"
+      },
+      "source_type": "ENGINEERING_ASSUMPTION",
+      "confidence": "LOW",
+      "source_reference": "upp100-v1",
+      "generated_by": "upp100-seed"
+    },
+    {
+      "equipment_tag": "M-808",
+      "failure_mode_name": "Generic wear",
+      "distribution": {
+        "type": "WEIBULL",
+        "shape": 1.5,
+        "scale": 8000.0,
+        "unit": "HOURS"
+      },
+      "source_type": "ENGINEERING_ASSUMPTION",
+      "confidence": "LOW",
+      "source_reference": "upp100-v1",
+      "generated_by": "upp100-seed"
+    },
+    {
+      "equipment_tag": "I-901",
+      "failure_mode_name": "Generic wear",
+      "distribution": {
+        "type": "WEIBULL",
+        "shape": 1.5,
+        "scale": 8000.0,
+        "unit": "HOURS"
+      },
+      "source_type": "ENGINEERING_ASSUMPTION",
+      "confidence": "LOW",
+      "source_reference": "upp100-v1",
+      "generated_by": "upp100-seed"
+    },
+    {
+      "equipment_tag": "I-902",
+      "failure_mode_name": "Generic wear",
+      "distribution": {
+        "type": "WEIBULL",
+        "shape": 1.5,
+        "scale": 8000.0,
+        "unit": "HOURS"
+      },
+      "source_type": "ENGINEERING_ASSUMPTION",
+      "confidence": "LOW",
+      "source_reference": "upp100-v1",
+      "generated_by": "upp100-seed"
+    },
+    {
+      "equipment_tag": "I-903",
+      "failure_mode_name": "Generic wear",
+      "distribution": {
+        "type": "WEIBULL",
+        "shape": 1.5,
+        "scale": 8000.0,
+        "unit": "HOURS"
+      },
+      "source_type": "ENGINEERING_ASSUMPTION",
+      "confidence": "LOW",
+      "source_reference": "upp100-v1",
+      "generated_by": "upp100-seed"
+    },
+    {
+      "equipment_tag": "I-904",
+      "failure_mode_name": "Generic wear",
+      "distribution": {
+        "type": "WEIBULL",
+        "shape": 1.5,
+        "scale": 8000.0,
+        "unit": "HOURS"
+      },
+      "source_type": "ENGINEERING_ASSUMPTION",
+      "confidence": "LOW",
+      "source_reference": "upp100-v1",
+      "generated_by": "upp100-seed"
+    },
+    {
+      "equipment_tag": "I-905",
+      "failure_mode_name": "Generic wear",
+      "distribution": {
+        "type": "WEIBULL",
+        "shape": 1.5,
+        "scale": 8000.0,
+        "unit": "HOURS"
+      },
+      "source_type": "ENGINEERING_ASSUMPTION",
+      "confidence": "LOW",
+      "source_reference": "upp100-v1",
+      "generated_by": "upp100-seed"
+    },
+    {
+      "equipment_tag": "I-906",
+      "failure_mode_name": "Generic wear",
+      "distribution": {
+        "type": "WEIBULL",
+        "shape": 1.5,
+        "scale": 8000.0,
+        "unit": "HOURS"
+      },
+      "source_type": "ENGINEERING_ASSUMPTION",
+      "confidence": "LOW",
+      "source_reference": "upp100-v1",
+      "generated_by": "upp100-seed"
+    },
+    {
+      "equipment_tag": "I-907",
+      "failure_mode_name": "Generic wear",
+      "distribution": {
+        "type": "WEIBULL",
+        "shape": 1.5,
+        "scale": 8000.0,
+        "unit": "HOURS"
+      },
+      "source_type": "ENGINEERING_ASSUMPTION",
+      "confidence": "LOW",
+      "source_reference": "upp100-v1",
+      "generated_by": "upp100-seed"
+    },
+    {
+      "equipment_tag": "I-908",
+      "failure_mode_name": "Generic wear",
+      "distribution": {
+        "type": "WEIBULL",
+        "shape": 1.5,
+        "scale": 8000.0,
+        "unit": "HOURS"
+      },
+      "source_type": "ENGINEERING_ASSUMPTION",
+      "confidence": "LOW",
+      "source_reference": "upp100-v1",
+      "generated_by": "upp100-seed"
+    },
+    {
+      "equipment_tag": "P-101",
+      "failure_mode_name": "Mechanical seal degradation",
+      "distribution": {
+        "type": "WEIBULL",
+        "shape": 2.0,
+        "scale": 2000.0,
+        "unit": "HOURS"
+      },
+      "source_type": "ENGINEERING_ASSUMPTION",
+      "confidence": "MEDIUM",
+      "source_reference": "PF-demo P-101",
+      "generated_by": "upp100-seed"
+    }
+  ],
+  "maintenance": [
+    {
+      "equipment_tag": "P-101",
+      "name": "Corrective repair",
+      "task_type": "CORRECTIVE",
+      "trigger": "ON_FAILURE",
+      "failure_mode_name": "Generic wear",
+      "interval_value": null,
+      "interval_unit": null,
+      "cost": null,
+      "duration_distribution": {
+        "type": "CONSTANT",
+        "value": 4.0,
+        "unit": "HOURS"
+      },
+      "duration_source_type": "ENGINEERING_ASSUMPTION",
+      "duration_confidence": "LOW"
+    },
+    {
+      "equipment_tag": "P-102",
+      "name": "Corrective repair",
+      "task_type": "CORRECTIVE",
+      "trigger": "ON_FAILURE",
+      "failure_mode_name": "Generic wear",
+      "interval_value": null,
+      "interval_unit": null,
+      "cost": null,
+      "duration_distribution": {
+        "type": "CONSTANT",
+        "value": 4.0,
+        "unit": "HOURS"
+      },
+      "duration_source_type": "ENGINEERING_ASSUMPTION",
+      "duration_confidence": "LOW"
+    },
+    {
+      "equipment_tag": "P-103",
+      "name": "Corrective repair",
+      "task_type": "CORRECTIVE",
+      "trigger": "ON_FAILURE",
+      "failure_mode_name": "Generic wear",
+      "interval_value": null,
+      "interval_unit": null,
+      "cost": null,
+      "duration_distribution": {
+        "type": "CONSTANT",
+        "value": 4.0,
+        "unit": "HOURS"
+      },
+      "duration_source_type": "ENGINEERING_ASSUMPTION",
+      "duration_confidence": "LOW"
+    },
+    {
+      "equipment_tag": "P-104",
+      "name": "Corrective repair",
+      "task_type": "CORRECTIVE",
+      "trigger": "ON_FAILURE",
+      "failure_mode_name": "Generic wear",
+      "interval_value": null,
+      "interval_unit": null,
+      "cost": null,
+      "duration_distribution": {
+        "type": "CONSTANT",
+        "value": 4.0,
+        "unit": "HOURS"
+      },
+      "duration_source_type": "ENGINEERING_ASSUMPTION",
+      "duration_confidence": "LOW"
+    },
+    {
+      "equipment_tag": "P-105",
+      "name": "Corrective repair",
+      "task_type": "CORRECTIVE",
+      "trigger": "ON_FAILURE",
+      "failure_mode_name": "Generic wear",
+      "interval_value": null,
+      "interval_unit": null,
+      "cost": null,
+      "duration_distribution": {
+        "type": "CONSTANT",
+        "value": 4.0,
+        "unit": "HOURS"
+      },
+      "duration_source_type": "ENGINEERING_ASSUMPTION",
+      "duration_confidence": "LOW"
+    },
+    {
+      "equipment_tag": "P-106",
+      "name": "Corrective repair",
+      "task_type": "CORRECTIVE",
+      "trigger": "ON_FAILURE",
+      "failure_mode_name": "Generic wear",
+      "interval_value": null,
+      "interval_unit": null,
+      "cost": null,
+      "duration_distribution": {
+        "type": "CONSTANT",
+        "value": 4.0,
+        "unit": "HOURS"
+      },
+      "duration_source_type": "ENGINEERING_ASSUMPTION",
+      "duration_confidence": "LOW"
+    },
+    {
+      "equipment_tag": "R-201",
+      "name": "Corrective repair",
+      "task_type": "CORRECTIVE",
+      "trigger": "ON_FAILURE",
+      "failure_mode_name": "Generic wear",
+      "interval_value": null,
+      "interval_unit": null,
+      "cost": null,
+      "duration_distribution": {
+        "type": "CONSTANT",
+        "value": 4.0,
+        "unit": "HOURS"
+      },
+      "duration_source_type": "ENGINEERING_ASSUMPTION",
+      "duration_confidence": "LOW"
+    },
+    {
+      "equipment_tag": "R-202",
+      "name": "Corrective repair",
+      "task_type": "CORRECTIVE",
+      "trigger": "ON_FAILURE",
+      "failure_mode_name": "Generic wear",
+      "interval_value": null,
+      "interval_unit": null,
+      "cost": null,
+      "duration_distribution": {
+        "type": "CONSTANT",
+        "value": 4.0,
+        "unit": "HOURS"
+      },
+      "duration_source_type": "ENGINEERING_ASSUMPTION",
+      "duration_confidence": "LOW"
+    },
+    {
+      "equipment_tag": "R-203",
+      "name": "Corrective repair",
+      "task_type": "CORRECTIVE",
+      "trigger": "ON_FAILURE",
+      "failure_mode_name": "Generic wear",
+      "interval_value": null,
+      "interval_unit": null,
+      "cost": null,
+      "duration_distribution": {
+        "type": "CONSTANT",
+        "value": 4.0,
+        "unit": "HOURS"
+      },
+      "duration_source_type": "ENGINEERING_ASSUMPTION",
+      "duration_confidence": "LOW"
+    },
+    {
+      "equipment_tag": "R-204",
+      "name": "Corrective repair",
+      "task_type": "CORRECTIVE",
+      "trigger": "ON_FAILURE",
+      "failure_mode_name": "Generic wear",
+      "interval_value": null,
+      "interval_unit": null,
+      "cost": null,
+      "duration_distribution": {
+        "type": "CONSTANT",
+        "value": 4.0,
+        "unit": "HOURS"
+      },
+      "duration_source_type": "ENGINEERING_ASSUMPTION",
+      "duration_confidence": "LOW"
+    },
+    {
+      "equipment_tag": "AG-211",
+      "name": "Corrective repair",
+      "task_type": "CORRECTIVE",
+      "trigger": "ON_FAILURE",
+      "failure_mode_name": "Generic wear",
+      "interval_value": null,
+      "interval_unit": null,
+      "cost": null,
+      "duration_distribution": {
+        "type": "CONSTANT",
+        "value": 4.0,
+        "unit": "HOURS"
+      },
+      "duration_source_type": "ENGINEERING_ASSUMPTION",
+      "duration_confidence": "LOW"
+    },
+    {
+      "equipment_tag": "AG-212",
+      "name": "Corrective repair",
+      "task_type": "CORRECTIVE",
+      "trigger": "ON_FAILURE",
+      "failure_mode_name": "Generic wear",
+      "interval_value": null,
+      "interval_unit": null,
+      "cost": null,
+      "duration_distribution": {
+        "type": "CONSTANT",
+        "value": 4.0,
+        "unit": "HOURS"
+      },
+      "duration_source_type": "ENGINEERING_ASSUMPTION",
+      "duration_confidence": "LOW"
+    },
+    {
+      "equipment_tag": "AG-213",
+      "name": "Corrective repair",
+      "task_type": "CORRECTIVE",
+      "trigger": "ON_FAILURE",
+      "failure_mode_name": "Generic wear",
+      "interval_value": null,
+      "interval_unit": null,
+      "cost": null,
+      "duration_distribution": {
+        "type": "CONSTANT",
+        "value": 4.0,
+        "unit": "HOURS"
+      },
+      "duration_source_type": "ENGINEERING_ASSUMPTION",
+      "duration_confidence": "LOW"
+    },
+    {
+      "equipment_tag": "AG-214",
+      "name": "Corrective repair",
+      "task_type": "CORRECTIVE",
+      "trigger": "ON_FAILURE",
+      "failure_mode_name": "Generic wear",
+      "interval_value": null,
+      "interval_unit": null,
+      "cost": null,
+      "duration_distribution": {
+        "type": "CONSTANT",
+        "value": 4.0,
+        "unit": "HOURS"
+      },
+      "duration_source_type": "ENGINEERING_ASSUMPTION",
+      "duration_confidence": "LOW"
+    },
+    {
+      "equipment_tag": "E-301",
+      "name": "Corrective repair",
+      "task_type": "CORRECTIVE",
+      "trigger": "ON_FAILURE",
+      "failure_mode_name": "Generic wear",
+      "interval_value": null,
+      "interval_unit": null,
+      "cost": null,
+      "duration_distribution": {
+        "type": "CONSTANT",
+        "value": 4.0,
+        "unit": "HOURS"
+      },
+      "duration_source_type": "ENGINEERING_ASSUMPTION",
+      "duration_confidence": "LOW"
+    },
+    {
+      "equipment_tag": "E-302",
+      "name": "Corrective repair",
+      "task_type": "CORRECTIVE",
+      "trigger": "ON_FAILURE",
+      "failure_mode_name": "Generic wear",
+      "interval_value": null,
+      "interval_unit": null,
+      "cost": null,
+      "duration_distribution": {
+        "type": "CONSTANT",
+        "value": 4.0,
+        "unit": "HOURS"
+      },
+      "duration_source_type": "ENGINEERING_ASSUMPTION",
+      "duration_confidence": "LOW"
+    },
+    {
+      "equipment_tag": "E-303",
+      "name": "Corrective repair",
+      "task_type": "CORRECTIVE",
+      "trigger": "ON_FAILURE",
+      "failure_mode_name": "Generic wear",
+      "interval_value": null,
+      "interval_unit": null,
+      "cost": null,
+      "duration_distribution": {
+        "type": "CONSTANT",
+        "value": 4.0,
+        "unit": "HOURS"
+      },
+      "duration_source_type": "ENGINEERING_ASSUMPTION",
+      "duration_confidence": "LOW"
+    },
+    {
+      "equipment_tag": "E-304",
+      "name": "Corrective repair",
+      "task_type": "CORRECTIVE",
+      "trigger": "ON_FAILURE",
+      "failure_mode_name": "Generic wear",
+      "interval_value": null,
+      "interval_unit": null,
+      "cost": null,
+      "duration_distribution": {
+        "type": "CONSTANT",
+        "value": 4.0,
+        "unit": "HOURS"
+      },
+      "duration_source_type": "ENGINEERING_ASSUMPTION",
+      "duration_confidence": "LOW"
+    },
+    {
+      "equipment_tag": "E-305",
+      "name": "Corrective repair",
+      "task_type": "CORRECTIVE",
+      "trigger": "ON_FAILURE",
+      "failure_mode_name": "Generic wear",
+      "interval_value": null,
+      "interval_unit": null,
+      "cost": null,
+      "duration_distribution": {
+        "type": "CONSTANT",
+        "value": 4.0,
+        "unit": "HOURS"
+      },
+      "duration_source_type": "ENGINEERING_ASSUMPTION",
+      "duration_confidence": "LOW"
+    },
+    {
+      "equipment_tag": "E-306",
+      "name": "Corrective repair",
+      "task_type": "CORRECTIVE",
+      "trigger": "ON_FAILURE",
+      "failure_mode_name": "Generic wear",
+      "interval_value": null,
+      "interval_unit": null,
+      "cost": null,
+      "duration_distribution": {
+        "type": "CONSTANT",
+        "value": 4.0,
+        "unit": "HOURS"
+      },
+      "duration_source_type": "ENGINEERING_ASSUMPTION",
+      "duration_confidence": "LOW"
+    },
+    {
+      "equipment_tag": "E-307",
+      "name": "Corrective repair",
+      "task_type": "CORRECTIVE",
+      "trigger": "ON_FAILURE",
+      "failure_mode_name": "Generic wear",
+      "interval_value": null,
+      "interval_unit": null,
+      "cost": null,
+      "duration_distribution": {
+        "type": "CONSTANT",
+        "value": 4.0,
+        "unit": "HOURS"
+      },
+      "duration_source_type": "ENGINEERING_ASSUMPTION",
+      "duration_confidence": "LOW"
+    },
+    {
+      "equipment_tag": "E-308",
+      "name": "Corrective repair",
+      "task_type": "CORRECTIVE",
+      "trigger": "ON_FAILURE",
+      "failure_mode_name": "Generic wear",
+      "interval_value": null,
+      "interval_unit": null,
+      "cost": null,
+      "duration_distribution": {
+        "type": "CONSTANT",
+        "value": 4.0,
+        "unit": "HOURS"
+      },
+      "duration_source_type": "ENGINEERING_ASSUMPTION",
+      "duration_confidence": "LOW"
+    },
+    {
+      "equipment_tag": "C-401",
+      "name": "Corrective repair",
+      "task_type": "CORRECTIVE",
+      "trigger": "ON_FAILURE",
+      "failure_mode_name": "Generic wear",
+      "interval_value": null,
+      "interval_unit": null,
+      "cost": null,
+      "duration_distribution": {
+        "type": "CONSTANT",
+        "value": 4.0,
+        "unit": "HOURS"
+      },
+      "duration_source_type": "ENGINEERING_ASSUMPTION",
+      "duration_confidence": "LOW"
+    },
+    {
+      "equipment_tag": "C-402",
+      "name": "Corrective repair",
+      "task_type": "CORRECTIVE",
+      "trigger": "ON_FAILURE",
+      "failure_mode_name": "Generic wear",
+      "interval_value": null,
+      "interval_unit": null,
+      "cost": null,
+      "duration_distribution": {
+        "type": "CONSTANT",
+        "value": 4.0,
+        "unit": "HOURS"
+      },
+      "duration_source_type": "ENGINEERING_ASSUMPTION",
+      "duration_confidence": "LOW"
+    },
+    {
+      "equipment_tag": "C-403",
+      "name": "Corrective repair",
+      "task_type": "CORRECTIVE",
+      "trigger": "ON_FAILURE",
+      "failure_mode_name": "Generic wear",
+      "interval_value": null,
+      "interval_unit": null,
+      "cost": null,
+      "duration_distribution": {
+        "type": "CONSTANT",
+        "value": 4.0,
+        "unit": "HOURS"
+      },
+      "duration_source_type": "ENGINEERING_ASSUMPTION",
+      "duration_confidence": "LOW"
+    },
+    {
+      "equipment_tag": "C-404",
+      "name": "Corrective repair",
+      "task_type": "CORRECTIVE",
+      "trigger": "ON_FAILURE",
+      "failure_mode_name": "Generic wear",
+      "interval_value": null,
+      "interval_unit": null,
+      "cost": null,
+      "duration_distribution": {
+        "type": "CONSTANT",
+        "value": 4.0,
+        "unit": "HOURS"
+      },
+      "duration_source_type": "ENGINEERING_ASSUMPTION",
+      "duration_confidence": "LOW"
+    },
+    {
+      "equipment_tag": "CW-501",
+      "name": "Corrective repair",
+      "task_type": "CORRECTIVE",
+      "trigger": "ON_FAILURE",
+      "failure_mode_name": "Generic wear",
+      "interval_value": null,
+      "interval_unit": null,
+      "cost": null,
+      "duration_distribution": {
+        "type": "CONSTANT",
+        "value": 4.0,
+        "unit": "HOURS"
+      },
+      "duration_source_type": "ENGINEERING_ASSUMPTION",
+      "duration_confidence": "LOW"
+    },
+    {
+      "equipment_tag": "CW-502",
+      "name": "Corrective repair",
+      "task_type": "CORRECTIVE",
+      "trigger": "ON_FAILURE",
+      "failure_mode_name": "Generic wear",
+      "interval_value": null,
+      "interval_unit": null,
+      "cost": null,
+      "duration_distribution": {
+        "type": "CONSTANT",
+        "value": 4.0,
+        "unit": "HOURS"
+      },
+      "duration_source_type": "ENGINEERING_ASSUMPTION",
+      "duration_confidence": "LOW"
+    },
+    {
+      "equipment_tag": "CW-503",
+      "name": "Corrective repair",
+      "task_type": "CORRECTIVE",
+      "trigger": "ON_FAILURE",
+      "failure_mode_name": "Generic wear",
+      "interval_value": null,
+      "interval_unit": null,
+      "cost": null,
+      "duration_distribution": {
+        "type": "CONSTANT",
+        "value": 4.0,
+        "unit": "HOURS"
+      },
+      "duration_source_type": "ENGINEERING_ASSUMPTION",
+      "duration_confidence": "LOW"
+    },
+    {
+      "equipment_tag": "FV-601",
+      "name": "Corrective repair",
+      "task_type": "CORRECTIVE",
+      "trigger": "ON_FAILURE",
+      "failure_mode_name": "Generic wear",
+      "interval_value": null,
+      "interval_unit": null,
+      "cost": null,
+      "duration_distribution": {
+        "type": "CONSTANT",
+        "value": 4.0,
+        "unit": "HOURS"
+      },
+      "duration_source_type": "ENGINEERING_ASSUMPTION",
+      "duration_confidence": "LOW"
+    },
+    {
+      "equipment_tag": "FV-602",
+      "name": "Corrective repair",
+      "task_type": "CORRECTIVE",
+      "trigger": "ON_FAILURE",
+      "failure_mode_name": "Generic wear",
+      "interval_value": null,
+      "interval_unit": null,
+      "cost": null,
+      "duration_distribution": {
+        "type": "CONSTANT",
+        "value": 4.0,
+        "unit": "HOURS"
+      },
+      "duration_source_type": "ENGINEERING_ASSUMPTION",
+      "duration_confidence": "LOW"
+    },
+    {
+      "equipment_tag": "FV-603",
+      "name": "Corrective repair",
+      "task_type": "CORRECTIVE",
+      "trigger": "ON_FAILURE",
+      "failure_mode_name": "Generic wear",
+      "interval_value": null,
+      "interval_unit": null,
+      "cost": null,
+      "duration_distribution": {
+        "type": "CONSTANT",
+        "value": 4.0,
+        "unit": "HOURS"
+      },
+      "duration_source_type": "ENGINEERING_ASSUMPTION",
+      "duration_confidence": "LOW"
+    },
+    {
+      "equipment_tag": "FV-604",
+      "name": "Corrective repair",
+      "task_type": "CORRECTIVE",
+      "trigger": "ON_FAILURE",
+      "failure_mode_name": "Generic wear",
+      "interval_value": null,
+      "interval_unit": null,
+      "cost": null,
+      "duration_distribution": {
+        "type": "CONSTANT",
+        "value": 4.0,
+        "unit": "HOURS"
+      },
+      "duration_source_type": "ENGINEERING_ASSUMPTION",
+      "duration_confidence": "LOW"
+    },
+    {
+      "equipment_tag": "FV-605",
+      "name": "Corrective repair",
+      "task_type": "CORRECTIVE",
+      "trigger": "ON_FAILURE",
+      "failure_mode_name": "Generic wear",
+      "interval_value": null,
+      "interval_unit": null,
+      "cost": null,
+      "duration_distribution": {
+        "type": "CONSTANT",
+        "value": 4.0,
+        "unit": "HOURS"
+      },
+      "duration_source_type": "ENGINEERING_ASSUMPTION",
+      "duration_confidence": "LOW"
+    },
+    {
+      "equipment_tag": "FV-606",
+      "name": "Corrective repair",
+      "task_type": "CORRECTIVE",
+      "trigger": "ON_FAILURE",
+      "failure_mode_name": "Generic wear",
+      "interval_value": null,
+      "interval_unit": null,
+      "cost": null,
+      "duration_distribution": {
+        "type": "CONSTANT",
+        "value": 4.0,
+        "unit": "HOURS"
+      },
+      "duration_source_type": "ENGINEERING_ASSUMPTION",
+      "duration_confidence": "LOW"
+    },
+    {
+      "equipment_tag": "FV-607",
+      "name": "Corrective repair",
+      "task_type": "CORRECTIVE",
+      "trigger": "ON_FAILURE",
+      "failure_mode_name": "Generic wear",
+      "interval_value": null,
+      "interval_unit": null,
+      "cost": null,
+      "duration_distribution": {
+        "type": "CONSTANT",
+        "value": 4.0,
+        "unit": "HOURS"
+      },
+      "duration_source_type": "ENGINEERING_ASSUMPTION",
+      "duration_confidence": "LOW"
+    },
+    {
+      "equipment_tag": "FV-608",
+      "name": "Corrective repair",
+      "task_type": "CORRECTIVE",
+      "trigger": "ON_FAILURE",
+      "failure_mode_name": "Generic wear",
+      "interval_value": null,
+      "interval_unit": null,
+      "cost": null,
+      "duration_distribution": {
+        "type": "CONSTANT",
+        "value": 4.0,
+        "unit": "HOURS"
+      },
+      "duration_source_type": "ENGINEERING_ASSUMPTION",
+      "duration_confidence": "LOW"
+    },
+    {
+      "equipment_tag": "FV-609",
+      "name": "Corrective repair",
+      "task_type": "CORRECTIVE",
+      "trigger": "ON_FAILURE",
+      "failure_mode_name": "Generic wear",
+      "interval_value": null,
+      "interval_unit": null,
+      "cost": null,
+      "duration_distribution": {
+        "type": "CONSTANT",
+        "value": 4.0,
+        "unit": "HOURS"
+      },
+      "duration_source_type": "ENGINEERING_ASSUMPTION",
+      "duration_confidence": "LOW"
+    },
+    {
+      "equipment_tag": "FV-610",
+      "name": "Corrective repair",
+      "task_type": "CORRECTIVE",
+      "trigger": "ON_FAILURE",
+      "failure_mode_name": "Generic wear",
+      "interval_value": null,
+      "interval_unit": null,
+      "cost": null,
+      "duration_distribution": {
+        "type": "CONSTANT",
+        "value": 4.0,
+        "unit": "HOURS"
+      },
+      "duration_source_type": "ENGINEERING_ASSUMPTION",
+      "duration_confidence": "LOW"
+    },
+    {
+      "equipment_tag": "T-701",
+      "name": "Corrective repair",
+      "task_type": "CORRECTIVE",
+      "trigger": "ON_FAILURE",
+      "failure_mode_name": "Generic wear",
+      "interval_value": null,
+      "interval_unit": null,
+      "cost": null,
+      "duration_distribution": {
+        "type": "CONSTANT",
+        "value": 4.0,
+        "unit": "HOURS"
+      },
+      "duration_source_type": "ENGINEERING_ASSUMPTION",
+      "duration_confidence": "LOW"
+    },
+    {
+      "equipment_tag": "T-702",
+      "name": "Corrective repair",
+      "task_type": "CORRECTIVE",
+      "trigger": "ON_FAILURE",
+      "failure_mode_name": "Generic wear",
+      "interval_value": null,
+      "interval_unit": null,
+      "cost": null,
+      "duration_distribution": {
+        "type": "CONSTANT",
+        "value": 4.0,
+        "unit": "HOURS"
+      },
+      "duration_source_type": "ENGINEERING_ASSUMPTION",
+      "duration_confidence": "LOW"
+    },
+    {
+      "equipment_tag": "T-703",
+      "name": "Corrective repair",
+      "task_type": "CORRECTIVE",
+      "trigger": "ON_FAILURE",
+      "failure_mode_name": "Generic wear",
+      "interval_value": null,
+      "interval_unit": null,
+      "cost": null,
+      "duration_distribution": {
+        "type": "CONSTANT",
+        "value": 4.0,
+        "unit": "HOURS"
+      },
+      "duration_source_type": "ENGINEERING_ASSUMPTION",
+      "duration_confidence": "LOW"
+    },
+    {
+      "equipment_tag": "T-704",
+      "name": "Corrective repair",
+      "task_type": "CORRECTIVE",
+      "trigger": "ON_FAILURE",
+      "failure_mode_name": "Generic wear",
+      "interval_value": null,
+      "interval_unit": null,
+      "cost": null,
+      "duration_distribution": {
+        "type": "CONSTANT",
+        "value": 4.0,
+        "unit": "HOURS"
+      },
+      "duration_source_type": "ENGINEERING_ASSUMPTION",
+      "duration_confidence": "LOW"
+    },
+    {
+      "equipment_tag": "T-705",
+      "name": "Corrective repair",
+      "task_type": "CORRECTIVE",
+      "trigger": "ON_FAILURE",
+      "failure_mode_name": "Generic wear",
+      "interval_value": null,
+      "interval_unit": null,
+      "cost": null,
+      "duration_distribution": {
+        "type": "CONSTANT",
+        "value": 4.0,
+        "unit": "HOURS"
+      },
+      "duration_source_type": "ENGINEERING_ASSUMPTION",
+      "duration_confidence": "LOW"
+    },
+    {
+      "equipment_tag": "T-706",
+      "name": "Corrective repair",
+      "task_type": "CORRECTIVE",
+      "trigger": "ON_FAILURE",
+      "failure_mode_name": "Generic wear",
+      "interval_value": null,
+      "interval_unit": null,
+      "cost": null,
+      "duration_distribution": {
+        "type": "CONSTANT",
+        "value": 4.0,
+        "unit": "HOURS"
+      },
+      "duration_source_type": "ENGINEERING_ASSUMPTION",
+      "duration_confidence": "LOW"
+    },
+    {
+      "equipment_tag": "M-801",
+      "name": "Corrective repair",
+      "task_type": "CORRECTIVE",
+      "trigger": "ON_FAILURE",
+      "failure_mode_name": "Generic wear",
+      "interval_value": null,
+      "interval_unit": null,
+      "cost": null,
+      "duration_distribution": {
+        "type": "CONSTANT",
+        "value": 4.0,
+        "unit": "HOURS"
+      },
+      "duration_source_type": "ENGINEERING_ASSUMPTION",
+      "duration_confidence": "LOW"
+    },
+    {
+      "equipment_tag": "M-802",
+      "name": "Corrective repair",
+      "task_type": "CORRECTIVE",
+      "trigger": "ON_FAILURE",
+      "failure_mode_name": "Generic wear",
+      "interval_value": null,
+      "interval_unit": null,
+      "cost": null,
+      "duration_distribution": {
+        "type": "CONSTANT",
+        "value": 4.0,
+        "unit": "HOURS"
+      },
+      "duration_source_type": "ENGINEERING_ASSUMPTION",
+      "duration_confidence": "LOW"
+    },
+    {
+      "equipment_tag": "M-803",
+      "name": "Corrective repair",
+      "task_type": "CORRECTIVE",
+      "trigger": "ON_FAILURE",
+      "failure_mode_name": "Generic wear",
+      "interval_value": null,
+      "interval_unit": null,
+      "cost": null,
+      "duration_distribution": {
+        "type": "CONSTANT",
+        "value": 4.0,
+        "unit": "HOURS"
+      },
+      "duration_source_type": "ENGINEERING_ASSUMPTION",
+      "duration_confidence": "LOW"
+    },
+    {
+      "equipment_tag": "M-804",
+      "name": "Corrective repair",
+      "task_type": "CORRECTIVE",
+      "trigger": "ON_FAILURE",
+      "failure_mode_name": "Generic wear",
+      "interval_value": null,
+      "interval_unit": null,
+      "cost": null,
+      "duration_distribution": {
+        "type": "CONSTANT",
+        "value": 4.0,
+        "unit": "HOURS"
+      },
+      "duration_source_type": "ENGINEERING_ASSUMPTION",
+      "duration_confidence": "LOW"
+    },
+    {
+      "equipment_tag": "M-805",
+      "name": "Corrective repair",
+      "task_type": "CORRECTIVE",
+      "trigger": "ON_FAILURE",
+      "failure_mode_name": "Generic wear",
+      "interval_value": null,
+      "interval_unit": null,
+      "cost": null,
+      "duration_distribution": {
+        "type": "CONSTANT",
+        "value": 4.0,
+        "unit": "HOURS"
+      },
+      "duration_source_type": "ENGINEERING_ASSUMPTION",
+      "duration_confidence": "LOW"
+    },
+    {
+      "equipment_tag": "M-806",
+      "name": "Corrective repair",
+      "task_type": "CORRECTIVE",
+      "trigger": "ON_FAILURE",
+      "failure_mode_name": "Generic wear",
+      "interval_value": null,
+      "interval_unit": null,
+      "cost": null,
+      "duration_distribution": {
+        "type": "CONSTANT",
+        "value": 4.0,
+        "unit": "HOURS"
+      },
+      "duration_source_type": "ENGINEERING_ASSUMPTION",
+      "duration_confidence": "LOW"
+    },
+    {
+      "equipment_tag": "M-807",
+      "name": "Corrective repair",
+      "task_type": "CORRECTIVE",
+      "trigger": "ON_FAILURE",
+      "failure_mode_name": "Generic wear",
+      "interval_value": null,
+      "interval_unit": null,
+      "cost": null,
+      "duration_distribution": {
+        "type": "CONSTANT",
+        "value": 4.0,
+        "unit": "HOURS"
+      },
+      "duration_source_type": "ENGINEERING_ASSUMPTION",
+      "duration_confidence": "LOW"
+    },
+    {
+      "equipment_tag": "M-808",
+      "name": "Corrective repair",
+      "task_type": "CORRECTIVE",
+      "trigger": "ON_FAILURE",
+      "failure_mode_name": "Generic wear",
+      "interval_value": null,
+      "interval_unit": null,
+      "cost": null,
+      "duration_distribution": {
+        "type": "CONSTANT",
+        "value": 4.0,
+        "unit": "HOURS"
+      },
+      "duration_source_type": "ENGINEERING_ASSUMPTION",
+      "duration_confidence": "LOW"
+    },
+    {
+      "equipment_tag": "I-901",
+      "name": "Corrective repair",
+      "task_type": "CORRECTIVE",
+      "trigger": "ON_FAILURE",
+      "failure_mode_name": "Generic wear",
+      "interval_value": null,
+      "interval_unit": null,
+      "cost": null,
+      "duration_distribution": {
+        "type": "CONSTANT",
+        "value": 4.0,
+        "unit": "HOURS"
+      },
+      "duration_source_type": "ENGINEERING_ASSUMPTION",
+      "duration_confidence": "LOW"
+    },
+    {
+      "equipment_tag": "I-902",
+      "name": "Corrective repair",
+      "task_type": "CORRECTIVE",
+      "trigger": "ON_FAILURE",
+      "failure_mode_name": "Generic wear",
+      "interval_value": null,
+      "interval_unit": null,
+      "cost": null,
+      "duration_distribution": {
+        "type": "CONSTANT",
+        "value": 4.0,
+        "unit": "HOURS"
+      },
+      "duration_source_type": "ENGINEERING_ASSUMPTION",
+      "duration_confidence": "LOW"
+    },
+    {
+      "equipment_tag": "I-903",
+      "name": "Corrective repair",
+      "task_type": "CORRECTIVE",
+      "trigger": "ON_FAILURE",
+      "failure_mode_name": "Generic wear",
+      "interval_value": null,
+      "interval_unit": null,
+      "cost": null,
+      "duration_distribution": {
+        "type": "CONSTANT",
+        "value": 4.0,
+        "unit": "HOURS"
+      },
+      "duration_source_type": "ENGINEERING_ASSUMPTION",
+      "duration_confidence": "LOW"
+    },
+    {
+      "equipment_tag": "I-904",
+      "name": "Corrective repair",
+      "task_type": "CORRECTIVE",
+      "trigger": "ON_FAILURE",
+      "failure_mode_name": "Generic wear",
+      "interval_value": null,
+      "interval_unit": null,
+      "cost": null,
+      "duration_distribution": {
+        "type": "CONSTANT",
+        "value": 4.0,
+        "unit": "HOURS"
+      },
+      "duration_source_type": "ENGINEERING_ASSUMPTION",
+      "duration_confidence": "LOW"
+    },
+    {
+      "equipment_tag": "I-905",
+      "name": "Corrective repair",
+      "task_type": "CORRECTIVE",
+      "trigger": "ON_FAILURE",
+      "failure_mode_name": "Generic wear",
+      "interval_value": null,
+      "interval_unit": null,
+      "cost": null,
+      "duration_distribution": {
+        "type": "CONSTANT",
+        "value": 4.0,
+        "unit": "HOURS"
+      },
+      "duration_source_type": "ENGINEERING_ASSUMPTION",
+      "duration_confidence": "LOW"
+    },
+    {
+      "equipment_tag": "I-906",
+      "name": "Corrective repair",
+      "task_type": "CORRECTIVE",
+      "trigger": "ON_FAILURE",
+      "failure_mode_name": "Generic wear",
+      "interval_value": null,
+      "interval_unit": null,
+      "cost": null,
+      "duration_distribution": {
+        "type": "CONSTANT",
+        "value": 4.0,
+        "unit": "HOURS"
+      },
+      "duration_source_type": "ENGINEERING_ASSUMPTION",
+      "duration_confidence": "LOW"
+    },
+    {
+      "equipment_tag": "I-907",
+      "name": "Corrective repair",
+      "task_type": "CORRECTIVE",
+      "trigger": "ON_FAILURE",
+      "failure_mode_name": "Generic wear",
+      "interval_value": null,
+      "interval_unit": null,
+      "cost": null,
+      "duration_distribution": {
+        "type": "CONSTANT",
+        "value": 4.0,
+        "unit": "HOURS"
+      },
+      "duration_source_type": "ENGINEERING_ASSUMPTION",
+      "duration_confidence": "LOW"
+    },
+    {
+      "equipment_tag": "I-908",
+      "name": "Corrective repair",
+      "task_type": "CORRECTIVE",
+      "trigger": "ON_FAILURE",
+      "failure_mode_name": "Generic wear",
+      "interval_value": null,
+      "interval_unit": null,
+      "cost": null,
+      "duration_distribution": {
+        "type": "CONSTANT",
+        "value": 4.0,
+        "unit": "HOURS"
+      },
+      "duration_source_type": "ENGINEERING_ASSUMPTION",
+      "duration_confidence": "LOW"
+    },
+    {
+      "equipment_tag": "P-101",
+      "name": "Seal replacement",
+      "task_type": "PREVENTIVE",
+      "trigger": "CONDITION_BASED",
+      "failure_mode_name": "Mechanical seal degradation",
+      "interval_value": null,
+      "interval_unit": null,
+      "cost": null,
+      "duration_distribution": {
+        "type": "CONSTANT",
+        "value": 1.0,
+        "unit": "HOURS"
+      },
+      "duration_source_type": "ENGINEERING_ASSUMPTION",
+      "duration_confidence": "MEDIUM"
+    }
+  ],
+  "maintenance_effects": [
+    {
+      "equipment_tag": "P-101",
+      "maintenance_name": "Corrective repair",
+      "effect_type": "RESTORE_AS_NEW",
+      "failure_mode_name": "Generic wear",
+      "parameter": null
+    },
+    {
+      "equipment_tag": "P-102",
+      "maintenance_name": "Corrective repair",
+      "effect_type": "RESTORE_AS_NEW",
+      "failure_mode_name": "Generic wear",
+      "parameter": null
+    },
+    {
+      "equipment_tag": "P-103",
+      "maintenance_name": "Corrective repair",
+      "effect_type": "RESTORE_AS_NEW",
+      "failure_mode_name": "Generic wear",
+      "parameter": null
+    },
+    {
+      "equipment_tag": "P-104",
+      "maintenance_name": "Corrective repair",
+      "effect_type": "RESTORE_AS_NEW",
+      "failure_mode_name": "Generic wear",
+      "parameter": null
+    },
+    {
+      "equipment_tag": "P-105",
+      "maintenance_name": "Corrective repair",
+      "effect_type": "RESTORE_AS_NEW",
+      "failure_mode_name": "Generic wear",
+      "parameter": null
+    },
+    {
+      "equipment_tag": "P-106",
+      "maintenance_name": "Corrective repair",
+      "effect_type": "RESTORE_AS_NEW",
+      "failure_mode_name": "Generic wear",
+      "parameter": null
+    },
+    {
+      "equipment_tag": "R-201",
+      "maintenance_name": "Corrective repair",
+      "effect_type": "RESTORE_AS_NEW",
+      "failure_mode_name": "Generic wear",
+      "parameter": null
+    },
+    {
+      "equipment_tag": "R-202",
+      "maintenance_name": "Corrective repair",
+      "effect_type": "RESTORE_AS_NEW",
+      "failure_mode_name": "Generic wear",
+      "parameter": null
+    },
+    {
+      "equipment_tag": "R-203",
+      "maintenance_name": "Corrective repair",
+      "effect_type": "RESTORE_AS_NEW",
+      "failure_mode_name": "Generic wear",
+      "parameter": null
+    },
+    {
+      "equipment_tag": "R-204",
+      "maintenance_name": "Corrective repair",
+      "effect_type": "RESTORE_AS_NEW",
+      "failure_mode_name": "Generic wear",
+      "parameter": null
+    },
+    {
+      "equipment_tag": "AG-211",
+      "maintenance_name": "Corrective repair",
+      "effect_type": "RESTORE_AS_NEW",
+      "failure_mode_name": "Generic wear",
+      "parameter": null
+    },
+    {
+      "equipment_tag": "AG-212",
+      "maintenance_name": "Corrective repair",
+      "effect_type": "RESTORE_AS_NEW",
+      "failure_mode_name": "Generic wear",
+      "parameter": null
+    },
+    {
+      "equipment_tag": "AG-213",
+      "maintenance_name": "Corrective repair",
+      "effect_type": "RESTORE_AS_NEW",
+      "failure_mode_name": "Generic wear",
+      "parameter": null
+    },
+    {
+      "equipment_tag": "AG-214",
+      "maintenance_name": "Corrective repair",
+      "effect_type": "RESTORE_AS_NEW",
+      "failure_mode_name": "Generic wear",
+      "parameter": null
+    },
+    {
+      "equipment_tag": "E-301",
+      "maintenance_name": "Corrective repair",
+      "effect_type": "RESTORE_AS_NEW",
+      "failure_mode_name": "Generic wear",
+      "parameter": null
+    },
+    {
+      "equipment_tag": "E-302",
+      "maintenance_name": "Corrective repair",
+      "effect_type": "RESTORE_AS_NEW",
+      "failure_mode_name": "Generic wear",
+      "parameter": null
+    },
+    {
+      "equipment_tag": "E-303",
+      "maintenance_name": "Corrective repair",
+      "effect_type": "RESTORE_AS_NEW",
+      "failure_mode_name": "Generic wear",
+      "parameter": null
+    },
+    {
+      "equipment_tag": "E-304",
+      "maintenance_name": "Corrective repair",
+      "effect_type": "RESTORE_AS_NEW",
+      "failure_mode_name": "Generic wear",
+      "parameter": null
+    },
+    {
+      "equipment_tag": "E-305",
+      "maintenance_name": "Corrective repair",
+      "effect_type": "RESTORE_AS_NEW",
+      "failure_mode_name": "Generic wear",
+      "parameter": null
+    },
+    {
+      "equipment_tag": "E-306",
+      "maintenance_name": "Corrective repair",
+      "effect_type": "RESTORE_AS_NEW",
+      "failure_mode_name": "Generic wear",
+      "parameter": null
+    },
+    {
+      "equipment_tag": "E-307",
+      "maintenance_name": "Corrective repair",
+      "effect_type": "RESTORE_AS_NEW",
+      "failure_mode_name": "Generic wear",
+      "parameter": null
+    },
+    {
+      "equipment_tag": "E-308",
+      "maintenance_name": "Corrective repair",
+      "effect_type": "RESTORE_AS_NEW",
+      "failure_mode_name": "Generic wear",
+      "parameter": null
+    },
+    {
+      "equipment_tag": "C-401",
+      "maintenance_name": "Corrective repair",
+      "effect_type": "RESTORE_AS_NEW",
+      "failure_mode_name": "Generic wear",
+      "parameter": null
+    },
+    {
+      "equipment_tag": "C-402",
+      "maintenance_name": "Corrective repair",
+      "effect_type": "RESTORE_AS_NEW",
+      "failure_mode_name": "Generic wear",
+      "parameter": null
+    },
+    {
+      "equipment_tag": "C-403",
+      "maintenance_name": "Corrective repair",
+      "effect_type": "RESTORE_AS_NEW",
+      "failure_mode_name": "Generic wear",
+      "parameter": null
+    },
+    {
+      "equipment_tag": "C-404",
+      "maintenance_name": "Corrective repair",
+      "effect_type": "RESTORE_AS_NEW",
+      "failure_mode_name": "Generic wear",
+      "parameter": null
+    },
+    {
+      "equipment_tag": "CW-501",
+      "maintenance_name": "Corrective repair",
+      "effect_type": "RESTORE_AS_NEW",
+      "failure_mode_name": "Generic wear",
+      "parameter": null
+    },
+    {
+      "equipment_tag": "CW-502",
+      "maintenance_name": "Corrective repair",
+      "effect_type": "RESTORE_AS_NEW",
+      "failure_mode_name": "Generic wear",
+      "parameter": null
+    },
+    {
+      "equipment_tag": "CW-503",
+      "maintenance_name": "Corrective repair",
+      "effect_type": "RESTORE_AS_NEW",
+      "failure_mode_name": "Generic wear",
+      "parameter": null
+    },
+    {
+      "equipment_tag": "FV-601",
+      "maintenance_name": "Corrective repair",
+      "effect_type": "RESTORE_AS_NEW",
+      "failure_mode_name": "Generic wear",
+      "parameter": null
+    },
+    {
+      "equipment_tag": "FV-602",
+      "maintenance_name": "Corrective repair",
+      "effect_type": "RESTORE_AS_NEW",
+      "failure_mode_name": "Generic wear",
+      "parameter": null
+    },
+    {
+      "equipment_tag": "FV-603",
+      "maintenance_name": "Corrective repair",
+      "effect_type": "RESTORE_AS_NEW",
+      "failure_mode_name": "Generic wear",
+      "parameter": null
+    },
+    {
+      "equipment_tag": "FV-604",
+      "maintenance_name": "Corrective repair",
+      "effect_type": "RESTORE_AS_NEW",
+      "failure_mode_name": "Generic wear",
+      "parameter": null
+    },
+    {
+      "equipment_tag": "FV-605",
+      "maintenance_name": "Corrective repair",
+      "effect_type": "RESTORE_AS_NEW",
+      "failure_mode_name": "Generic wear",
+      "parameter": null
+    },
+    {
+      "equipment_tag": "FV-606",
+      "maintenance_name": "Corrective repair",
+      "effect_type": "RESTORE_AS_NEW",
+      "failure_mode_name": "Generic wear",
+      "parameter": null
+    },
+    {
+      "equipment_tag": "FV-607",
+      "maintenance_name": "Corrective repair",
+      "effect_type": "RESTORE_AS_NEW",
+      "failure_mode_name": "Generic wear",
+      "parameter": null
+    },
+    {
+      "equipment_tag": "FV-608",
+      "maintenance_name": "Corrective repair",
+      "effect_type": "RESTORE_AS_NEW",
+      "failure_mode_name": "Generic wear",
+      "parameter": null
+    },
+    {
+      "equipment_tag": "FV-609",
+      "maintenance_name": "Corrective repair",
+      "effect_type": "RESTORE_AS_NEW",
+      "failure_mode_name": "Generic wear",
+      "parameter": null
+    },
+    {
+      "equipment_tag": "FV-610",
+      "maintenance_name": "Corrective repair",
+      "effect_type": "RESTORE_AS_NEW",
+      "failure_mode_name": "Generic wear",
+      "parameter": null
+    },
+    {
+      "equipment_tag": "T-701",
+      "maintenance_name": "Corrective repair",
+      "effect_type": "RESTORE_AS_NEW",
+      "failure_mode_name": "Generic wear",
+      "parameter": null
+    },
+    {
+      "equipment_tag": "T-702",
+      "maintenance_name": "Corrective repair",
+      "effect_type": "RESTORE_AS_NEW",
+      "failure_mode_name": "Generic wear",
+      "parameter": null
+    },
+    {
+      "equipment_tag": "T-703",
+      "maintenance_name": "Corrective repair",
+      "effect_type": "RESTORE_AS_NEW",
+      "failure_mode_name": "Generic wear",
+      "parameter": null
+    },
+    {
+      "equipment_tag": "T-704",
+      "maintenance_name": "Corrective repair",
+      "effect_type": "RESTORE_AS_NEW",
+      "failure_mode_name": "Generic wear",
+      "parameter": null
+    },
+    {
+      "equipment_tag": "T-705",
+      "maintenance_name": "Corrective repair",
+      "effect_type": "RESTORE_AS_NEW",
+      "failure_mode_name": "Generic wear",
+      "parameter": null
+    },
+    {
+      "equipment_tag": "T-706",
+      "maintenance_name": "Corrective repair",
+      "effect_type": "RESTORE_AS_NEW",
+      "failure_mode_name": "Generic wear",
+      "parameter": null
+    },
+    {
+      "equipment_tag": "M-801",
+      "maintenance_name": "Corrective repair",
+      "effect_type": "RESTORE_AS_NEW",
+      "failure_mode_name": "Generic wear",
+      "parameter": null
+    },
+    {
+      "equipment_tag": "M-802",
+      "maintenance_name": "Corrective repair",
+      "effect_type": "RESTORE_AS_NEW",
+      "failure_mode_name": "Generic wear",
+      "parameter": null
+    },
+    {
+      "equipment_tag": "M-803",
+      "maintenance_name": "Corrective repair",
+      "effect_type": "RESTORE_AS_NEW",
+      "failure_mode_name": "Generic wear",
+      "parameter": null
+    },
+    {
+      "equipment_tag": "M-804",
+      "maintenance_name": "Corrective repair",
+      "effect_type": "RESTORE_AS_NEW",
+      "failure_mode_name": "Generic wear",
+      "parameter": null
+    },
+    {
+      "equipment_tag": "M-805",
+      "maintenance_name": "Corrective repair",
+      "effect_type": "RESTORE_AS_NEW",
+      "failure_mode_name": "Generic wear",
+      "parameter": null
+    },
+    {
+      "equipment_tag": "M-806",
+      "maintenance_name": "Corrective repair",
+      "effect_type": "RESTORE_AS_NEW",
+      "failure_mode_name": "Generic wear",
+      "parameter": null
+    },
+    {
+      "equipment_tag": "M-807",
+      "maintenance_name": "Corrective repair",
+      "effect_type": "RESTORE_AS_NEW",
+      "failure_mode_name": "Generic wear",
+      "parameter": null
+    },
+    {
+      "equipment_tag": "M-808",
+      "maintenance_name": "Corrective repair",
+      "effect_type": "RESTORE_AS_NEW",
+      "failure_mode_name": "Generic wear",
+      "parameter": null
+    },
+    {
+      "equipment_tag": "I-901",
+      "maintenance_name": "Corrective repair",
+      "effect_type": "RESTORE_AS_NEW",
+      "failure_mode_name": "Generic wear",
+      "parameter": null
+    },
+    {
+      "equipment_tag": "I-902",
+      "maintenance_name": "Corrective repair",
+      "effect_type": "RESTORE_AS_NEW",
+      "failure_mode_name": "Generic wear",
+      "parameter": null
+    },
+    {
+      "equipment_tag": "I-903",
+      "maintenance_name": "Corrective repair",
+      "effect_type": "RESTORE_AS_NEW",
+      "failure_mode_name": "Generic wear",
+      "parameter": null
+    },
+    {
+      "equipment_tag": "I-904",
+      "maintenance_name": "Corrective repair",
+      "effect_type": "RESTORE_AS_NEW",
+      "failure_mode_name": "Generic wear",
+      "parameter": null
+    },
+    {
+      "equipment_tag": "I-905",
+      "maintenance_name": "Corrective repair",
+      "effect_type": "RESTORE_AS_NEW",
+      "failure_mode_name": "Generic wear",
+      "parameter": null
+    },
+    {
+      "equipment_tag": "I-906",
+      "maintenance_name": "Corrective repair",
+      "effect_type": "RESTORE_AS_NEW",
+      "failure_mode_name": "Generic wear",
+      "parameter": null
+    },
+    {
+      "equipment_tag": "I-907",
+      "maintenance_name": "Corrective repair",
+      "effect_type": "RESTORE_AS_NEW",
+      "failure_mode_name": "Generic wear",
+      "parameter": null
+    },
+    {
+      "equipment_tag": "I-908",
+      "maintenance_name": "Corrective repair",
+      "effect_type": "RESTORE_AS_NEW",
+      "failure_mode_name": "Generic wear",
+      "parameter": null
+    },
+    {
+      "equipment_tag": "P-101",
+      "maintenance_name": "Seal replacement",
+      "effect_type": "RESTORE_AS_NEW",
+      "failure_mode_name": "Mechanical seal degradation",
+      "parameter": null
+    }
+  ],
+  "diagnostics": [
+    {
+      "equipment_tag": "P-101",
+      "failure_mode_name": "Mechanical seal degradation",
+      "name": "Vibration/condition monitoring",
+      "method": "vibration",
+      "interval_value": 7.0,
+      "interval_unit": "DAYS",
+      "detection_probability": 0.85,
+      "false_positive_probability": 0.02
+    }
+  ],
+  "resources": [
+    {
+      "name": "Mechanical crew",
+      "resource_type": "crew",
+      "capacity": 2,
+      "cost_per_hour": 80.0
+    }
+  ],
+  "spare_parts": [
+    {
+      "name": "Mechanical seal kit",
+      "stock": 4,
+      "lead_time_value": 14.0,
+      "lead_time_unit": "DAYS",
+      "unit_cost": 1200.0
+    }
+  ],
+  "production": [
+    {
+      "kind": "function",
+      "product": "Polystyrene",
+      "nominal_rate_value": 11.4,
+      "mass_unit": "TONNES",
+      "time_unit": "HOURS",
+      "equipment_tag": null,
+      "failure_mode_name": null,
+      "loss_fraction": null
+    },
+    {
+      "kind": "impact",
+      "product": null,
+      "nominal_rate_value": null,
+      "mass_unit": null,
+      "time_unit": null,
+      "equipment_tag": "P-101",
+      "failure_mode_name": "Generic wear",
+      "loss_fraction": 0.25
+    },
+    {
+      "kind": "impact",
+      "product": null,
+      "nominal_rate_value": null,
+      "mass_unit": null,
+      "time_unit": null,
+      "equipment_tag": "P-102",
+      "failure_mode_name": "Generic wear",
+      "loss_fraction": 0.05
+    },
+    {
+      "kind": "impact",
+      "product": null,
+      "nominal_rate_value": null,
+      "mass_unit": null,
+      "time_unit": null,
+      "equipment_tag": "P-103",
+      "failure_mode_name": "Generic wear",
+      "loss_fraction": 0.05
+    },
+    {
+      "kind": "impact",
+      "product": null,
+      "nominal_rate_value": null,
+      "mass_unit": null,
+      "time_unit": null,
+      "equipment_tag": "P-104",
+      "failure_mode_name": "Generic wear",
+      "loss_fraction": 0.05
+    },
+    {
+      "kind": "impact",
+      "product": null,
+      "nominal_rate_value": null,
+      "mass_unit": null,
+      "time_unit": null,
+      "equipment_tag": "P-105",
+      "failure_mode_name": "Generic wear",
+      "loss_fraction": 0.05
+    },
+    {
+      "kind": "impact",
+      "product": null,
+      "nominal_rate_value": null,
+      "mass_unit": null,
+      "time_unit": null,
+      "equipment_tag": "P-106",
+      "failure_mode_name": "Generic wear",
+      "loss_fraction": 0.05
+    },
+    {
+      "kind": "impact",
+      "product": null,
+      "nominal_rate_value": null,
+      "mass_unit": null,
+      "time_unit": null,
+      "equipment_tag": "R-201",
+      "failure_mode_name": "Generic wear",
+      "loss_fraction": 0.05
+    },
+    {
+      "kind": "impact",
+      "product": null,
+      "nominal_rate_value": null,
+      "mass_unit": null,
+      "time_unit": null,
+      "equipment_tag": "R-202",
+      "failure_mode_name": "Generic wear",
+      "loss_fraction": 0.05
+    },
+    {
+      "kind": "impact",
+      "product": null,
+      "nominal_rate_value": null,
+      "mass_unit": null,
+      "time_unit": null,
+      "equipment_tag": "R-203",
+      "failure_mode_name": "Generic wear",
+      "loss_fraction": 0.05
+    },
+    {
+      "kind": "impact",
+      "product": null,
+      "nominal_rate_value": null,
+      "mass_unit": null,
+      "time_unit": null,
+      "equipment_tag": "R-204",
+      "failure_mode_name": "Generic wear",
+      "loss_fraction": 0.05
+    },
+    {
+      "kind": "impact",
+      "product": null,
+      "nominal_rate_value": null,
+      "mass_unit": null,
+      "time_unit": null,
+      "equipment_tag": "AG-211",
+      "failure_mode_name": "Generic wear",
+      "loss_fraction": 0.05
+    },
+    {
+      "kind": "impact",
+      "product": null,
+      "nominal_rate_value": null,
+      "mass_unit": null,
+      "time_unit": null,
+      "equipment_tag": "AG-212",
+      "failure_mode_name": "Generic wear",
+      "loss_fraction": 0.05
+    },
+    {
+      "kind": "impact",
+      "product": null,
+      "nominal_rate_value": null,
+      "mass_unit": null,
+      "time_unit": null,
+      "equipment_tag": "AG-213",
+      "failure_mode_name": "Generic wear",
+      "loss_fraction": 0.05
+    },
+    {
+      "kind": "impact",
+      "product": null,
+      "nominal_rate_value": null,
+      "mass_unit": null,
+      "time_unit": null,
+      "equipment_tag": "AG-214",
+      "failure_mode_name": "Generic wear",
+      "loss_fraction": 0.05
+    },
+    {
+      "kind": "impact",
+      "product": null,
+      "nominal_rate_value": null,
+      "mass_unit": null,
+      "time_unit": null,
+      "equipment_tag": "E-301",
+      "failure_mode_name": "Generic wear",
+      "loss_fraction": 0.05
+    },
+    {
+      "kind": "impact",
+      "product": null,
+      "nominal_rate_value": null,
+      "mass_unit": null,
+      "time_unit": null,
+      "equipment_tag": "E-302",
+      "failure_mode_name": "Generic wear",
+      "loss_fraction": 0.05
+    },
+    {
+      "kind": "impact",
+      "product": null,
+      "nominal_rate_value": null,
+      "mass_unit": null,
+      "time_unit": null,
+      "equipment_tag": "E-303",
+      "failure_mode_name": "Generic wear",
+      "loss_fraction": 0.05
+    },
+    {
+      "kind": "impact",
+      "product": null,
+      "nominal_rate_value": null,
+      "mass_unit": null,
+      "time_unit": null,
+      "equipment_tag": "E-304",
+      "failure_mode_name": "Generic wear",
+      "loss_fraction": 0.05
+    },
+    {
+      "kind": "impact",
+      "product": null,
+      "nominal_rate_value": null,
+      "mass_unit": null,
+      "time_unit": null,
+      "equipment_tag": "E-305",
+      "failure_mode_name": "Generic wear",
+      "loss_fraction": 0.05
+    },
+    {
+      "kind": "impact",
+      "product": null,
+      "nominal_rate_value": null,
+      "mass_unit": null,
+      "time_unit": null,
+      "equipment_tag": "E-306",
+      "failure_mode_name": "Generic wear",
+      "loss_fraction": 0.05
+    },
+    {
+      "kind": "impact",
+      "product": null,
+      "nominal_rate_value": null,
+      "mass_unit": null,
+      "time_unit": null,
+      "equipment_tag": "E-307",
+      "failure_mode_name": "Generic wear",
+      "loss_fraction": 0.05
+    },
+    {
+      "kind": "impact",
+      "product": null,
+      "nominal_rate_value": null,
+      "mass_unit": null,
+      "time_unit": null,
+      "equipment_tag": "E-308",
+      "failure_mode_name": "Generic wear",
+      "loss_fraction": 0.05
+    },
+    {
+      "kind": "impact",
+      "product": null,
+      "nominal_rate_value": null,
+      "mass_unit": null,
+      "time_unit": null,
+      "equipment_tag": "C-401",
+      "failure_mode_name": "Generic wear",
+      "loss_fraction": 0.05
+    },
+    {
+      "kind": "impact",
+      "product": null,
+      "nominal_rate_value": null,
+      "mass_unit": null,
+      "time_unit": null,
+      "equipment_tag": "C-402",
+      "failure_mode_name": "Generic wear",
+      "loss_fraction": 0.05
+    },
+    {
+      "kind": "impact",
+      "product": null,
+      "nominal_rate_value": null,
+      "mass_unit": null,
+      "time_unit": null,
+      "equipment_tag": "C-403",
+      "failure_mode_name": "Generic wear",
+      "loss_fraction": 0.05
+    },
+    {
+      "kind": "impact",
+      "product": null,
+      "nominal_rate_value": null,
+      "mass_unit": null,
+      "time_unit": null,
+      "equipment_tag": "C-404",
+      "failure_mode_name": "Generic wear",
+      "loss_fraction": 0.05
+    },
+    {
+      "kind": "impact",
+      "product": null,
+      "nominal_rate_value": null,
+      "mass_unit": null,
+      "time_unit": null,
+      "equipment_tag": "CW-501",
+      "failure_mode_name": "Generic wear",
+      "loss_fraction": 0.05
+    },
+    {
+      "kind": "impact",
+      "product": null,
+      "nominal_rate_value": null,
+      "mass_unit": null,
+      "time_unit": null,
+      "equipment_tag": "CW-502",
+      "failure_mode_name": "Generic wear",
+      "loss_fraction": 0.05
+    },
+    {
+      "kind": "impact",
+      "product": null,
+      "nominal_rate_value": null,
+      "mass_unit": null,
+      "time_unit": null,
+      "equipment_tag": "CW-503",
+      "failure_mode_name": "Generic wear",
+      "loss_fraction": 0.05
+    },
+    {
+      "kind": "impact",
+      "product": null,
+      "nominal_rate_value": null,
+      "mass_unit": null,
+      "time_unit": null,
+      "equipment_tag": "FV-601",
+      "failure_mode_name": "Generic wear",
+      "loss_fraction": 0.05
+    },
+    {
+      "kind": "impact",
+      "product": null,
+      "nominal_rate_value": null,
+      "mass_unit": null,
+      "time_unit": null,
+      "equipment_tag": "FV-602",
+      "failure_mode_name": "Generic wear",
+      "loss_fraction": 0.05
+    },
+    {
+      "kind": "impact",
+      "product": null,
+      "nominal_rate_value": null,
+      "mass_unit": null,
+      "time_unit": null,
+      "equipment_tag": "FV-603",
+      "failure_mode_name": "Generic wear",
+      "loss_fraction": 0.05
+    },
+    {
+      "kind": "impact",
+      "product": null,
+      "nominal_rate_value": null,
+      "mass_unit": null,
+      "time_unit": null,
+      "equipment_tag": "FV-604",
+      "failure_mode_name": "Generic wear",
+      "loss_fraction": 0.05
+    },
+    {
+      "kind": "impact",
+      "product": null,
+      "nominal_rate_value": null,
+      "mass_unit": null,
+      "time_unit": null,
+      "equipment_tag": "FV-605",
+      "failure_mode_name": "Generic wear",
+      "loss_fraction": 0.05
+    },
+    {
+      "kind": "impact",
+      "product": null,
+      "nominal_rate_value": null,
+      "mass_unit": null,
+      "time_unit": null,
+      "equipment_tag": "FV-606",
+      "failure_mode_name": "Generic wear",
+      "loss_fraction": 0.05
+    },
+    {
+      "kind": "impact",
+      "product": null,
+      "nominal_rate_value": null,
+      "mass_unit": null,
+      "time_unit": null,
+      "equipment_tag": "FV-607",
+      "failure_mode_name": "Generic wear",
+      "loss_fraction": 0.05
+    },
+    {
+      "kind": "impact",
+      "product": null,
+      "nominal_rate_value": null,
+      "mass_unit": null,
+      "time_unit": null,
+      "equipment_tag": "FV-608",
+      "failure_mode_name": "Generic wear",
+      "loss_fraction": 0.05
+    },
+    {
+      "kind": "impact",
+      "product": null,
+      "nominal_rate_value": null,
+      "mass_unit": null,
+      "time_unit": null,
+      "equipment_tag": "FV-609",
+      "failure_mode_name": "Generic wear",
+      "loss_fraction": 0.05
+    },
+    {
+      "kind": "impact",
+      "product": null,
+      "nominal_rate_value": null,
+      "mass_unit": null,
+      "time_unit": null,
+      "equipment_tag": "FV-610",
+      "failure_mode_name": "Generic wear",
+      "loss_fraction": 0.05
+    },
+    {
+      "kind": "impact",
+      "product": null,
+      "nominal_rate_value": null,
+      "mass_unit": null,
+      "time_unit": null,
+      "equipment_tag": "T-701",
+      "failure_mode_name": "Generic wear",
+      "loss_fraction": 0.05
+    },
+    {
+      "kind": "impact",
+      "product": null,
+      "nominal_rate_value": null,
+      "mass_unit": null,
+      "time_unit": null,
+      "equipment_tag": "T-702",
+      "failure_mode_name": "Generic wear",
+      "loss_fraction": 0.05
+    },
+    {
+      "kind": "impact",
+      "product": null,
+      "nominal_rate_value": null,
+      "mass_unit": null,
+      "time_unit": null,
+      "equipment_tag": "T-703",
+      "failure_mode_name": "Generic wear",
+      "loss_fraction": 0.05
+    },
+    {
+      "kind": "impact",
+      "product": null,
+      "nominal_rate_value": null,
+      "mass_unit": null,
+      "time_unit": null,
+      "equipment_tag": "T-704",
+      "failure_mode_name": "Generic wear",
+      "loss_fraction": 0.05
+    },
+    {
+      "kind": "impact",
+      "product": null,
+      "nominal_rate_value": null,
+      "mass_unit": null,
+      "time_unit": null,
+      "equipment_tag": "T-705",
+      "failure_mode_name": "Generic wear",
+      "loss_fraction": 0.05
+    },
+    {
+      "kind": "impact",
+      "product": null,
+      "nominal_rate_value": null,
+      "mass_unit": null,
+      "time_unit": null,
+      "equipment_tag": "T-706",
+      "failure_mode_name": "Generic wear",
+      "loss_fraction": 0.05
+    },
+    {
+      "kind": "impact",
+      "product": null,
+      "nominal_rate_value": null,
+      "mass_unit": null,
+      "time_unit": null,
+      "equipment_tag": "M-801",
+      "failure_mode_name": "Generic wear",
+      "loss_fraction": 0.05
+    },
+    {
+      "kind": "impact",
+      "product": null,
+      "nominal_rate_value": null,
+      "mass_unit": null,
+      "time_unit": null,
+      "equipment_tag": "M-802",
+      "failure_mode_name": "Generic wear",
+      "loss_fraction": 0.05
+    },
+    {
+      "kind": "impact",
+      "product": null,
+      "nominal_rate_value": null,
+      "mass_unit": null,
+      "time_unit": null,
+      "equipment_tag": "M-803",
+      "failure_mode_name": "Generic wear",
+      "loss_fraction": 0.05
+    },
+    {
+      "kind": "impact",
+      "product": null,
+      "nominal_rate_value": null,
+      "mass_unit": null,
+      "time_unit": null,
+      "equipment_tag": "M-804",
+      "failure_mode_name": "Generic wear",
+      "loss_fraction": 0.05
+    },
+    {
+      "kind": "impact",
+      "product": null,
+      "nominal_rate_value": null,
+      "mass_unit": null,
+      "time_unit": null,
+      "equipment_tag": "M-805",
+      "failure_mode_name": "Generic wear",
+      "loss_fraction": 0.05
+    },
+    {
+      "kind": "impact",
+      "product": null,
+      "nominal_rate_value": null,
+      "mass_unit": null,
+      "time_unit": null,
+      "equipment_tag": "M-806",
+      "failure_mode_name": "Generic wear",
+      "loss_fraction": 0.05
+    },
+    {
+      "kind": "impact",
+      "product": null,
+      "nominal_rate_value": null,
+      "mass_unit": null,
+      "time_unit": null,
+      "equipment_tag": "M-807",
+      "failure_mode_name": "Generic wear",
+      "loss_fraction": 0.05
+    },
+    {
+      "kind": "impact",
+      "product": null,
+      "nominal_rate_value": null,
+      "mass_unit": null,
+      "time_unit": null,
+      "equipment_tag": "M-808",
+      "failure_mode_name": "Generic wear",
+      "loss_fraction": 0.05
+    },
+    {
+      "kind": "impact",
+      "product": null,
+      "nominal_rate_value": null,
+      "mass_unit": null,
+      "time_unit": null,
+      "equipment_tag": "I-901",
+      "failure_mode_name": "Generic wear",
+      "loss_fraction": 0.05
+    },
+    {
+      "kind": "impact",
+      "product": null,
+      "nominal_rate_value": null,
+      "mass_unit": null,
+      "time_unit": null,
+      "equipment_tag": "I-902",
+      "failure_mode_name": "Generic wear",
+      "loss_fraction": 0.05
+    },
+    {
+      "kind": "impact",
+      "product": null,
+      "nominal_rate_value": null,
+      "mass_unit": null,
+      "time_unit": null,
+      "equipment_tag": "I-903",
+      "failure_mode_name": "Generic wear",
+      "loss_fraction": 0.05
+    },
+    {
+      "kind": "impact",
+      "product": null,
+      "nominal_rate_value": null,
+      "mass_unit": null,
+      "time_unit": null,
+      "equipment_tag": "I-904",
+      "failure_mode_name": "Generic wear",
+      "loss_fraction": 0.05
+    },
+    {
+      "kind": "impact",
+      "product": null,
+      "nominal_rate_value": null,
+      "mass_unit": null,
+      "time_unit": null,
+      "equipment_tag": "I-905",
+      "failure_mode_name": "Generic wear",
+      "loss_fraction": 0.05
+    },
+    {
+      "kind": "impact",
+      "product": null,
+      "nominal_rate_value": null,
+      "mass_unit": null,
+      "time_unit": null,
+      "equipment_tag": "I-906",
+      "failure_mode_name": "Generic wear",
+      "loss_fraction": 0.05
+    },
+    {
+      "kind": "impact",
+      "product": null,
+      "nominal_rate_value": null,
+      "mass_unit": null,
+      "time_unit": null,
+      "equipment_tag": "I-907",
+      "failure_mode_name": "Generic wear",
+      "loss_fraction": 0.05
+    },
+    {
+      "kind": "impact",
+      "product": null,
+      "nominal_rate_value": null,
+      "mass_unit": null,
+      "time_unit": null,
+      "equipment_tag": "I-908",
+      "failure_mode_name": "Generic wear",
+      "loss_fraction": 0.05
+    },
+    {
+      "kind": "impact",
+      "product": null,
+      "nominal_rate_value": null,
+      "mass_unit": null,
+      "time_unit": null,
+      "equipment_tag": "P-101",
+      "failure_mode_name": "Mechanical seal degradation",
+      "loss_fraction": 0.4
+    }
+  ]
+}

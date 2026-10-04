@@ -14,10 +14,7 @@ import { useMemo, useState } from 'react'
 
 import { ApiError } from '../../api/client'
 import { referenceApi } from '../../api/resources'
-import type {
-  ReferenceParameter,
-  TaxonomyNode,
-} from '../../api/types'
+import type { ReferenceParameter, TaxonomyNode } from '../../api/types'
 import { ProvenanceBadge } from '../../components/ProvenanceBadge'
 import { ProvenancePanel } from '../../components/ProvenancePanel'
 
@@ -140,8 +137,8 @@ export function ReferenceBrowserPage() {
       <Typography variant="h4">Справочник OREDA / ISO 14224</Typography>
       <Typography color="text.secondary">
         Курируемые demo-извлечения для тестирования ПО. PDF handbook не
-        распространяются; полуавтоматическая загрузка — CSV/JSON после
-        ручной проверки.
+        распространяются; полуавтоматическая загрузка — CSV/JSON после ручной
+        проверки.
       </Typography>
       <Stack direction="row" spacing={1} alignItems="center" flexWrap="wrap">
         <Button
@@ -206,8 +203,8 @@ export function ReferenceBrowserPage() {
               />
             ) : (
               <Typography color="text.secondary" variant="body2">
-                Выберите строку, чтобы увидеть значение, источник, ссылку
-                и уверенность.
+                Выберите строку, чтобы увидеть значение, источник, ссылку и
+                уверенность.
               </Typography>
             )}
           </Box>

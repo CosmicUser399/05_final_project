@@ -6,8 +6,10 @@ from fastapi import APIRouter
 
 from app.api.v1 import ai
 from app.api.v1 import connections
+from app.api.v1 import demo
 from app.api.v1 import diagnostics
 from app.api.v1 import equipment
+from app.api.v1 import excel
 from app.api.v1 import failure_modes
 from app.api.v1 import maintenance
 from app.api.v1 import petri
@@ -37,3 +39,5 @@ router.include_router(simulations.router)
 router.include_router(scenarios.router)
 router.include_router(ai.router)
 router.include_router(reference.router)
+router.include_router(excel.router)
+router.include_router(demo.router)

@@ -15,11 +15,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 
 import { ApiError } from '../../api/client'
-import {
-  reliabilityApi,
-  simulationsApi,
-  systemsApi,
-} from '../../api/resources'
+import { reliabilityApi, simulationsApi, systemsApi } from '../../api/resources'
 import type { SimulationStatus } from '../../api/types'
 import { ReliabilityPanel } from '../reliability/ReliabilityPanel'
 import { shortHash } from './format'
@@ -46,15 +42,13 @@ const columns: GridColDef<SimulationStatus>[] = [
     field: 'progress',
     headerName: 'Прогресс',
     width: 110,
-    valueFormatter: (value: number) =>
-      `${Math.round((value ?? 0) * 100)} %`,
+    valueFormatter: (value: number) => `${Math.round((value ?? 0) * 100)} %`,
   },
   {
     field: 'completed_runs',
     headerName: 'Прогоны',
     width: 120,
-    valueGetter: (_value, row) =>
-      `${row.completed_runs}/${row.total_runs}`,
+    valueGetter: (_value, row) => `${row.completed_runs}/${row.total_runs}`,
   },
   {
     field: 'random_seed',
@@ -139,10 +133,7 @@ export function SimulationsListPage() {
     retry: false,
   })
 
-  const streamStatus = useSimulationStream(
-    activeRunId,
-    Boolean(activeRunId),
-  )
+  const streamStatus = useSimulationStream(activeRunId, Boolean(activeRunId))
 
   useEffect(() => {
     if (
@@ -190,8 +181,8 @@ export function SimulationsListPage() {
     <Stack spacing={2}>
       <Typography variant="h4">Симуляции</Typography>
       <Typography color="text.secondary">
-        Запуск Monte Carlo, прогресс (SSE) и переход к дашборду
-        результатов. Расчёты только на backend.
+        Запуск Monte Carlo, прогресс (SSE) и переход к дашборду результатов.
+        Расчёты только на backend.
       </Typography>
 
       <Stack direction={{ xs: 'column', md: 'row' }} spacing={1}>
@@ -213,11 +204,7 @@ export function SimulationsListPage() {
             ))}
           </Select>
         </FormControl>
-        <FormControl
-          size="small"
-          sx={{ minWidth: 220 }}
-          disabled={!systemId}
-        >
+        <FormControl size="small" sx={{ minWidth: 220 }} disabled={!systemId}>
           <InputLabel id="version">Версия</InputLabel>
           <Select
             labelId="version"
@@ -260,9 +247,7 @@ export function SimulationsListPage() {
         <Button
           variant="contained"
           disabled={
-            !selectedVersionId ||
-            !modelReady ||
-            createMutation.isPending
+            !selectedVersionId || !modelReady || createMutation.isPending
           }
           onClick={() => createMutation.mutate()}
         >
@@ -278,8 +263,8 @@ export function SimulationsListPage() {
 
       {streamStatus ? (
         <Alert severity="info">
-          SSE: {streamStatus.id.slice(0, 8)}… — {streamStatus.status}{' '}
-          ({streamStatus.completed_runs}/{streamStatus.total_runs})
+          SSE: {streamStatus.id.slice(0, 8)}… — {streamStatus.status} (
+          {streamStatus.completed_runs}/{streamStatus.total_runs})
         </Alert>
       ) : null}
       {error ? <Alert severity="error">{error}</Alert> : null}
