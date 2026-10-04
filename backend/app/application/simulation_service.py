@@ -124,6 +124,14 @@ class SimulationService:
             row = SimulationRepository(uow.session).get_run(run_id)
             return row.as_status_dict()
 
+    def list_for_version(self, version_id: UUID) -> list[dict[str, Any]]:
+        """Return simulation runs for a system version."""
+        with self._uow_factory() as uow:
+            rows = SimulationRepository(uow.session).list_by_version(
+                version_id
+            )
+            return [row.as_status_dict() for row in rows]
+
     def get_status(self, run_id: UUID) -> dict[str, Any]:
         """Return a compact status payload."""
         return self.get(run_id)

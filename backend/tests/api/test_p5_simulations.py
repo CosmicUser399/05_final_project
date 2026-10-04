@@ -238,6 +238,32 @@ def test_sse_stream_completed(
     assert "COMPLETED" in text
 
 
+def test_list_simulations_for_version(client: TestClient) -> None:
+    system = _create_system(client)
+    version = _first_version(client, system["id"])
+    version_id = version["id"]
+    _seed_and_compile(client, version_id)
+
+    created = client.post(
+        "/api/v1/simulations",
+        json={
+            "version_id": version_id,
+            "horizon": 100,
+            "horizon_unit": "HOURS",
+            "number_of_runs": 2,
+            "random_seed": 7,
+        },
+    )
+    assert created.status_code == 202, created.text
+    run_id = created.json()["id"]
+
+    listed = client.get(f"/api/v1/versions/{version_id}/simulations")
+    assert listed.status_code == 200, listed.text
+    rows = listed.json()
+    assert len(rows) >= 1
+    assert any(row["id"] == run_id for row in rows)
+
+
 def test_rejects_too_many_runs(client: TestClient) -> None:
     system = _create_system(client)
     version = _first_version(client, system["id"])

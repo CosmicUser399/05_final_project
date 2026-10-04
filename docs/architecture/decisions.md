@@ -91,6 +91,15 @@
   Сравнение метрик - только по завершённым прогонам (ТЗ §71).
   Подробности: `docs/architecture/scenarios.md`.
 
+## ADR-012. Results UI без расчётов на клиенте
+
+- Status: Accepted.
+- Дашборд/графики/events/Petri viewer читают только API-агрегаты и
+  логи. Формулы метрик показываются как справочник; provenance
+  (seed, hashes, fingerprint) обязателен у значений. Кривая R(t)
+  в MVP — скаляр R(horizon) с CI (временной ряд не персистится).
+  Подробности: `docs/architecture/results-ui.md`.
+
 ## Контракт P0 (bootstrap)
 
 - API: `GET /health`, `GET /ready` (в том числе под `/api/v1`), заголовок

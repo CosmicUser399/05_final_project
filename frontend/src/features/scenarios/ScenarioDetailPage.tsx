@@ -256,6 +256,16 @@ export function ScenarioDetailPage() {
                 ? 'error'
                 : 'info'
           }
+          action={
+            <Button
+              component={RouterLink}
+              to={`/simulations/${job.id}`}
+              color="inherit"
+              size="small"
+            >
+              Результаты
+            </Button>
+          }
         >
           Симуляция {job.id}: {job.status} (
           {job.completed_runs}/{job.total_runs}), seed={job.random_seed}

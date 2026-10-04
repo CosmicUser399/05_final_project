@@ -55,6 +55,14 @@ describe('app shell', () => {
     ).toBeInTheDocument()
   })
 
+  it('renders simulations results list page', () => {
+    renderAt('/simulations')
+
+    expect(
+      screen.getByRole('heading', { name: 'Симуляции', level: 4 }),
+    ).toBeInTheDocument()
+  })
+
   it('renders AI generation page', () => {
     renderAt('/ai/generate')
 

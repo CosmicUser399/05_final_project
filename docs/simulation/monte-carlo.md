@@ -19,6 +19,7 @@ result = MonteCarloRunner(software_version="0.1.0").run(
 HTTP (worker executes the queue):
 
 ```http
+GET  /api/v1/versions/{version_id}/simulations
 POST /api/v1/simulations
 Idempotency-Key: <optional unique key>
 
@@ -28,6 +29,8 @@ GET  /api/v1/simulations/{id}/events
 GET  /api/v1/simulations/{id}/stream   # SSE progress
 POST /api/v1/simulations/{id}/cancel
 ```
+
+UI: `docs/architecture/results-ui.md`.
 
 Worker: `python -m app.worker` (claims `QUEUED` rows).
 

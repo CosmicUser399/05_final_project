@@ -60,6 +60,18 @@ class SimulationRepository:
             )
         return row
 
+    def list_by_version(
+        self,
+        version_id: UUID,
+    ) -> list[SimulationRunRow]:
+        """Return runs for a system version, newest first."""
+        stmt = (
+            select(SimulationRunRow)
+            .where(SimulationRunRow.version_id == version_id)
+            .order_by(SimulationRunRow.created_at.desc())
+        )
+        return list(self._session.scalars(stmt))
+
     def get_by_idempotency_key(
         self,
         key: str,

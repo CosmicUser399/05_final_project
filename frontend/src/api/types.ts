@@ -152,6 +152,205 @@ export interface SimulationStatus {
   software_version: string
   simulation_fingerprint: string
   error_message: string | null
+  started_at?: string | null
+  completed_at?: string | null
+  created_at?: string | null
+  updated_at?: string | null
+}
+
+export interface MetricSummary {
+  mean: number | null
+  median: number | null
+  p5: number | null
+  p50: number | null
+  p95: number | null
+  ci_low: number | null
+  ci_high: number | null
+  sample_size: number
+}
+
+export interface ProportionSummary {
+  value: number | null
+  successes: number
+  trials: number
+  ci_low: number | null
+  ci_high: number | null
+  method: string
+}
+
+export interface ParetoItem {
+  key: string
+  count: number
+  share: number
+}
+
+export interface EquipmentAggregateMetrics {
+  equipment_id: string
+  failure_count: MetricSummary
+  downtime_minutes: MetricSummary
+  mtbf_minutes: MetricSummary
+  mttr_minutes: MetricSummary
+  ai: MetricSummary
+  pm_count: MetricSummary
+  cm_count: MetricSummary
+  detection_count: MetricSummary
+}
+
+export interface SystemAggregateMetrics {
+  number_of_runs: number
+  completed_runs: number
+  confidence_level: number
+  reliability_at_horizon: ProportionSummary
+  ai: MetricSummary
+  ao: MetricSummary
+  mtbf_minutes: MetricSummary
+  mttr_minutes: MetricSummary
+  mtbm_minutes: MetricSummary
+  mdt_minutes: MetricSummary
+  downtime_minutes: MetricSummary
+  production_loss: MetricSummary
+  production_availability: MetricSummary
+  repair_p90_minutes: number | null
+  repair_p95_minutes: number | null
+  maintainability_at_mttr: ProportionSummary | null
+  failure_pareto: ParetoItem[]
+  equipment: EquipmentAggregateMetrics[]
+}
+
+export interface SimulationResults {
+  id: string
+  status: string
+  simulation_fingerprint: string
+  model_hash: string
+  scenario_hash: string
+  configuration_hash: string
+  software_version: string
+  random_seed: number
+  metrics: SystemAggregateMetrics
+}
+
+export interface SimulationEvent {
+  id: string
+  trial_run_id: number
+  time_minutes: number
+  event_type: string
+  details: Record<string, unknown>
+  equipment_id?: string | null
+  failure_mode_id?: string | null
+  task_id?: string | null
+  resource_id?: string | null
+  spare_part_id?: string | null
+}
+
+export interface SimulationEventsPage {
+  items: SimulationEvent[]
+  offset: number
+  limit: number
+  count: number
+}
+
+export interface PetriSourceMapping {
+  kind: string
+  role: string
+  source_entity_type: string | null
+  source_entity_id: string | null
+  equipment_id: string | null
+  failure_mode_id: string | null
+  subnet_key: string | null
+}
+
+export interface PetriPlace {
+  id: string
+  role: string
+  initial: number
+  capacity: number | null
+  source_entity_type: string | null
+  source_entity_id: string | null
+}
+
+export interface PetriTransition {
+  id: string
+  role: string
+  source_entity_type: string | null
+  source_entity_id: string | null
+}
+
+export interface PetriArc {
+  id: string
+  source: string
+  target: string
+  weight: number
+  arc_type: string | null
+}
+
+export interface PetriSubnet {
+  key: string
+  name: string
+  case_id: string
+  kind: string
+  places: PetriPlace[]
+  transitions: PetriTransition[]
+  arcs: PetriArc[]
+}
+
+export interface PetriDefinition {
+  version_id: string
+  reliability_model_id: string | null
+  reliability_model_hash: string
+  schema_version: number
+  subnets: PetriSubnet[]
+  id_map: Record<string, PetriSourceMapping>
+}
+
+export interface PetriModel {
+  id: string
+  version_id: string
+  reliability_model_id: string | null
+  reliability_model_hash: string
+  schema_version: string
+  validation_status: string
+  petri_pilot_version: string | null
+  generated_at: string
+  notes: string | null
+  definition: PetriDefinition | null
+}
+
+export interface ReliabilityModel {
+  id: string
+  version_id: string
+  model_hash: string
+  validation_status: string
+  generated_at: string
+  notes: string | null
+  snapshot?: Record<string, unknown> | null
+}
+
+export interface ValidationIssue {
+  code: string
+  message: string
+  level: string
+  severity: string
+  entity: string | null
+  entity_id: string | null
+}
+
+export interface ValidationReport {
+  is_valid: boolean
+  issues: ValidationIssue[]
+}
+
+export interface FailureMode {
+  id: string
+  equipment_id: string
+  name: string
+}
+
+export interface ProductionImpact {
+  id: string
+  version_id: string
+  equipment_id: string
+  failure_mode_id: string | null
+  loss_fraction: number
 }
 
 export interface MetricComparisonRow {

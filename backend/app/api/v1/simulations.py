@@ -22,10 +22,23 @@ from app.api.v1.schemas import SimulationResultsResponse
 from app.api.v1.schemas import SimulationStatusResponse
 from app.domain.simulation.status import TERMINAL_STATUSES
 
-router = APIRouter(prefix="/simulations", tags=["simulations"])
+router = APIRouter(tags=["simulations"])
 
 
-@router.post("", status_code=status.HTTP_202_ACCEPTED)
+@router.get("/versions/{version_id}/simulations")
+def list_simulations(
+    version_id: UUID,
+    service: SimulationServiceDep,
+) -> list[SimulationStatusResponse]:
+    """List Monte Carlo runs for a system version."""
+    rows = service.list_for_version(version_id)
+    return [SimulationStatusResponse.from_row(row) for row in rows]
+
+
+@router.post(
+    "/simulations",
+    status_code=status.HTTP_202_ACCEPTED,
+)
 def create_simulation(
     body: SimulationCreateRequest,
     service: SimulationServiceDep,
@@ -46,7 +59,7 @@ def create_simulation(
     return SimulationStatusResponse.from_row(row)
 
 
-@router.get("/{run_id}")
+@router.get("/simulations/{run_id}")
 def get_simulation(
     run_id: UUID,
     service: SimulationServiceDep,
@@ -55,7 +68,7 @@ def get_simulation(
     return SimulationStatusResponse.from_row(service.get(run_id))
 
 
-@router.get("/{run_id}/status")
+@router.get("/simulations/{run_id}/status")
 def get_simulation_status(
     run_id: UUID,
     service: SimulationServiceDep,
@@ -64,7 +77,7 @@ def get_simulation_status(
     return SimulationStatusResponse.from_row(service.get_status(run_id))
 
 
-@router.get("/{run_id}/results")
+@router.get("/simulations/{run_id}/results")
 def get_simulation_results(
     run_id: UUID,
     service: SimulationServiceDep,
@@ -75,7 +88,7 @@ def get_simulation_results(
     )
 
 
-@router.get("/{run_id}/events")
+@router.get("/simulations/{run_id}/events")
 def get_simulation_events(
     run_id: UUID,
     service: SimulationServiceDep,
@@ -96,7 +109,7 @@ def get_simulation_events(
     )
 
 
-@router.post("/{run_id}/cancel")
+@router.post("/simulations/{run_id}/cancel")
 def cancel_simulation(
     run_id: UUID,
     service: SimulationServiceDep,
@@ -105,7 +118,7 @@ def cancel_simulation(
     return SimulationStatusResponse.from_row(service.cancel(run_id))
 
 
-@router.get("/{run_id}/stream")
+@router.get("/simulations/{run_id}/stream")
 async def stream_simulation_progress(
     run_id: UUID,
     service: SimulationServiceDep,

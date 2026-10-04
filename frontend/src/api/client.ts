@@ -78,6 +78,23 @@ export async function apiPost<T>(path: string, body?: unknown): Promise<T> {
   return apiSend<T>('POST', path, body)
 }
 
+export async function apiPostWithHeaders<T>(
+  path: string,
+  body?: unknown,
+  headers?: Record<string, string>,
+): Promise<T> {
+  const response = await fetch(`${API_BASE}${path}`, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      ...(body !== undefined ? { 'Content-Type': 'application/json' } : {}),
+      ...headers,
+    },
+    body: body !== undefined ? JSON.stringify(body) : undefined,
+  })
+  return parseResponse<T>(response)
+}
+
 export async function apiPatch<T>(path: string, body?: unknown): Promise<T> {
   return apiSend<T>('PATCH', path, body)
 }

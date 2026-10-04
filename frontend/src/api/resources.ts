@@ -1,16 +1,30 @@
-import { apiDelete, apiGet, apiPatch, apiPost } from './client'
+import {
+  ApiError,
+  apiDelete,
+  apiGet,
+  apiPatch,
+  apiPost,
+  apiPostWithHeaders,
+} from './client'
 import type {
   CommitResult,
   Equipment,
   EquipmentConnection,
+  FailureMode,
   GenerationJob,
+  PetriModel,
+  ProductionImpact,
   Proposal,
+  ReliabilityModel,
   Scenario,
   ScenarioChangeType,
   ScenarioComparison,
+  SimulationEventsPage,
+  SimulationResults,
   SimulationStatus,
   System,
   SystemVersion,
+  ValidationReport,
 } from './types'
 
 export const systemsApi = {
@@ -129,14 +143,129 @@ export const scenariosApi = {
 }
 
 export const simulationsApi = {
-  create: (body: {
-    version_id: string
-    horizon: number
-    horizon_unit?: string
-    number_of_runs?: number
-    random_seed?: number
-    parallel_runs?: number
-  }) => apiPost<SimulationStatus>('/simulations', body),
+  list: (versionId: string) =>
+    apiGet<SimulationStatus[]>(
+      `/versions/${versionId}/simulations`,
+    ),
+  create: (
+    body: {
+      version_id: string
+      horizon: number
+      horizon_unit?: string
+      number_of_runs?: number
+      random_seed?: number
+      parallel_runs?: number
+      scenario_version_id?: string
+    },
+    idempotencyKey?: string,
+  ) =>
+    apiPostWithHeaders<SimulationStatus>(
+      '/simulations',
+      body,
+      idempotencyKey
+        ? { 'Idempotency-Key': idempotencyKey }
+        : undefined,
+    ),
   get: (runId: string) =>
     apiGet<SimulationStatus>(`/simulations/${runId}`),
+  status: (runId: string) =>
+    apiGet<SimulationStatus>(`/simulations/${runId}/status`),
+  results: (runId: string) =>
+    apiGet<SimulationResults>(`/simulations/${runId}/results`),
+  events: (
+    runId: string,
+    params?: {
+      offset?: number
+      limit?: number
+      event_type?: string
+      equipment_id?: string
+    },
+  ) => {
+    const query = new URLSearchParams()
+    if (params?.offset !== undefined) {
+      query.set('offset', String(params.offset))
+    }
+    if (params?.limit !== undefined) {
+      query.set('limit', String(params.limit))
+    }
+    if (params?.event_type) {
+      query.set('event_type', params.event_type)
+    }
+    if (params?.equipment_id) {
+      query.set('equipment_id', params.equipment_id)
+    }
+    const suffix = query.size > 0 ? `?${query.toString()}` : ''
+    return apiGet<SimulationEventsPage>(
+      `/simulations/${runId}/events${suffix}`,
+    )
+  },
+  cancel: (runId: string) =>
+    apiPost<SimulationStatus>(`/simulations/${runId}/cancel`),
+}
+
+export const petriApi = {
+  getLatest: (versionId: string) =>
+    apiGet<PetriModel>(`/versions/${versionId}/petri`),
+  generate: (versionId: string, notes?: string) =>
+    apiPost<PetriModel>(`/versions/${versionId}/petri/generate`, {
+      notes: notes ?? null,
+    }),
+  get: (petriId: string) =>
+    apiGet<PetriModel>(`/petri/${petriId}`),
+}
+
+export const reliabilityApi = {
+  getLatest: async (
+    versionId: string,
+  ): Promise<ReliabilityModel | null> => {
+    try {
+      return await apiGet<ReliabilityModel>(
+        `/versions/${versionId}/reliability`,
+      )
+    } catch (error) {
+      if (error instanceof ApiError && error.status === 404) {
+        return null
+      }
+      throw error
+    }
+  },
+  generate: (versionId: string, notes?: string) =>
+    apiPost<ReliabilityModel>(
+      `/versions/${versionId}/reliability/generate`,
+      { notes: notes ?? null },
+    ),
+  validate: (versionId: string) =>
+    apiPost<ValidationReport>(`/versions/${versionId}/validate`),
+}
+
+export const failureModesApi = {
+  list: (equipmentId: string) =>
+    apiGet<FailureMode[]>(
+      `/equipment/${equipmentId}/failure-modes`,
+    ),
+  create: (equipmentId: string, body: Record<string, unknown>) =>
+    apiPost<FailureMode>(
+      `/equipment/${equipmentId}/failure-modes`,
+      body,
+    ),
+}
+
+export const maintenanceApi = {
+  create: (equipmentId: string, body: Record<string, unknown>) =>
+    apiPost(`/equipment/${equipmentId}/maintenance`, body),
+}
+
+export const productionApi = {
+  listImpacts: (versionId: string) =>
+    apiGet<ProductionImpact[]>(
+      `/versions/${versionId}/production-impacts`,
+    ),
+  createImpact: (
+    versionId: string,
+    body: { equipment_id: string; loss_fraction: number },
+  ) =>
+    apiPost<ProductionImpact>(
+      `/versions/${versionId}/production-impacts`,
+      body,
+    ),
 }

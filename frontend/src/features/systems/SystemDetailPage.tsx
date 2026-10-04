@@ -13,6 +13,7 @@ import { useParams } from 'react-router-dom'
 import { systemsApi } from '../../api/resources'
 import { EquipmentGraph } from '../equipment/EquipmentGraph'
 import { EquipmentTable } from '../equipment/EquipmentTable'
+import { ReliabilityPanel } from '../reliability/ReliabilityPanel'
 
 export function SystemDetailPage() {
   const { systemId = '' } = useParams()
@@ -63,12 +64,16 @@ export function SystemDetailPage() {
       <Tabs value={tab} onChange={(_, value: number) => setTab(value)}>
         <Tab label="Оборудование" />
         <Tab label="Граф" />
+        <Tab label="Надёжность" />
       </Tabs>
       {versionId && tab === 0 ? (
         <EquipmentTable versionId={versionId} />
       ) : null}
       {versionId && tab === 1 ? (
         <EquipmentGraph versionId={versionId} />
+      ) : null}
+      {versionId && tab === 2 ? (
+        <ReliabilityPanel versionId={versionId} />
       ) : null}
     </Stack>
   )

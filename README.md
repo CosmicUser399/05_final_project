@@ -22,7 +22,8 @@ Reliability Model -> Petri Model / RAM-симуляция (Monte Carlo).
 | P6 Petri-Pilot | выполнен | генератор, MCP-адаптер, validate/analyze API |
 | P7 AI + Frontend CRUD | выполнен | OpenAI/Fabricate, proposals, CRUD, граф |
 | P8 Scenarios | выполнен | Scenario overlay, simulate/compare, UI |
-| P9-P12 | не начаты | Results UI, AI Analyst, OREDA, Excel/Demo |
+| P9 Results UI | выполнен | дашборд, графики, events, Petri viewer |
+| P10-P12 | не начаты | AI Analyst, OREDA, Excel/Demo |
 
 ### P0. Bootstrap
 
@@ -128,7 +129,7 @@ OpenAI, MCP (проверяется архитектурным тестом).
   | Production | `/versions/{id}/production`, `/production-impacts` |
 | Reliability | `POST /versions/{id}/validate`, `POST .../reliability/generate`, `GET .../reliability`, `GET /reliability-models/{id}` |
   | Petri | `POST /versions/{id}/petri/generate`, `GET .../petri`, `GET /petri/{id}`, `POST /petri/{id}/validate|analyze|verify|conformance|diff|canonical` |
-  | Simulations | `POST /simulations` (+ `Idempotency-Key`), `GET /simulations/{id}`, `/status`, `/results`, `/events`, `/stream` (SSE), `POST .../cancel` |
+  | Simulations | `GET /versions/{id}/simulations`, `POST /simulations` (+ `Idempotency-Key`), `GET /simulations/{id}`, `/status`, `/results`, `/events`, `/stream` (SSE), `POST .../cancel` |
 
   Ошибки: domain → `404` (`ENTITY_NOT_FOUND`), `409` (`VERSION_FROZEN`,
   `INVALID_STATUS_TRANSITION`, `RESULTS_NOT_READY`), `422` (валидация),
@@ -170,8 +171,14 @@ OpenAI, MCP (проверяется архитектурным тестом).
   (Δ Availability / Production Loss / Maintenance Cost), worker
   применяет overlay; UI список/редактор/таблица сравнения + ECharts.
   Baseline не мутирует. См. `docs/architecture/scenarios.md`.
+- **P9 Results UI:** `/simulations` и `/simulations/:runId` —
+  дашборд mean/median/P5/P95/CI, ECharts (квантили, Pareto, нагрузка
+  ТО), метрики оборудования, event explorer (пагинация/фильтры),
+  панель определений метрик, provenance (seed/hashes/fingerprint),
+  Petri viewer (React Flow, collapse/expand, клик → source entity).
+  См. `docs/architecture/results-ui.md`.
 
-Следующий шаг - P9 (Results UI) / P10 (AI Analyst).
+Следующий шаг - P10 (AI Analyst).
 
 ## Требования
 
@@ -216,6 +223,9 @@ docker compose up --build -d
 # http://localhost:18080/health - backend /health
 # http://localhost:18080/api/docs - OpenAPI (не в production)
 ```
+
+При старте `backend`/`worker` entrypoint выполняет
+`alembic upgrade head` для volume SQLite (`/srv/data/app.db`).
 
 Профили: `petri` (локальный Petri-Pilot, образ задаётся
 `PETRI_PILOT_IMAGE`), `postgres`, `queue` (Redis).

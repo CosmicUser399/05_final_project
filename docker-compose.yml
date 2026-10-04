@@ -77,7 +77,9 @@ services:
     environment:
       POSTGRES_DB: ${POSTGRES_DB:-app}
       POSTGRES_USER: ${POSTGRES_USER:-app}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}
+      # Default allows compose file parse without profile "postgres".
+      # Override in .env for real use (see .env.example).
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
     volumes:
       - pg-data:/var/lib/postgresql/data
     restart: unless-stopped
