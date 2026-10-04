@@ -1,0 +1,80 @@
+{
+  "taxonomy": {
+    "name": "ISO 14224 demo taxonomy",
+    "kind": "ISO_14224",
+    "version_label": "demo-1.0"
+  },
+  "source": {
+    "source_type": "ISO_14224",
+    "title": "ISO 14224 demo taxonomy extract",
+    "edition": "demo",
+    "locator": "synthetic seed for software testing"
+  },
+  "nodes": [
+    {
+      "code": "1",
+      "name": "Equipment classes",
+      "parent_code": null
+    },
+    {
+      "code": "PUMP",
+      "name": "Pumps",
+      "parent_code": "1"
+    },
+    {
+      "code": "PUMP.CENT",
+      "name": "Centrifugal pump",
+      "parent_code": "PUMP"
+    },
+    {
+      "code": "COMP",
+      "name": "Compressors",
+      "parent_code": "1"
+    },
+    {
+      "code": "COMP.REC",
+      "name": "Reciprocating compressor",
+      "parent_code": "COMP"
+    },
+    {
+      "code": "HEX",
+      "name": "Heat exchangers",
+      "parent_code": "1"
+    },
+    {
+      "code": "HEX.SHELL",
+      "name": "Shell and tube heat exchanger",
+      "parent_code": "HEX"
+    },
+    {
+      "code": "VALVE",
+      "name": "Valves",
+      "parent_code": "1"
+    },
+    {
+      "code": "VALVE.ONOFF",
+      "name": "On/off valve",
+      "parent_code": "VALVE"
+    },
+    {
+      "code": "MOTOR",
+      "name": "Electric motors",
+      "parent_code": "1"
+    },
+    {
+      "code": "MOTOR.AC",
+      "name": "AC electric motor",
+      "parent_code": "MOTOR"
+    },
+    {
+      "code": "INST",
+      "name": "Instrumentation",
+      "parent_code": "1"
+    },
+    {
+      "code": "INST.TX",
+      "name": "Transmitter",
+      "parent_code": "INST"
+    }
+  ]
+}

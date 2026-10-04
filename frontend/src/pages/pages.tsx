@@ -33,6 +33,9 @@ export function HomePage() {
         <Button component={RouterLink} to="/scenarios" variant="outlined">
           Сценарии
         </Button>
+        <Button component={RouterLink} to="/reference" variant="outlined">
+          Справочник
+        </Button>
       </Stack>
     </Stack>
   )

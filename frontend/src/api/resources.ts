@@ -17,6 +17,9 @@ import type {
   PetriModel,
   ProductionImpact,
   Proposal,
+  ReferenceParameter,
+  ReferenceSearchResult,
+  ReferenceStatus,
   ReliabilityModel,
   Scenario,
   ScenarioChangeType,
@@ -26,6 +29,7 @@ import type {
   SimulationStatus,
   System,
   SystemVersion,
+  TaxonomyNode,
   ValidationReport,
 } from './types'
 
@@ -60,6 +64,65 @@ export const connectionsApi = {
       body,
     ),
   remove: (id: string) => apiDelete(`/connections/${id}`),
+}
+
+export const referenceApi = {
+  status: () => apiGet<ReferenceStatus>('/reference/status'),
+  ingest: (body: { replace?: boolean } = {}) =>
+    apiPost<Record<string, unknown>>('/reference/ingest', body),
+  searchParameters: (params: {
+    query?: string
+    equipment_class?: string
+    equipment_class_code?: string
+    parameter_kind?: string
+    limit?: number
+  }) => {
+    const search = new URLSearchParams()
+    if (params.query) search.set('query', params.query)
+    if (params.equipment_class) {
+      search.set('equipment_class', params.equipment_class)
+    }
+    if (params.equipment_class_code) {
+      search.set('equipment_class_code', params.equipment_class_code)
+    }
+    if (params.parameter_kind) {
+      search.set('parameter_kind', params.parameter_kind)
+    }
+    if (params.limit) search.set('limit', String(params.limit))
+    const qs = search.toString()
+    return apiGet<ReferenceSearchResult<ReferenceParameter>>(
+      `/reference/parameters${qs ? `?${qs}` : ''}`,
+    )
+  },
+  searchTaxonomy: (params: { query?: string; limit?: number }) => {
+    const search = new URLSearchParams()
+    if (params.query) search.set('query', params.query)
+    if (params.limit) search.set('limit', String(params.limit))
+    const qs = search.toString()
+    return apiGet<ReferenceSearchResult<TaxonomyNode>>(
+      `/reference/taxonomy${qs ? `?${qs}` : ''}`,
+    )
+  },
+  suggest: (equipmentClass: string, limit = 20) =>
+    apiGet<{ equipment_class: string; count: number; items: unknown[] }>(
+      `/reference/suggest?equipment_class=${encodeURIComponent(equipmentClass)}&limit=${limit}`,
+    ),
+  linkEquipment: (
+    equipmentId: string,
+    body: { taxonomy_node_id: string; reason?: string },
+  ) =>
+    apiPost<Equipment>(
+      `/reference/equipment/${equipmentId}/link`,
+      body,
+    ),
+  applyParameter: (
+    parameterId: string,
+    body: { failure_mode_id: string; reason?: string },
+  ) =>
+    apiPost<Record<string, unknown>>(
+      `/reference/parameters/${parameterId}/apply`,
+      body,
+    ),
 }
 
 export const aiApi = {

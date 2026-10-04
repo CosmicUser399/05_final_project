@@ -24,7 +24,8 @@ Reliability Model -> Petri Model / RAM-симуляция (Monte Carlo).
 | P8 Scenarios | выполнен | Scenario overlay, simulate/compare, UI |
 | P9 Results UI | выполнен | дашборд, графики, events, Petri viewer |
 | P10 AI Analyst | выполнен | typed tools, grounded chat, SSE, UI |
-| P11-P12 | не начаты | OREDA, Excel/Demo |
+| P11 Reference Data | выполнен | OREDA/ISO ingest, browser, provenance |
+| P12 Excel/Demo | не начат | Excel, demo seed, E2E |
 
 ### P0. Bootstrap
 
@@ -185,8 +186,14 @@ OpenAI, MCP (проверяется архитектурным тестом).
   `reference.search`), grounding чисел по tool-результатам,
   `POST /api/v1/ai/chat` + SSE `/ai/chat/stream`, UI `/ai/analyst`.
   См. `docs/architecture/ai-analyst.md`, ADR-013.
+- **P11 Reference Data:** spike (полуавтоматический CSV/JSON, PDF
+  локально), `reference_parameters` + OREDA/ISO репозитории, ingest
+  demo-сидов, API `/reference/*`, browser UI `/reference`,
+  ProvenancePanel, AI: suggestions + auto-link taxonomy,
+  `reference.search` в Analyst. См. `docs/architecture/oreda-iso.md`,
+  ADR-014.
 
-Следующий шаг - P11 (OREDA / ISO 14224).
+Следующий шаг - P12 (Excel, Demo, Quality).
 
 ## Требования
 
@@ -250,7 +257,9 @@ backend/
     infrastructure/ai/  # OpenAI + equipment proposal providers
     infrastructure/mcp/ # Petri-Pilot / Fabricate adapters + mocks
     infrastructure/files/ # Fabricate staging importer
+    infrastructure/reference_data/ # OREDA/ISO repos + demo seeds
     simulation/     # RAM engine (Monte Carlo)
+reference_data/     # local PDFs (gitignored) + README workflow
   alembic/          # миграции схемы
   tests/            # domain, api, infrastructure
 frontend/           # React + TS + MUI X DataGrid + React Flow

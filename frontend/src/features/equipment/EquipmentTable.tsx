@@ -82,6 +82,15 @@ export function EquipmentTable({ versionId }: Props) {
       editable: true,
     },
     {
+      field: 'taxonomy_node_id',
+      headerName: 'ISO node',
+      width: 120,
+      valueGetter: (_value, row) =>
+        row.taxonomy_node_id
+          ? String(row.taxonomy_node_id).slice(0, 8)
+          : '—',
+    },
+    {
       field: 'criticality',
       headerName: 'Критичность',
       width: 130,

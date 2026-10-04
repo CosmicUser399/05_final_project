@@ -27,6 +27,7 @@ export interface Equipment {
   name: string
   description: string | null
   parent_id: string | null
+  taxonomy_node_id: string | null
   category: string | null
   equipment_class: string | null
   equipment_type: string | null
@@ -65,6 +66,25 @@ export interface GenerationJob {
   updated_at: string
 }
 
+export interface ReferenceSuggestion {
+  kind: string
+  parameter_id?: string
+  taxonomy_node_id?: string
+  code?: string
+  name?: string
+  equipment_class?: string
+  equipment_class_code?: string | null
+  failure_mode_name?: string | null
+  parameter_name?: string
+  parameter_kind?: string
+  value?: number
+  unit?: string
+  source_type?: string
+  source_document?: string
+  source_reference?: string
+  confidence?: string
+}
+
 export interface ProposalItem {
   id: string
   item_type: string
@@ -73,6 +93,7 @@ export interface ProposalItem {
   decision: string
   edited_payload: Record<string, unknown> | null
   sort_order: number
+  reference_suggestions?: ReferenceSuggestion[]
 }
 
 export interface Proposal {
@@ -86,6 +107,50 @@ export interface Proposal {
   items: ProposalItem[]
   system_id: string | null
   version_id: string | null
+  reference_priority?: string
+}
+
+export interface ReferenceParameter {
+  id: string
+  source_id: string
+  equipment_class: string
+  equipment_class_code: string | null
+  failure_mode_code: string | null
+  failure_mode_name: string | null
+  parameter_name: string
+  parameter_kind: string
+  value: number
+  unit: string
+  distribution_type: string | null
+  distribution_params_json: Record<string, number> | null
+  source_type: string
+  source_document: string
+  source_reference: string
+  confidence: string
+  notes: string | null
+}
+
+export interface TaxonomyNode {
+  id: string
+  taxonomy_id: string
+  parent_id: string | null
+  code: string
+  name: string
+}
+
+export interface ReferenceStatus {
+  available: boolean
+  oreda_parameters: number
+  iso_taxonomy_nodes: number
+}
+
+export interface ReferenceSearchResult<T> {
+  query: string | null
+  available: boolean
+  count: number
+  limit: number
+  items: T[]
+  message?: string
 }
 
 export interface CommitResult {

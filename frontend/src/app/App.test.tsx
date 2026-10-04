@@ -85,6 +85,17 @@ describe('app shell', () => {
     ).toBeInTheDocument()
   })
 
+  it('renders reference browser page', () => {
+    renderAt('/reference')
+
+    expect(
+      screen.getByRole('heading', {
+        name: 'Справочник OREDA / ISO 14224',
+        level: 4,
+      }),
+    ).toBeInTheDocument()
+  })
+
   it('renders the not-found page for unknown routes', () => {
     renderAt('/unknown/path')
 

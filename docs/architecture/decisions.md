@@ -113,6 +113,17 @@
   встречаться в tool-результатах; иначе ответ заменяется
   детерминированной сводкой. См. `docs/architecture/ai-analyst.md`.
 
+## ADR-014. Semi-automatic OREDA / ISO ingestion
+
+- Status: Accepted.
+- Licensed PDFs stay local and are never redistributed. Ingestion is
+  curated CSV/JSON after human review, not blind PDF parsing.
+- Demo seeds under `infrastructure/reference_data/seeds/` are synthetic
+  and marked for software testing. Business logic never hard-codes
+  OREDA rates; only `OREDARepository` / `ISO14224Repository` load them.
+- AI prefers reference matches; otherwise `AI_ESTIMATE` / `UNKNOWN`.
+  See `docs/architecture/oreda-iso.md`.
+
 ## Контракт P0 (bootstrap)
 
 - API: `GET /health`, `GET /ready` (в том числе под `/api/v1`), заголовок

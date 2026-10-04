@@ -6,6 +6,7 @@ import { GenerateSystemPage } from '../features/ai/GenerateSystemPage'
 import { ProposalReviewPage } from '../features/ai/ProposalReviewPage'
 import { SimulationDetailPage } from '../features/results/SimulationDetailPage'
 import { SimulationsListPage } from '../features/results/SimulationsListPage'
+import { ReferenceBrowserPage } from '../features/reference/ReferenceBrowserPage'
 import { ScenarioDetailPage } from '../features/scenarios/ScenarioDetailPage'
 import { ScenariosListPage } from '../features/scenarios/ScenariosListPage'
 import { SystemDetailPage } from '../features/systems/SystemDetailPage'
@@ -27,6 +28,7 @@ export const routes: RouteObject[] = [
       { path: 'simulations/:runId', element: <SimulationDetailPage /> },
       { path: 'scenarios', element: <ScenariosListPage /> },
       { path: 'scenarios/:scenarioId', element: <ScenarioDetailPage /> },
+      { path: 'reference', element: <ReferenceBrowserPage /> },
       { path: '*', element: <NotFoundPage /> },
     ],
   },

@@ -22,6 +22,7 @@ from app.infrastructure.db.models.maintenance import SparePartRow
 from app.infrastructure.db.models.petri import PetriModelRow
 from app.infrastructure.db.models.production import ProductionFunctionRow
 from app.infrastructure.db.models.production import ProductionImpactRow
+from app.infrastructure.db.models.reference import ReferenceParameterRow
 from app.infrastructure.db.models.reliability import FailureDistributionRow
 from app.infrastructure.db.models.reliability import FailureModeRow
 from app.infrastructure.db.models.reliability import (
@@ -70,6 +71,7 @@ __all__ = [
     "ProductionLossEventRow",
     "ProposalItemRow",
     "ProposalRow",
+    "ReferenceParameterRow",
     "ReferenceSourceRow",
     "ReliabilityModelRow",
     "ReliabilityStructureMemberRow",

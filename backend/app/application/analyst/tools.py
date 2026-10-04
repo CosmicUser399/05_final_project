@@ -14,6 +14,7 @@ from pydantic import ValidationError as PydanticValidationError
 from app.application.equipment_service import EquipmentService
 from app.application.failure_modes import FailureModeService
 from app.application.maintenance_service import MaintenanceService
+from app.application.reference_service import ReferenceDataService
 from app.application.scenario_service import ScenarioService
 from app.application.simulation_service import SimulationService
 from app.application.systems import SystemService
@@ -187,11 +188,14 @@ TOOL_SPECS: tuple[ToolSpec, ...] = (
     ),
     ToolSpec(
         name="reference.search",
-        description=("Search OREDA/ISO reference parameters (P11 stub)."),
+        description=("Search OREDA/ISO reference parameters and taxonomy."),
         parameters={
             "type": "object",
             "properties": {
                 "query": {"type": "string"},
+                "equipment_class": {"type": "string"},
+                "equipment_class_code": {"type": "string"},
+                "parameter_kind": {"type": "string"},
                 "limit": {"type": "integer", "minimum": 1},
             },
         },
@@ -230,6 +234,7 @@ class AnalystToolExecutor:
         maintenance: MaintenanceService,
         simulations: SimulationService,
         scenarios: ScenarioService,
+        reference: ReferenceDataService | None = None,
     ) -> None:
         """Bind read services used by tools."""
         self._systems = systems
@@ -239,6 +244,7 @@ class AnalystToolExecutor:
         self._maintenance = maintenance
         self._simulations = simulations
         self._scenarios = scenarios
+        self._reference = reference
         self._handlers: dict[
             str,
             Callable[[dict[str, Any]], dict[str, Any]],
@@ -408,15 +414,89 @@ class AnalystToolExecutor:
     def _reference_search(self, args: dict[str, Any]) -> dict[str, Any]:
         query = str(args.get("query") or "").strip()
         limit = _limit(args.get("limit"), default=20)
-        # P11 will populate reference repositories; empty until then.
-        return {
-            "query": query or None,
-            "available": False,
-            "message": ("Reference data (OREDA/ISO) is not loaded yet (P11)."),
-            "count": 0,
-            "items": [],
-            "limit": limit,
-        }
+        if self._reference is None:
+            return {
+                "query": query or None,
+                "available": False,
+                "message": "Reference data service is not configured.",
+                "count": 0,
+                "items": [],
+                "limit": limit,
+            }
+        equipment_class = (
+            str(args.get("equipment_class") or "").strip() or None
+        )
+        equipment_class_code = (
+            str(args.get("equipment_class_code") or "").strip() or None
+        )
+        parameter_kind = (
+            str(args.get("parameter_kind") or "").strip() or None
+        )
+        result = self._reference.search_parameters(
+            query=query or None,
+            equipment_class=equipment_class,
+            equipment_class_code=equipment_class_code,
+            parameter_kind=parameter_kind,
+            limit=limit,
+        )
+        # Planner may pass a full sentence; retry on significant tokens.
+        if result["count"] == 0 and query:
+            for token in _reference_tokens(query):
+                result = self._reference.search_parameters(
+                    query=token,
+                    equipment_class=equipment_class,
+                    equipment_class_code=equipment_class_code,
+                    parameter_kind=parameter_kind,
+                    limit=limit,
+                )
+                if result["count"] > 0:
+                    result["query"] = query
+                    result["matched_token"] = token
+                    break
+        if not result["available"]:
+            result["message"] = (
+                "Reference data is empty; call POST /reference/ingest "
+                "to load the demo extract."
+            )
+        taxonomy_query = query
+        if result.get("matched_token"):
+            taxonomy_query = str(result["matched_token"])
+        taxonomy = self._reference.search_taxonomy(
+            query=taxonomy_query or None,
+            limit=min(limit, 20),
+        )
+        result["taxonomy_nodes"] = taxonomy.get("items", [])
+        return result
+
+
+_REFERENCE_STOPWORDS = frozenset(
+    {
+        "найди",
+        "найти",
+        "параметры",
+        "параметр",
+        "для",
+        "the",
+        "for",
+        "and",
+        "oreda",
+        "iso",
+        "14224",
+        "reference",
+        "данные",
+        "справочник",
+    }
+)
+
+
+def _reference_tokens(query: str) -> list[str]:
+    """Return searchable tokens from a free-text analyst query."""
+    parts = [part.strip(".,;:?!") for part in query.lower().split()]
+    return [
+        part
+        for part in parts
+        if len(part) >= 3 and part not in _REFERENCE_STOPWORDS
+    ]
 
 
 def _require_uuid(args: dict[str, Any], key: str) -> UUID:

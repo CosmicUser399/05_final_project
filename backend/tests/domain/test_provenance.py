@@ -100,3 +100,11 @@ def test_reference_source() -> None:
     assert src.id is not None
     with pytest.raises(PydanticValidationError):
         ReferenceSource(source_type=SourceType.OREDA, title="")
+
+
+def test_oreda_and_iso_factories() -> None:
+    oreda = Provenance.oreda("table 4.1 p.12")
+    assert oreda.source_type is SourceType.OREDA
+    assert oreda.confidence is Confidence.HIGH
+    iso = Provenance.iso14224("code PUMP.CENT")
+    assert iso.source_type is SourceType.ISO_14224

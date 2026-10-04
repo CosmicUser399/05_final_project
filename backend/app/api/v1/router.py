@@ -12,6 +12,7 @@ from app.api.v1 import failure_modes
 from app.api.v1 import maintenance
 from app.api.v1 import petri
 from app.api.v1 import production
+from app.api.v1 import reference
 from app.api.v1 import reliability
 from app.api.v1 import resources
 from app.api.v1 import scenarios
@@ -35,3 +36,4 @@ router.include_router(petri.router)
 router.include_router(simulations.router)
 router.include_router(scenarios.router)
 router.include_router(ai.router)
+router.include_router(reference.router)

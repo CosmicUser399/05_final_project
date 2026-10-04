@@ -14,6 +14,7 @@ import { ApiError } from '../../api/client'
 import { aiApi } from '../../api/resources'
 import type { ProposalItem } from '../../api/types'
 import { ProvenanceBadge } from '../../components/ProvenanceBadge'
+import { ProvenancePanel } from '../../components/ProvenancePanel'
 
 export function ProposalReviewPage() {
   const { proposalId = '' } = useParams()
@@ -57,10 +58,17 @@ export function ProposalReviewPage() {
     },
   })
 
+  const [selectedItem, setSelectedItem] = useState<ProposalItem | null>(
+    null,
+  )
   const rows = proposalQuery.data?.items ?? []
   const acceptedCount = rows.filter((item) =>
     ['ACCEPTED', 'EDITED'].includes(item.decision),
   ).length
+  const firstSuggestion =
+    selectedItem?.reference_suggestions?.find(
+      (item) => item.kind === 'parameter',
+    ) ?? null
 
   const columns: GridColDef<ProposalItem>[] = useMemo(
     () => [
@@ -72,6 +80,15 @@ export function ProposalReviewPage() {
         flex: 1.5,
         minWidth: 220,
         valueGetter: (_value, row) => JSON.stringify(row.payload),
+      },
+      {
+        field: 'reference_suggestions',
+        headerName: 'OREDA/ISO',
+        width: 120,
+        valueGetter: (_value, row) =>
+          row.reference_suggestions?.length
+            ? String(row.reference_suggestions.length)
+            : '—',
       },
       { field: 'decision', headerName: 'Решение', width: 120 },
       {
@@ -132,22 +149,70 @@ export function ProposalReviewPage() {
         />
       </Stack>
       <Typography color="text.secondary">
-        Примите или отклоните строки. Числовые параметры надёжности из
+        Примите или отклоните строки. Сначала справочник OREDA/ISO, затем
+        AI_ESTIMATE с низкой уверенностью. Числовые параметры из
         Fabricate/AI по умолчанию не импортируются.
       </Typography>
+      {proposalQuery.data?.reference_priority ? (
+        <Alert severity="info">
+          {proposalQuery.data.reference_priority}{' '}
+          <Button component={RouterLink} to="/reference" size="small">
+            Открыть справочник
+          </Button>
+        </Alert>
+      ) : null}
       {error ? <Alert severity="error">{error}</Alert> : null}
-      <Box sx={{ height: 480, width: '100%' }}>
-        <DataGrid
-          rows={rows}
-          columns={columns}
-          loading={proposalQuery.isLoading}
-          disableRowSelectionOnClick
-          pageSizeOptions={[25, 50]}
-          initialState={{
-            pagination: { paginationModel: { pageSize: 25 } },
-          }}
-        />
-      </Box>
+      <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
+        <Box sx={{ height: 480, flex: 2, width: '100%' }}>
+          <DataGrid
+            rows={rows}
+            columns={columns}
+            loading={proposalQuery.isLoading}
+            disableRowSelectionOnClick
+            onRowClick={(params) =>
+              setSelectedItem(params.row as ProposalItem)
+            }
+            pageSizeOptions={[25, 50]}
+            initialState={{
+              pagination: { paginationModel: { pageSize: 25 } },
+            }}
+          />
+        </Box>
+        <Box sx={{ flex: 1, minWidth: 240 }}>
+          <Typography variant="h6" gutterBottom>
+            Provenance / OREDA
+          </Typography>
+          <ProvenancePanel
+            value={firstSuggestion?.value}
+            unit={firstSuggestion?.unit}
+            sourceType={
+              firstSuggestion?.source_type ??
+              String(provenance.source_type ?? 'AI_ESTIMATE')
+            }
+            sourceDocument={firstSuggestion?.source_document}
+            sourceReference={
+              firstSuggestion?.source_reference ??
+              String(provenance.source_reference ?? '')
+            }
+            confidence={
+              firstSuggestion?.confidence ??
+              String(provenance.confidence ?? 'LOW')
+            }
+            generatedBy={String(provenance.generated_by ?? '')}
+            generatedAt={String(provenance.generated_at ?? '')}
+          />
+          {selectedItem?.reference_suggestions?.length ? (
+            <Typography variant="caption" color="text.secondary">
+              Подсказок справочника:{' '}
+              {selectedItem.reference_suggestions.length}
+            </Typography>
+          ) : (
+            <Typography variant="caption" color="text.secondary">
+              Нет совпадений OREDA/ISO — оставьте UNKNOWN или оценку.
+            </Typography>
+          )}
+        </Box>
+      </Stack>
       <Box sx={{ display: 'flex', gap: 1 }}>
         <Button
           variant="contained"

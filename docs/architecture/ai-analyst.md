@@ -15,7 +15,7 @@ Allowed tools (whitelist):
 - `simulation.get_events`
 - `simulation.compare`
 - `scenario.get`
-- `reference.search` (stub until P11)
+- `reference.search` (OREDA/ISO parameters + taxonomy; requires ingest)
 
 Forbidden: `sql.execute`, `shell.execute`, `filesystem.*`, arbitrary DB.
 

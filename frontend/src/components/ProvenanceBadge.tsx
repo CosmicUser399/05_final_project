@@ -3,7 +3,9 @@ import { Chip } from '@mui/material'
 const COLORS: Record<string, 'default' | 'warning' | 'success' | 'info'> = {
   AI_ESTIMATE: 'warning',
   OREDA: 'success',
+  ISO_14224: 'success',
   MANUFACTURER_DATA: 'info',
+  HISTORICAL_DATA: 'info',
   USER_DEFINED: 'default',
   ENGINEERING_ASSUMPTION: 'warning',
 }

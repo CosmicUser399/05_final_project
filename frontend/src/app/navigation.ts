@@ -10,4 +10,5 @@ export const NAV_ITEMS: readonly NavItem[] = [
   { path: '/ai/analyst', label: 'AI Analyst' },
   { path: '/simulations', label: 'Симуляции' },
   { path: '/scenarios', label: 'Сценарии' },
+  { path: '/reference', label: 'Справочник' },
 ]

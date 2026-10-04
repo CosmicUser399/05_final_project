@@ -18,6 +18,7 @@ from app.application.equipment_service import EquipmentService
 from app.application.ports import EquipmentProposalProvider
 from app.application.ports import ExternalCallStatus
 from app.application.ports import FabricateProvider
+from app.application.reference_service import ReferenceDataService
 from app.application.systems import SystemService
 from app.application.versions import VersionService
 from app.config import Settings
@@ -63,6 +64,7 @@ class AiGenerationService:
         self._versions = VersionService(uow_factory)
         self._equipment = EquipmentService(uow_factory)
         self._connections = ConnectionsService(uow_factory)
+        self._reference = ReferenceDataService(session_factory, uow_factory)
 
     def start_generation(
         self,
@@ -287,6 +289,30 @@ class AiGenerationService:
             repo = AiRepository(session)
             proposal = repo.get_proposal(proposal_id)
             items = repo.list_items(proposal_id)
+            serialized_items = []
+            for item in items:
+                payload = item.payload_json or {}
+                suggestions: list[dict[str, Any]] = []
+                if item.item_type == "equipment":
+                    eq_class = payload.get("equipment_class") or payload.get(
+                        "category"
+                    )
+                    suggestions = self._reference.suggest_for_class(
+                        str(eq_class) if eq_class else None,
+                        limit=8,
+                    )
+                serialized_items.append(
+                    {
+                        "id": item.id,
+                        "item_type": item.item_type,
+                        "item_key": item.item_key,
+                        "payload": payload,
+                        "decision": item.decision,
+                        "edited_payload": item.edited_payload_json,
+                        "sort_order": item.sort_order,
+                        "reference_suggestions": suggestions,
+                    }
+                )
             return {
                 "id": proposal.id,
                 "generation_job_id": proposal.generation_job_id,
@@ -300,18 +326,11 @@ class AiGenerationService:
                 "provenance": proposal.provenance_json,
                 "created_at": proposal.created_at,
                 "updated_at": proposal.updated_at,
-                "items": [
-                    {
-                        "id": item.id,
-                        "item_type": item.item_type,
-                        "item_key": item.item_key,
-                        "payload": item.payload_json,
-                        "decision": item.decision,
-                        "edited_payload": item.edited_payload_json,
-                        "sort_order": item.sort_order,
-                    }
-                    for item in items
-                ],
+                "items": serialized_items,
+                "reference_priority": (
+                    "Prefer OREDA/ISO reference matches over "
+                    "AI_ESTIMATE; leave UNKNOWN when no match."
+                ),
             }
 
     def decide_item(
@@ -436,6 +455,8 @@ class AiGenerationService:
                 source="ai_proposal",
                 reason=f"proposal:{proposal_id}",
             )
+            # Prefer ISO/OREDA mapping over leaving class unlinked.
+            self._reference.auto_link_equipment(equipment.id)
             tag_to_id[str(payload["tag"])] = equipment.id
             created_equipment += 1
 

@@ -25,6 +25,7 @@ from app.application.ports import AIProvider
 from app.application.ports import FabricateProvider
 from app.application.ports import PetriPilotPort
 from app.application.production_service import ProductionService
+from app.application.reference_service import ReferenceDataService
 from app.application.reliability_service import ReliabilityService
 from app.application.resources_service import ResourcesService
 from app.application.scenario_service import ScenarioService
@@ -220,6 +221,15 @@ def get_ai_generation_service(
     )
 
 
+def get_reference_data_service(
+    request: Request,
+    uow_factory: UowFactoryDep,
+) -> ReferenceDataService:
+    """Provide OREDA / ISO reference data service."""
+    session_factory = get_session_factory(request)
+    return ReferenceDataService(session_factory, uow_factory)
+
+
 def get_analyst_tool_executor(
     systems: Annotated[SystemService, Depends(get_system_service)],
     versions: Annotated[VersionService, Depends(get_version_service)],
@@ -240,6 +250,10 @@ def get_analyst_tool_executor(
         ScenarioService,
         Depends(get_scenario_service),
     ],
+    reference: Annotated[
+        ReferenceDataService,
+        Depends(get_reference_data_service),
+    ],
 ) -> AnalystToolExecutor:
     """Provide whitelisted analyst tool executor."""
     return AnalystToolExecutor(
@@ -250,6 +264,7 @@ def get_analyst_tool_executor(
         maintenance=maintenance,
         simulations=simulations,
         scenarios=scenarios,
+        reference=reference,
     )
 
 
@@ -314,4 +329,8 @@ AiGenerationServiceDep = Annotated[
 AiAnalystServiceDep = Annotated[
     AiAnalystService,
     Depends(get_ai_analyst_service),
+]
+ReferenceDataServiceDep = Annotated[
+    ReferenceDataService,
+    Depends(get_reference_data_service),
 ]

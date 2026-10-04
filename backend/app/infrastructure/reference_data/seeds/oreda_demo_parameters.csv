@@ -1,0 +1,11 @@
+equipment_class,equipment_class_code,failure_mode_code,failure_mode_name,parameter_name,parameter_kind,value,unit,distribution_type,distribution_params_json,source_reference,confidence,notes
+Centrifugal pump,PUMP.CENT,FTF,Fail to function,failure_rate,FAILURE_RATE,3.5e-6,1/hour,EXPONENTIAL,"{""lambda"": 3.5e-6}",demo extract table PUMP.CENT / FTF,MEDIUM,Synthetic demo row for software testing; not OREDA handbook text
+Centrifugal pump,PUMP.CENT,ELU,External leakage,failure_rate,FAILURE_RATE,1.2e-6,1/hour,EXPONENTIAL,"{""lambda"": 1.2e-6}",demo extract table PUMP.CENT / ELU,MEDIUM,Synthetic demo row for software testing; not OREDA handbook text
+Centrifugal pump,PUMP.CENT,FTF,Fail to function,mean_repair_time,MTTR,8.0,hour,CONSTANT,"{""value"": 8.0}",demo extract table PUMP.CENT / repair,MEDIUM,Synthetic demo MTTR
+Compressor,COMP.REC,FTF,Fail to function,failure_rate,FAILURE_RATE,5.0e-6,1/hour,EXPONENTIAL,"{""lambda"": 5.0e-6}",demo extract table COMP.REC / FTF,MEDIUM,Synthetic demo row for software testing
+Compressor,COMP.REC,FTF,Fail to function,mean_repair_time,MTTR,24.0,hour,CONSTANT,"{""value"": 24.0}",demo extract table COMP.REC / repair,MEDIUM,Synthetic demo MTTR
+Heat exchanger,HEX.SHELL,PLU,Plugged,failure_rate,FAILURE_RATE,2.0e-6,1/hour,EXPONENTIAL,"{""lambda"": 2.0e-6}",demo extract table HEX.SHELL / PLU,LOW,Synthetic demo row for software testing
+Valve,VALVE.ONOFF,FTC,Fail to close,failure_rate,FAILURE_RATE,1.5e-6,1/hour,EXPONENTIAL,"{""lambda"": 1.5e-6}",demo extract table VALVE.ONOFF / FTC,MEDIUM,Synthetic demo row for software testing
+Valve,VALVE.ONOFF,FTO,Fail to open,failure_rate,FAILURE_RATE,1.1e-6,1/hour,EXPONENTIAL,"{""lambda"": 1.1e-6}",demo extract table VALVE.ONOFF / FTO,MEDIUM,Synthetic demo row for software testing
+Electric motor,MOTOR.AC,FTS,Fail to start,failure_rate,FAILURE_RATE,0.8e-6,1/hour,EXPONENTIAL,"{""lambda"": 0.8e-6}",demo extract table MOTOR.AC / FTS,MEDIUM,Synthetic demo row for software testing
+Instrumentation,INST.TX,FTF,Fail to function,failure_rate,FAILURE_RATE,4.0e-6,1/hour,EXPONENTIAL,"{""lambda"": 4.0e-6}",demo extract table INST.TX / FTF,LOW,Synthetic demo row for software testing

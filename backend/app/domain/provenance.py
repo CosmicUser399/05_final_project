@@ -139,3 +139,33 @@ class Provenance(BaseModel):
             generated_by=FABRICATE_GENERATOR,
             source_reference=conversation_id,
         )
+
+    @classmethod
+    def oreda(
+        cls,
+        source_reference: str,
+        *,
+        confidence: Confidence = Confidence.HIGH,
+    ) -> "Provenance":
+        """Provenance for a value taken from an OREDA extract."""
+        return cls(
+            source_type=SourceType.OREDA,
+            source_reference=source_reference,
+            confidence=confidence,
+            generated_at=datetime.now(UTC),
+        )
+
+    @classmethod
+    def iso14224(
+        cls,
+        source_reference: str,
+        *,
+        confidence: Confidence = Confidence.HIGH,
+    ) -> "Provenance":
+        """Provenance for a value taken from ISO 14224."""
+        return cls(
+            source_type=SourceType.ISO_14224,
+            source_reference=source_reference,
+            confidence=confidence,
+            generated_at=datetime.now(UTC),
+        )
